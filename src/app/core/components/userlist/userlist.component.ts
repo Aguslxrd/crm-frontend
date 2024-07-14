@@ -72,13 +72,29 @@ export class UserlistComponent implements OnInit {
             }
           );
         break;
-      default:
-        console.error('Invalid search criteria:', this.searchCriteria);
-        this.users = []; 
-        break;
+        case 'userId':
+          const userId = parseInt(this.searchQuery, 10);
+          if (!isNaN(userId)) {
+            this.userService.searchUserByUserId(userId).subscribe(
+              (response) => {
+                this.users = Array.isArray(response) ? response : [response];
+              },
+              (error) => {
+                console.error('Error searching users by user ID:', error);
+                this.users = [];
+              }
+            );
+          } else {
+            console.error('Invalid user ID');
+            this.users = [];
+          }
+          break;
+        default:
+          console.error('Invalid search criteria:', this.searchCriteria);
+          this.users = []; 
+          break;
+      }
     }
-  }
-
   openSaveUserModal(): void {
     const dialogRef = this.dialog.open(NewUserFormModalComponent, {
       width: '400px'
