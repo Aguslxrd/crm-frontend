@@ -61,6 +61,17 @@ export class UserlistComponent implements OnInit {
             }
           );
         break;
+        case 'phoneNumber':
+          this.userService.searchUserByPhone(this.searchQuery).subscribe(
+            (response) => {
+              this.users = Array.isArray(response) ? response : [response];
+            },
+            (error) => {
+              console.error('Error searching users by phone number:', error);
+              this.users = [];
+            }
+          );
+        break;
       default:
         console.error('Invalid search criteria:', this.searchCriteria);
         this.users = []; 

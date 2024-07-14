@@ -3,8 +3,9 @@
     <div class="search-container">
         <select [(ngModel)]="searchCriteria">
             <option value="email">Email</option>
-            <option value="identifier">Identifier</option>
-            <option value="userId">User ID</option>
+            <option value="identifier">Identificador</option>
+            <option value="userId">Numero de cliente</option>
+            <option value="phoneNumber">Numero de telefono</option>
         </select>
         <input [(ngModel)]="searchQuery" placeholder="Buscar por: ">
         <button (click)="searchUsers()">Buscar</button>
