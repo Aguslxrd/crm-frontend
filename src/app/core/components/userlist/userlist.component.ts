@@ -32,27 +32,27 @@ export class UserlistComponent implements OnInit {
     );
   }
 
-  searchUsers(): void { 
-    //shit code dont work's, ERROR 
-    //bug: NG0900: Error trying to diff '[object Object]'. Only arrays and iterables are allowed
+  searchUsers(): void {
     if (this.searchQuery.trim() === '') {
       this.loadUsers();
       return;
     }
-
+  
     switch (this.searchCriteria) {
       case 'email':
         this.userService.searchUsersByEmail(this.searchQuery).subscribe(
           (response) => {
-            this.users = response;
+            this.users = Array.isArray(response) ? response : [response];
           },
           (error) => {
             console.error('Error searching users by email:', error);
+            this.users = [];
           }
         );
         break;
       default:
         console.error('Invalid search criteria:', this.searchCriteria);
+        this.users = []; 
         break;
     }
   }
