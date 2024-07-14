@@ -1,19 +1,17 @@
 .container {
     display: flex;
-    justify-content: flex-start; /* Ajusta según sea necesario */
+    justify-content: flex-start; 
   }
   
   .app-navbar {
-    /* Estilos de la sidebar según tus necesidades */
-    width: 250px; /* Ancho de la sidebar */
-    background-color: #333; /* Color de fondo de la sidebar */
-    color: white; /* Color de texto de la sidebar */
-    /* Otros estilos según necesites */
+    width: 250px; 
+    background-color: #333; 
+    color: white; 
+    
   }
   
   .app-userlist {
-    /* Estilos para el componente de lista de usuarios */
-    flex: 1; /* El componente de lista de usuarios ocupa todo el espacio restante */
-    margin-left: 20px; /* Espacio entre la sidebar y el componente de lista de usuarios */
+    flex: 1; 
+    margin-left: 20px; 
   }
   
