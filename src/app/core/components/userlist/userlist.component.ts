@@ -3,6 +3,7 @@ import { UserInterface } from '../../interfaces/IUser';
 import { UserService } from '../../services/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { NewUserFormModalComponent } from '../new-user-form-modal/new-user-form-modal.component';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-userlist',
@@ -22,13 +23,38 @@ export class UserlistComponent implements OnInit {
 
   loadUsers(): void {
     this.userService.getUsers().subscribe(
-      (response) => this.users = response,
-      (error) => console.error('Error fetching users:', error)
+      (response) => {
+        this.users = response;
+      },
+      (error) => {
+        console.error('Error fetching users:', error);
+      }
     );
   }
 
-  searchUsers(): void {
-    
+  searchUsers(): void { 
+    //shit code dont work's, ERROR 
+    //bug: NG0900: Error trying to diff '[object Object]'. Only arrays and iterables are allowed
+    if (this.searchQuery.trim() === '') {
+      this.loadUsers();
+      return;
+    }
+
+    switch (this.searchCriteria) {
+      case 'email':
+        this.userService.searchUsersByEmail(this.searchQuery).subscribe(
+          (response) => {
+            this.users = response;
+          },
+          (error) => {
+            console.error('Error searching users by email:', error);
+          }
+        );
+        break;
+      default:
+        console.error('Invalid search criteria:', this.searchCriteria);
+        break;
+    }
   }
 
   openSaveUserModal(): void {
