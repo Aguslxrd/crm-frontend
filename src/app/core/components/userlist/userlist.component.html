@@ -29,7 +29,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let user of users">
-          <td>{{ user.userId }}</td>
+          <td>{{ user.userid }}</td>
           <td>{{ user.firstname }}</td>
           <td>{{ user.secondname }}</td>
           <td>{{ user.firstlastname }}</td>
@@ -40,7 +40,7 @@
           <td>{{ user.identifier }}</td>
           <td>
             <button (click)="editUser(user)">Edit</button>
-            <button (click)="deleteUser(user.userId)">Delete</button>
+            <button (click)="deleteUser(user.userid)">Delete</button>
           </td>
         </tr>
       </tbody>

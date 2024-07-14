@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog'; // Ajusta la ruta según sea necesario
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-user-form-modal',
@@ -12,7 +13,8 @@ export class NewUserFormModalComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private dialogRef: MatDialogRef<NewUserFormModalComponent>
+    private dialogRef: MatDialogRef<NewUserFormModalComponent>,
+    private userService: UserService
   ) {
     this.userForm = this.fb.group({
       firstname: ['', Validators.required],
@@ -30,7 +32,15 @@ export class NewUserFormModalComponent implements OnInit {
 
   onSubmit(): void {
     if (this.userForm.valid) {
-      this.dialogRef.close(this.userForm.value);
+      this.userService.saveUser(this.userForm.value).subscribe(
+        (response) => {
+          console.log('User saved successfully:', response);
+          this.dialogRef.close(); 
+        },
+        (error) => {
+          console.error('Error saving user:', error);
+        }
+      );
     }
   }
 }

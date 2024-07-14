@@ -1,0 +1,19 @@
+.container {
+    display: flex;
+    justify-content: flex-start; /* Ajusta según sea necesario */
+  }
+  
+  .app-navbar {
+    /* Estilos de la sidebar según tus necesidades */
+    width: 250px; /* Ancho de la sidebar */
+    background-color: #333; /* Color de fondo de la sidebar */
+    color: white; /* Color de texto de la sidebar */
+    /* Otros estilos según necesites */
+  }
+  
+  .app-userlist {
+    /* Estilos para el componente de lista de usuarios */
+    flex: 1; /* El componente de lista de usuarios ocupa todo el espacio restante */
+    margin-left: 20px; /* Espacio entre la sidebar y el componente de lista de usuarios */
+  }
+  
