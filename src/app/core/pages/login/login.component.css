@@ -1,0 +1,90 @@
+body {
+    background-color: #240750;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    font-family: "Oswald", sans-serif;
+  }
+  
+  .login-container {
+    background-color: #1B6B93;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    max-width: 90%;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .login-form h2 {
+    margin: 0 0 20px;
+    color: #57A6A1;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+    width: 100%;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #577B8D;
+    font-size: 16px;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #577B8D;
+    border-radius: 4px;
+    background-color: #240750;
+    color: #577B8D;
+    font-size: 16px;
+  }
+  
+  .form-group input:focus {
+    outline: none;
+    border-color: #57A6A1;
+  }
+  
+  button {
+    width: 100%;
+    padding: 10px;
+    background-color: #57A6A1;
+    color: #240750;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  
+  button:hover {
+    background-color: #4A8F8A;
+  }
+  
+  .form-footer {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .form-footer a {
+    color: #577B8D;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  
+  .form-footer a:hover {
+    color: #57A6A1;
+  }
