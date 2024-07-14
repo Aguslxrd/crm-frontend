@@ -50,6 +50,17 @@ export class UserlistComponent implements OnInit {
           }
         );
         break;
+        case 'identifier':
+          this.userService.searchUserByIdentifier(this.searchQuery).subscribe(
+            (response) => {
+              this.users = Array.isArray(response) ? response : [response];
+            },
+            (error) => {
+              console.error('Error searching users by identifier:', error);
+              this.users = [];
+            }
+          );
+        break;
       default:
         console.error('Invalid search criteria:', this.searchCriteria);
         this.users = []; 
