@@ -103,6 +103,7 @@ export class UserlistComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log('User saved:', result);
+        this.loadUsers();
       }
     });
   }
@@ -111,8 +112,10 @@ export class UserlistComponent implements OnInit {
     
   }
 
-  deleteUser(userId: string): void {
-    
+  deleteUser(userId: number): void {
+    this.userService.deleteUserById(userId).subscribe(
+      () => this.loadUsers()
+    );
   }
 
   viewUserData(): void{
