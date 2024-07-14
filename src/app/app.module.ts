@@ -6,9 +6,16 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './core/components/navbar/navbar.component';
 import { HomeComponent } from './core/pages/home/home.component';
 import { LoginComponent } from './core/pages/login/login.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { UserlistComponent } from './core/components/userlist/userlist.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { NewUserFormModalComponent } from './core/components/new-user-form-modal/new-user-form-modal.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -16,15 +23,25 @@ import { UserlistComponent } from './core/components/userlist/userlist.component
     NavbarComponent,
     HomeComponent,
     LoginComponent,
-    UserlistComponent
+    UserlistComponent,
+    NewUserFormModalComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatIconModule
+    
   ],
-  providers: [],
+  providers: [
+    provideAnimationsAsync()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

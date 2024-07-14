@@ -1,1 +1,49 @@
-<p>userlist works!</p>
+<div class="user-list-container">
+    <h2>User Management</h2>
+    <div class="search-container">
+      <select [(ngModel)]="searchCriteria">
+        <option value="email">Email</option>
+        <option value="identifier">Identifier</option>
+        <option value="userId">User ID</option>
+      </select>
+      <input [(ngModel)]="searchQuery" placeholder="Buscar por: ">
+      <button (click)="searchUsers()">Buscar</button>
+    </div>
+    
+    <button (click)="openSaveUserModal()">Cargar usuario</button>
+  
+    <table class="user-table">
+      <thead>
+        <tr>
+          <th>User ID</th>
+          <th>First Name</th>
+          <th>Second Name</th>
+          <th>First Last Name</th>
+          <th>Second Last Name</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>Address</th>
+          <th>Identifier</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.userId }}</td>
+          <td>{{ user.firstname }}</td>
+          <td>{{ user.secondname }}</td>
+          <td>{{ user.firstlastname }}</td>
+          <td>{{ user.secondlastname }}</td>
+          <td>{{ user.phone }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.address }}</td>
+          <td>{{ user.identifier }}</td>
+          <td>
+            <button (click)="editUser(user)">Edit</button>
+            <button (click)="deleteUser(user.userId)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

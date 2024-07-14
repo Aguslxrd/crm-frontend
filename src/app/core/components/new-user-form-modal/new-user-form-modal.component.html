@@ -1,0 +1,49 @@
+<h2 mat-dialog-title>Add New User</h2>
+<div mat-dialog-content>
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+      <mat-label>First Name</mat-label>
+      <input matInput formControlName="firstname" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Second Name</mat-label>
+      <input matInput formControlName="secondname">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>First Last Name</mat-label>
+      <input matInput formControlName="firstlastname" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Second Last Name</mat-label>
+      <input matInput formControlName="secondlastname">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Phone</mat-label>
+      <input matInput formControlName="phone" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Address</mat-label>
+      <input matInput formControlName="address">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Identifier</mat-label>
+      <input matInput formControlName="identifier" required>
+    </mat-form-field>
+
+    <div mat-dialog-actions>
+      <button mat-button mat-dialog-close>Cancel</button>
+      <button mat-button type="submit" [disabled]="!userForm.valid">Save</button>
+    </div>
+  </form>
+</div>
