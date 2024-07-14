@@ -51,4 +51,8 @@ export class UserlistComponent implements OnInit {
     
   }
 
+  viewUserData(): void{
+
+  }
+
 }
