@@ -1,0 +1,17 @@
+.readonly-field {
+    background-color: #f0f0f0;
+  }
+  
+  .readonly-input {
+    color: #666;
+    cursor: default;
+  }
+  
+
+  .readonly-field .mat-form-field-underline {
+    background-color: #ccc !important;
+  }
+  
+  .readonly-field .mat-form-field-ripple {
+    background-color: #ccc !important;
+  }

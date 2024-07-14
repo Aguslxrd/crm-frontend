@@ -4,6 +4,7 @@ import { UserService } from '../../services/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { NewUserFormModalComponent } from '../new-user-form-modal/new-user-form-modal.component';
 import { Observable } from 'rxjs';
+import { EditUserFormModalComponent } from '../edit-user-form-modal/edit-user-form-modal.component';
 
 @Component({
   selector: 'app-userlist',
@@ -109,6 +110,17 @@ export class UserlistComponent implements OnInit {
   }
 
   editUser(user: UserInterface): void {
+    const dialogRef = this.dialog.open(EditUserFormModalComponent, {
+      width: '400px',
+      data: user 
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('User Edited:', result);
+      }
+      this.loadUsers();
+    });
     
   }
 

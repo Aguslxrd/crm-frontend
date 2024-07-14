@@ -16,6 +16,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { EditUserFormModalComponent } from './core/components/edit-user-form-modal/edit-user-form-modal.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { MatInputModule } from '@angular/material/input';
     HomeComponent,
     LoginComponent,
     UserlistComponent,
-    NewUserFormModalComponent
+    NewUserFormModalComponent,
+    EditUserFormModalComponent
   ],
   imports: [
     BrowserModule,
