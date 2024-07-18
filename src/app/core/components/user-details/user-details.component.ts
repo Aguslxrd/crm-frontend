@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import { CasesService } from '../../services/cases.service';
 import { UserInterface } from '../../interfaces/IUser';
+import { CaseInterface } from '../../interfaces/ICase';
 
 @Component({
   selector: 'app-user-details',
@@ -9,12 +11,14 @@ import { UserInterface } from '../../interfaces/IUser';
   styleUrls: ['./user-details.component.css']
 })
 export class UserDetailsComponent implements OnInit {
-  user: any | null = null; // cambiar a user interface
+  user: any | null = null;
   userId: number | null = null;
+  cases: CaseInterface[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
+    private casesService: CasesService,
     private router: Router
   ) { }
 
@@ -24,6 +28,7 @@ export class UserDetailsComponent implements OnInit {
       this.userId = parseInt(userIdParam, 10);
       if (!isNaN(this.userId)) {
         this.loadUserDetails(this.userId);
+        this.loadUserCases(this.userId);
       } else {
         console.error('Invalid userId in URL');
       }
@@ -42,7 +47,19 @@ export class UserDetailsComponent implements OnInit {
     );
   }
 
-  backButton() : void{
-    this.router.navigate(['/home'])
+  loadUserCases(userId: number): void {
+    this.casesService.getCasesByUserId(userId).subscribe(
+      (cases) => {
+        this.cases = cases;
+        console.log('User cases:', this.cases);
+      },
+      (error) => {
+        console.error('Error fetching user cases:', error);
+      }
+    );
+  }
+
+  backButton(): void {
+    this.router.navigate(['/home']);
   }
 }
