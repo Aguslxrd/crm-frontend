@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { NewUserFormModalComponent } from '../new-user-form-modal/new-user-form-modal.component';
 import { Observable } from 'rxjs';
 import { EditUserFormModalComponent } from '../edit-user-form-modal/edit-user-form-modal.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-userlist',
@@ -16,7 +17,7 @@ export class UserlistComponent implements OnInit {
   searchCriteria: string = 'email';
   searchQuery: string = '';
 
-  constructor(private userService: UserService, public dialog: MatDialog) {}
+  constructor(private userService: UserService, public dialog: MatDialog, private router: Router) {}
 
   ngOnInit(): void {
     this.loadUsers();
@@ -130,8 +131,8 @@ export class UserlistComponent implements OnInit {
     );
   }
 
-  viewUserData(): void{
-
+  viewUserDetails(userId: number | string) {
+    this.router.navigate(['/user/details', userId]);
   }
 
 }
