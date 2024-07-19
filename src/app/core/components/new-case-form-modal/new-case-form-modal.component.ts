@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NewUserFormModalComponent } from '../new-user-form-modal/new-user-form-modal.component';
 import { CasesService } from '../../services/cases.service';
 
@@ -14,11 +14,12 @@ export class NewCaseFormModalComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private dialogRef: MatDialogRef<NewUserFormModalComponent>,
-    private caseService: CasesService
+    private dialogRef: MatDialogRef<NewCaseFormModalComponent>,
+    private caseService: CasesService,
+    @Inject(MAT_DIALOG_DATA) public data: { userId: number }
   ) {
     this.caseForm = this.fb.group({
-      userId: ['', Validators.required],
+      userId: [data.userId, Validators.required],
       title: ['', Validators.required],
       description_case: ['', Validators.required],
       case_status: ['', Validators.required]

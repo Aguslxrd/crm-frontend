@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { CasesService } from '../../services/cases.service';
-import { UserInterface } from '../../interfaces/IUser';
 import { CaseInterface } from '../../interfaces/ICase';
+import { MatDialog } from '@angular/material/dialog';
+import { NewCaseFormModalComponent } from '../new-case-form-modal/new-case-form-modal.component';
 
 @Component({
   selector: 'app-user-details',
@@ -19,7 +20,8 @@ export class UserDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private userService: UserService,
     private casesService: CasesService,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -61,6 +63,20 @@ export class UserDetailsComponent implements OnInit {
 
   backButton(): void {
     this.router.navigate(['/home']);
+  }
+
+  addCase(): void {
+    const dialogRef = this.dialog.open(NewCaseFormModalComponent, {
+      width: '400px',
+      data: { userId: this.userId } 
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Case saved:', result);
+        this.loadUserCases(this.userId as number);
+      }
+    });
   }
 
 

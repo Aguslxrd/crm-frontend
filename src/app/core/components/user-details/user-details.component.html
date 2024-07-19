@@ -22,7 +22,7 @@
     <div class="cases-box">
       <div class="cases-header">
         <h3>Casos</h3>
-        <button class="add-case-button">Añadir Caso</button>
+        <button class="add-case-button" (click)="addCase()">Añadir Caso</button>
       </div>
       <div class="case-list">
         <div *ngFor="let case of cases" class="case-item">

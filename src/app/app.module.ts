@@ -19,6 +19,7 @@ import { MatInputModule } from '@angular/material/input';
 import { EditUserFormModalComponent } from './core/components/edit-user-form-modal/edit-user-form-modal.component';
 import { UserDetailsComponent } from './core/components/user-details/user-details.component';
 import { NewCaseFormModalComponent } from './core/components/new-case-form-modal/new-case-form-modal.component';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { NewCaseFormModalComponent } from './core/components/new-case-form-modal
     MatInputModule,
     MatButtonModule,
     MatDialogModule,
-    MatIconModule
+    MatIconModule,
+    MatSelectModule,
     
   ],
   providers: [
