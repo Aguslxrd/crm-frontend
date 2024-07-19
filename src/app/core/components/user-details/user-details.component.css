@@ -17,17 +17,17 @@
   color: #333;
 }
 
-.edit-button, .add-case-button {
+.edit-button, .add-case-button, .edit-case-button, .view-case-button {
   background-color: #007bff;
   color: white;
   border: none;
-  padding: 10px 20px;
+  padding: 8px 15px;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
-.edit-button:hover, .add-case-button:hover {
+.edit-button:hover, .add-case-button:hover, .edit-case-button:hover, .view-case-button:hover {
   background-color: #0056b3;
 }
 
@@ -91,6 +91,18 @@
   border-radius: 5px;
   padding: 15px;
   margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.case-content {
+  flex: 1;
+}
+
+.case-actions {
+  display: flex;
+  gap: 10px;
 }
 
 .case-item h4 {
@@ -117,4 +129,20 @@
 .fas {
   margin-right: 10px;
   color: #007bff;
+}
+
+.edit-case-button {
+  background-color: #ffc107;
+}
+
+.view-case-button {
+  background-color: #28a745;
+}
+
+.edit-case-button:hover {
+  background-color: #e0a800;
+}
+
+.view-case-button:hover {
+  background-color: #218838;
 }

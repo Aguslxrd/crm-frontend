@@ -62,4 +62,14 @@ export class UserDetailsComponent implements OnInit {
   backButton(): void {
     this.router.navigate(['/home']);
   }
+
+
+  editCase(): void {
+    //to-do
+  }
+
+  viewCase(): void {
+    //to-do
+  }
+
 }
