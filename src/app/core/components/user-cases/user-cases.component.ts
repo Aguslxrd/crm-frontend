@@ -5,6 +5,9 @@ import { CaseInterface } from '../../interfaces/ICase';
 import { CasesService } from '../../services/cases.service';
 import { InteractionInterface } from '../../interfaces/IInteraction';
 import { InteractionsService } from '../../services/interactions.service';
+import { NewCaseFormModalComponent } from '../new-case-form-modal/new-case-form-modal.component';
+import { StorageService } from '../../services/storage-service.service';
+import { NewInteractionFormModalComponent } from '../new-interaction-form-modal/new-interaction-form-modal.component';
 
 @Component({
   selector: 'app-user-cases',
@@ -20,7 +23,8 @@ export class UserCasesComponent implements OnInit {
     private route: ActivatedRoute,
     private casesService: CasesService,
     private interactionService: InteractionsService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private localStorage: StorageService
   ) { }
 
   ngOnInit(): void {
@@ -65,11 +69,23 @@ export class UserCasesComponent implements OnInit {
     );
   }
 
-  addInteraction(): void {
-    console.log('Agregar interacción');
+  editInteraction(interaction: InteractionInterface): void {
+    console.log('Edit interaction');
   }
 
-  editInteraction(interaction: InteractionInterface): void {
-    console.log('Editar caso');
+  addInteraction(): void {
+    const dialogRef = this.dialog.open(NewInteractionFormModalComponent, {
+      width: '400px',
+      data: { userId: this.localStorage.getUserId(),
+        caseId: this.case?.caseId
+       } 
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Case saved:', result);
+      }
+    });
   }
+
 }
