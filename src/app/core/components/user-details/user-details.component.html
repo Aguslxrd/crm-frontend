@@ -35,7 +35,7 @@
           </div>
           <div class="case-actions">
             <button class="edit-case-button" (click)="editCase()">Editar</button>
-            <button class="view-case-button" (click)="viewCase()">Ver</button>
+            <button class="view-case-button" (click)="viewCase(case.caseId)">Ver</button>
           </div>
         </div>
         <div *ngIf="cases.length === 0" class="no-cases">

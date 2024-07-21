@@ -84,8 +84,8 @@ export class UserDetailsComponent implements OnInit {
     //to-do
   }
 
-  viewCase(): void {
-    //to-do
+  viewCase(caseId: number | string): void {
+    this.router.navigate(['/user/details/cases/interactions', caseId]);
   }
 
 }
