@@ -1,1 +1,30 @@
-<p>edit-interaction-form-modal works!</p>
+<!-- edit-interaction-form-modal.component.html -->
+<h1 mat-dialog-title>Editar Interacción</h1>
+<div mat-dialog-content>
+  <form [formGroup]="interactionForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+      <mat-label>ID de Interacción</mat-label>
+      <input matInput formControlName="interactionId" readonly />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>ID de Caso</mat-label>
+      <input matInput formControlName="caseId" readonly />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>ID de Usuario</mat-label>
+      <input matInput formControlName="authId" readonly />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Texto de la Interacción</mat-label>
+      <textarea matInput formControlName="interaction_text"></textarea>
+    </mat-form-field>
+
+    <div mat-dialog-actions>
+      <button mat-button type="submit" [disabled]="!interactionForm.valid">Guardar</button>
+      <button mat-button (click)="onCancel()">Cancelar</button>
+    </div>
+  </form>
+</div>

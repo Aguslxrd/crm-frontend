@@ -24,18 +24,14 @@ export class InteractionsService {
   }
 
   getInteractionById(interactionId: number): Observable<InteractionInterface[]> {
-    const headers = this.getHeaders();
-    if (headers.get('Authorization')) {
-      return this.http.get<InteractionInterface[]>(`${this.apiUrl}/${interactionId}`, { headers })
-        .pipe(
-          catchError(error => {
-            console.error('Error fetching interaction by ID:', error);
-            return throwError(error);
-          })
-        );
-    } else {
-      return throwError('No token found in localStorage');
+    const token = this.storageService.getToken();
+
+    if(token){
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.get<InteractionInterface[]>(`${this.apiUrl}/${interactionId}`, { headers });
     }
+    console.error('No token found in localStorage');
+    return new Observable<InteractionInterface[]>();
   }
 
   saveInteraction(interactionData: InteractionInterface): Observable<InteractionInterface> {
@@ -50,17 +46,13 @@ export class InteractionsService {
   }
 
   getInteractionsByCaseId(caseId: number): Observable<InteractionInterface[]> {
-    const headers = this.getHeaders();
-    if (headers.get('Authorization')) {
-      return this.http.get<InteractionInterface[]>(`${this.apiUrl}/case/${caseId}`, { headers })
-        .pipe(
-          catchError(error => {
-            console.error('Error fetching interactions by case ID:', error);
-            return throwError(error);
-          })
-        );
-    } else {
-      return throwError('No token found in localStorage');
+    const token = this.storageService.getToken();
+
+    if(token){
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.get<InteractionInterface[]>(`${this.apiUrl}/case/${caseId}`, { headers });
     }
+    console.error('No token found in localStorage');
+    return new Observable<InteractionInterface[]>();
   }
 }

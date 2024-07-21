@@ -71,34 +71,32 @@ export class UserCasesComponent implements OnInit {
     );
   }
 
-  editInteraction(): void {
+  editInteraction(interactionId: number): void {
     const dialogRef = this.dialog.open(EditInteractionFormModalComponent, {
       width: '400px',
-      data: { caseId: this.case?.caseId}
+      data: { interactionId: interactionId, caseId: this.case?.caseId }
     });
-  
+    
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('Case saved:', result);
+        console.log('Interaction updated:', result);
+        this.loadInteractions(this.case?.caseId as number); 
       }
     });
   }
-  
   
 
   addInteraction(): void {
     const dialogRef = this.dialog.open(NewInteractionFormModalComponent, {
       width: '400px',
-      data: { authId: this.localStorage.getUserId(),
-        caseId: this.case?.caseId
-       } 
+      data: { authId: this.localStorage.getUserId(), caseId: this.case?.caseId }
     });
   
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('Case saved:', result);
+        console.log('Interaction added:', result);
+        this.loadInteractions(this.case?.caseId as number); // Reload interactions after adding
       }
     });
   }
-
 }

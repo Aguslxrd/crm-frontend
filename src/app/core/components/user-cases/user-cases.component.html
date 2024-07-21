@@ -17,10 +17,12 @@
     <ul>
       <li *ngFor="let interaction of interactions" class="interaction-item">
         <p>
+          <strong>ID de Interacción:</strong> {{ interaction.interactionId }}
+          <br>
           <strong>{{ interaction.interaction_date | date:'dd/MM/yyyy HH:mm' }}</strong>
           <span class="interaction-auth-id">({{ interaction.adminName }})</span>: {{ interaction.interaction_text }}
         </p>
-        <button class="btn btn-edit" (click)="editInteraction()">Editar</button>
+        <button class="btn btn-edit" (click)="editInteraction(interaction.interactionId)">Editar</button>
       </li>
     </ul>
   </div>
