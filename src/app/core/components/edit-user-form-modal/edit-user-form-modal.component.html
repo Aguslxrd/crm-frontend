@@ -1,0 +1,54 @@
+<h2 mat-dialog-title>Editar Cliente</h2>
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <mat-form-field appearance="fill" class="readonly-field">
+      <mat-label>Numero de cliente (No editable)</mat-label>
+      <input matInput formControlName="userid" readonly class="readonly-input">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Primer Nombre</mat-label>
+      <input matInput formControlName="firstname" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Segundo Nombre</mat-label>
+      <input matInput formControlName="secondname">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Primer Apellido</mat-label>
+      <input matInput formControlName="firstlastname" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Segundo Apellido</mat-label>
+      <input matInput formControlName="secondlastname">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Telefono de contacto</mat-label>
+      <input matInput formControlName="phone" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Direccion</mat-label>
+      <input matInput formControlName="address">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Numero Identificador</mat-label>
+      <input matInput formControlName="identifier" required>
+    </mat-form-field>
+  </mat-dialog-content>
+  
+  <mat-dialog-actions>
+    <button mat-button (click)="onCancel()">Cancelar</button>
+    <button mat-button type="submit" [disabled]="!userForm.valid">Guardar</button>
+  </mat-dialog-actions>
+</form>

@@ -1,1 +1,50 @@
-<p>userlist works!</p>
+<div class="user-list-container">
+    <h2>Panel de usuarios</h2>
+    <div class="search-container">
+        <select [(ngModel)]="searchCriteria">
+            <option value="email">Email</option>
+            <option value="identifier">Identificador</option>
+            <option value="userId">Numero de cliente</option>
+            <option value="phoneNumber">Numero de telefono</option>
+        </select>
+        <input [(ngModel)]="searchQuery" placeholder="Buscar por: ">
+        <button (click)="searchUsers()">Buscar</button>
+    </div>
+    
+    <button (click)="openSaveUserModal()">Cargar usuario</button>
+  
+    <table class="user-table">
+        <thead>
+            <tr>
+                <th>Numero de usuario</th>
+                <th>Primer Nombre</th>
+                <th>Segundo Nombre</th>
+                <th>Primer Apellido</th>
+                <th>Segundo Apellido</th>
+                <th>Numero de celular</th>
+                <th>Email</th>
+                <th>Direccion</th>
+                <th>Identificado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users">
+                <td>{{ user.userid }}</td>
+                <td>{{ user.firstname }}</td>
+                <td>{{ user.secondname }}</td>
+                <td>{{ user.firstlastname }}</td>
+                <td>{{ user.secondlastname }}</td>
+                <td>{{ user.phone }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.address }}</td>
+                <td>{{ user.identifier }}</td>
+                <td>
+                    <button (click)="editUser(user)">Editar</button>
+                    <button (click)="deleteUser(user.userid)">Eliminar</button>
+                    <button (click)="viewUserDetails(user.userid)">Datos</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

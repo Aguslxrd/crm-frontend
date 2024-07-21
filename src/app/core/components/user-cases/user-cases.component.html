@@ -1,0 +1,38 @@
+<div class="case-container" *ngIf="case">
+  <h2>Detalles del Caso</h2>
+  <div class="case-details">
+    <p><strong>ID del Caso:</strong> {{ case.caseId }}</p>
+    <p><strong>Título:</strong> {{ case.title }}</p>
+    <p><strong>Descripción:</strong> {{ case.description_case }}</p>
+    <p><strong>Estado:</strong> {{ case.case_status }}</p>
+    <p><strong>Fecha de Creación:</strong> {{ case.date_created | date:'dd/MM/yyyy HH:mm' }}</p>
+  </div>
+
+  <div class="case-actions">
+    <button class="btn btn-primary" (click)="addInteraction()">Agregar Interacción</button>
+  </div>
+
+  <div class="interactions-list" *ngIf="interactions.length > 0">
+    <h3>Interacciones</h3>
+    <ul>
+      <li *ngFor="let interaction of interactions" class="interaction-item">
+        <p>
+          <strong>ID de Interacción:</strong> {{ interaction.interactionId }}
+          <br>
+          <strong>{{ interaction.interaction_date | date:'dd/MM/yyyy HH:mm' }}</strong>
+          <span class="interaction-auth-id">({{ interaction.adminName }})</span>: {{ interaction.interaction_text }}
+        </p>
+        <button class="btn btn-edit" (click)="editInteraction(interaction.interactionId)">Editar</button>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="interactions.length === 0" class="no-interactions">
+    No hay interacciones registradas para este caso.
+  </div>
+</div>
+
+<div class="loading-spinner" *ngIf="loading">
+  <div class="spinner"></div>
+  <p>Cargando detalles de interacciones...</p>
+</div>

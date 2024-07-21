@@ -1,0 +1,52 @@
+<div class="crm-container" *ngIf="user">
+  <div class="crm-header">
+    <h2>Detalles del Usuario</h2>
+    <button class="edit-button" (click)="backButton()">Volver</button>
+  </div>
+  
+  <div class="crm-content">
+    <div class="user-info-card">
+      <div class="user-avatar">
+        <i class="fas fa-user-circle"></i>
+      </div>
+      <div class="user-details">
+        <h3>{{ user.firstname }} {{ user.firstlastname }}</h3>
+        <p class="user-id">ID: {{ user.userid }}</p>
+        <p><i class="fas fa-envelope"></i> {{ user.email }}</p>
+        <p><i class="fas fa-phone"></i> {{ user.phone }}</p>
+        <p><i class="fas fa-map-marker-alt"></i> {{ user.address }}</p>
+        <p><i class="fas fa-id-card"></i> {{ user.identifier }}</p>
+      </div>
+    </div>
+
+    <div class="cases-box">
+      <div class="cases-header">
+        <h3>Casos</h3>
+        <button class="add-case-button" (click)="addCase()">Añadir Caso</button>
+      </div>
+      <div class="case-list">
+        <div *ngFor="let case of cases" class="case-item">
+          <div class="case-content">
+            <h4>{{ case.title }}</h4>
+            <p><strong>Numero de caso:</strong> {{ case.caseId}}</p>
+            <p><strong>Fecha:</strong> {{ case.date_created | date:'dd/MM/yyyy' }}</p>
+            <p><strong>Estado:</strong> {{ case.case_status }}</p>
+            <p>{{ case.description_case }}</p>
+          </div>
+          <div class="case-actions">
+            <button class="edit-case-button" (click)="editCase(case.caseId)">Editar</button>
+            <button class="view-case-button" (click)="viewCase(case.caseId)">Ver</button>
+          </div>
+        </div>
+        <div *ngIf="cases.length === 0" class="no-cases">
+          No hay casos registrados para este usuario.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="loading-spinner" *ngIf="!user">
+  <i class="fas fa-spinner fa-spin"></i>
+  <p>Cargando detalles del usuario...</p>
+</div>
