@@ -39,17 +39,13 @@ export class InteractionsService {
   }
 
   saveInteraction(interactionData: InteractionInterface): Observable<InteractionInterface> {
-    const headers = this.getHeaders();
-    if (headers.get('Authorization')) {
-      return this.http.post<InteractionInterface>(this.apiUrl, interactionData, { headers })
-        .pipe(
-          catchError(error => {
-            console.error('Error saving interaction:', error);
-            return throwError(error);
-          })
-        );
+    const token = this.storageService.getToken();
+    if (token) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.post<InteractionInterface>(this.apiUrl, interactionData, { headers });
     } else {
-      return throwError('No token found in localStorage');
+      console.error('No token found in localStorage');
+      return new Observable<InteractionInterface>();
     }
   }
 

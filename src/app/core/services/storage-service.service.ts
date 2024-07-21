@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class StorageService {
   private readonly TOKEN_KEY = 'token';
-  private readonly USER_ID_KEY = 'userId';
+  private readonly AUTH_ID_KEY = 'authId';
 
   constructor() { }
 
@@ -17,16 +17,16 @@ export class StorageService {
     return localStorage.getItem(this.TOKEN_KEY);
   }
 
-  setUserId(userId: string): void {
-    localStorage.setItem(this.USER_ID_KEY, userId);
+  setUserId(authId: string): void {
+    localStorage.setItem(this.AUTH_ID_KEY, authId);
   }
 
   getUserId(): string | null {
-    return localStorage.getItem(this.USER_ID_KEY);
+    return localStorage.getItem(this.AUTH_ID_KEY);
   }
 
   clearAuth(): void {
     localStorage.removeItem(this.TOKEN_KEY);
-    localStorage.removeItem(this.USER_ID_KEY);
+    localStorage.removeItem(this.AUTH_ID_KEY);
   }
 }

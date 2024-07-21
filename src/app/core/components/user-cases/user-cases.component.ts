@@ -76,7 +76,7 @@ export class UserCasesComponent implements OnInit {
   addInteraction(): void {
     const dialogRef = this.dialog.open(NewInteractionFormModalComponent, {
       width: '400px',
-      data: { userId: this.localStorage.getUserId(),
+      data: { authId: this.localStorage.getUserId(),
         caseId: this.case?.caseId
        } 
     });
