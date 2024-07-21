@@ -9,6 +9,7 @@ import { NewCaseFormModalComponent } from '../new-case-form-modal/new-case-form-
 import { StorageService } from '../../services/storage-service.service';
 import { NewInteractionFormModalComponent } from '../new-interaction-form-modal/new-interaction-form-modal.component';
 import { EditCaseFormModalComponent } from '../edit-case-form-modal/edit-case-form-modal.component';
+import { EditInteractionFormModalComponent } from '../edit-interaction-form-modal/edit-interaction-form-modal.component';
 
 @Component({
   selector: 'app-user-cases',
@@ -71,9 +72,9 @@ export class UserCasesComponent implements OnInit {
   }
 
   editInteraction(): void {
-    const dialogRef = this.dialog.open(EditCaseFormModalComponent, {
+    const dialogRef = this.dialog.open(EditInteractionFormModalComponent, {
       width: '400px',
-      data: { caseId: this.case?.caseId }
+      data: { caseId: this.case?.caseId}
     });
   
     dialogRef.afterClosed().subscribe(result => {
