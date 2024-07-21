@@ -21,6 +21,7 @@ import { UserDetailsComponent } from './core/components/user-details/user-detail
 import { NewCaseFormModalComponent } from './core/components/new-case-form-modal/new-case-form-modal.component';
 import { MatSelectModule } from '@angular/material/select';
 import { UserCasesComponent } from './core/components/user-cases/user-cases.component';
+import { NewInteractionFormModalComponent } from './core/components/new-interaction-form-modal/new-interaction-form-modal.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { UserCasesComponent } from './core/components/user-cases/user-cases.comp
     EditUserFormModalComponent,
     UserDetailsComponent,
     NewCaseFormModalComponent,
-    UserCasesComponent
+    UserCasesComponent,
+    NewInteractionFormModalComponent
   ],
   imports: [
     BrowserModule,

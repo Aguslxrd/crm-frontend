@@ -69,7 +69,7 @@ export class UserCasesComponent implements OnInit {
     console.log('Agregar interacción');
   }
 
-  editCase(): void {
+  editInteraction(interaction: InteractionInterface): void {
     console.log('Editar caso');
   }
 }

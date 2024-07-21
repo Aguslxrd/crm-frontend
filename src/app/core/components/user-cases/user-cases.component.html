@@ -10,17 +10,17 @@
 
   <div class="case-actions">
     <button class="btn btn-primary" (click)="addInteraction()">Agregar Interacción</button>
-    <button class="btn btn-secondary" (click)="editCase()">Editar Interaccion</button>
   </div>
 
   <div class="interactions-list" *ngIf="interactions.length > 0">
     <h3>Interacciones</h3>
     <ul>
-      <li *ngFor="let interaction of interactions">
+      <li *ngFor="let interaction of interactions" class="interaction-item">
         <p>
           <strong>{{ interaction.interaction_date | date:'dd/MM/yyyy HH:mm' }}</strong>
           <span class="interaction-auth-id">({{ interaction.adminName }})</span>: {{ interaction.interaction_text }}
         </p>
+        <button class="btn btn-edit" (click)="editInteraction(interaction)">Editar</button>
       </li>
     </ul>
   </div>
