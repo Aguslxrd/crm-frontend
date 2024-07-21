@@ -8,6 +8,7 @@ import { InteractionsService } from '../../services/interactions.service';
 import { NewCaseFormModalComponent } from '../new-case-form-modal/new-case-form-modal.component';
 import { StorageService } from '../../services/storage-service.service';
 import { NewInteractionFormModalComponent } from '../new-interaction-form-modal/new-interaction-form-modal.component';
+import { EditCaseFormModalComponent } from '../edit-case-form-modal/edit-case-form-modal.component';
 
 @Component({
   selector: 'app-user-cases',
@@ -69,9 +70,20 @@ export class UserCasesComponent implements OnInit {
     );
   }
 
-  editInteraction(interaction: InteractionInterface): void {
-    console.log('Edit interaction');
+  editInteraction(): void {
+    const dialogRef = this.dialog.open(EditCaseFormModalComponent, {
+      width: '400px',
+      data: { caseId: this.case?.caseId }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Case saved:', result);
+      }
+    });
   }
+  
+  
 
   addInteraction(): void {
     const dialogRef = this.dialog.open(NewInteractionFormModalComponent, {

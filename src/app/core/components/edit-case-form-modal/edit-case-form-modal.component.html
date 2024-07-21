@@ -1,0 +1,37 @@
+<h1 mat-dialog-title>Edit Case</h1>
+<div mat-dialog-content>
+  <form [formGroup]="caseForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" />
+      <mat-error *ngIf="caseForm.get('title')">
+        Title is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description_case"></textarea>
+      <mat-error *ngIf="caseForm.get('description_case')">
+        Description is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Estado</mat-label>
+      <mat-select formControlName="case_status">
+        <mat-option value="ABIERTO">Abierto</mat-option>
+        <mat-option value="EN_PROGRESO">En Progreso</mat-option>
+        <mat-option value="CERRADO">Cerrado</mat-option>
+      </mat-select>
+      <mat-error *ngIf="caseForm.get('case_status')">
+        Estado es requerido
+      </mat-error>
+    </mat-form-field>
+
+    <div mat-dialog-actions>
+      <button mat-button type="submit" [disabled]="caseForm.invalid">Save</button>
+      <button mat-button (click)="onCancel()">Cancel</button>
+    </div>
+  </form>
+</div>

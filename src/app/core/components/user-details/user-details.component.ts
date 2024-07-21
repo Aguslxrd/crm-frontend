@@ -5,6 +5,7 @@ import { CasesService } from '../../services/cases.service';
 import { CaseInterface } from '../../interfaces/ICase';
 import { MatDialog } from '@angular/material/dialog';
 import { NewCaseFormModalComponent } from '../new-case-form-modal/new-case-form-modal.component';
+import { EditCaseFormModalComponent } from '../edit-case-form-modal/edit-case-form-modal.component';
 
 @Component({
   selector: 'app-user-details',
@@ -21,7 +22,7 @@ export class UserDetailsComponent implements OnInit {
     private userService: UserService,
     private casesService: CasesService,
     private router: Router,
-    public dialog: MatDialog,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -78,14 +79,28 @@ export class UserDetailsComponent implements OnInit {
       }
     });
   }
-
-
-  editCase(): void {
-    //to-do
+  
+  editCase(caseId: number): void {
+    if (this.userId) {
+      console.log('Opening EditCaseFormModalComponent with caseId:', caseId, 'and userId:', this.userId);
+      
+      const dialogRef = this.dialog.open(EditCaseFormModalComponent, {
+        width: '400px',
+        data: { caseId: caseId, userId: this.userId }
+      });
+    
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          console.log('Case updated:', result);
+          this.loadUserCases(this.userId as number);
+        }
+      });
+    } else {
+      console.error('userId is not defined');
+    }
   }
 
   viewCase(caseId: number | string): void {
     this.router.navigate(['/user/details/cases/interactions', caseId]);
   }
-
 }

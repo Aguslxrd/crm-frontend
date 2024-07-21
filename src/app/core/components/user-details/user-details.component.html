@@ -34,7 +34,7 @@
             <p>{{ case.description_case }}</p>
           </div>
           <div class="case-actions">
-            <button class="edit-case-button" (click)="editCase()">Editar</button>
+            <button class="edit-case-button" (click)="editCase(case.caseId)">Editar</button>
             <button class="view-case-button" (click)="viewCase(case.caseId)">Ver</button>
           </div>
         </div>
