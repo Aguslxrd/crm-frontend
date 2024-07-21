@@ -1,0 +1,148 @@
+.crm-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.crm-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.crm-header h2 {
+  margin: 0;
+  color: #333;
+}
+
+.edit-button, .add-case-button, .edit-case-button, .view-case-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.edit-button:hover, .add-case-button:hover, .edit-case-button:hover, .view-case-button:hover {
+  background-color: #0056b3;
+}
+
+.crm-content {
+  display: flex;
+  gap: 20px;
+}
+
+.user-info-card {
+  flex: 1;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.user-avatar {
+  text-align: center;
+  font-size: 80px;
+  color: #007bff;
+  margin-bottom: 20px;
+}
+
+.user-details h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.user-details p {
+  margin: 10px 0;
+  color: #666;
+}
+
+.user-id {
+  font-size: 0.9em;
+  color: #888;
+}
+
+.cases-box {
+  flex: 2;
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.cases-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.case-list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.case-item {
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.case-content {
+  flex: 1;
+}
+
+.case-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.case-item h4 {
+  margin-top: 0;
+  color: #333;
+}
+
+.case-item p {
+  margin: 5px 0;
+  color: #666;
+}
+
+.loading-spinner {
+  text-align: center;
+  padding: 50px;
+  font-size: 24px;
+  color: #007bff;
+}
+
+.loading-spinner i {
+  margin-bottom: 10px;
+}
+
+.fas {
+  margin-right: 10px;
+  color: #007bff;
+}
+
+.edit-case-button {
+  background-color: #ffc107;
+}
+
+.view-case-button {
+  background-color: #28a745;
+}
+
+.edit-case-button:hover {
+  background-color: #e0a800;
+}
+
+.view-case-button:hover {
+  background-color: #218838;
+}

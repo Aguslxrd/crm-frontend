@@ -1,0 +1,33 @@
+<h2 mat-dialog-title>Casos</h2>
+<div mat-dialog-content>
+  <form [formGroup]="caseForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+      <mat-label>Identificador de usuario (No editable)</mat-label>
+      <input matInput formControlName="userId" required readonly class="readonly-input">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Titulo</mat-label>
+      <input matInput formControlName="title" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Descripcion</mat-label>
+      <textarea matInput formControlName="description_case" required></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Estado del caso</mat-label>
+      <mat-select formControlName="case_status" required>
+        <mat-option value="ABIERTO">Abierto</mat-option>
+        <mat-option value="CERRADO">Cerrado</mat-option>
+        <mat-option value="EN_PROGRESO">En Progreso</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div mat-dialog-actions>
+      <button mat-button mat-dialog-close>Cancelar</button>
+      <button mat-button type="submit" [disabled]="!caseForm.valid">Guardar</button>
+    </div>
+  </form>
+</div>
