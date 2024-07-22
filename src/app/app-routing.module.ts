@@ -5,9 +5,11 @@ import { LoginComponent } from './core/pages/login/login.component';
 import { authGuard } from './core/guards/auth-guard.guard';
 import { UserDetailsComponent } from './core/components/user-details/user-details.component';
 import { UserCasesComponent } from './core/components/user-cases/user-cases.component';
+import { UserlistComponent } from './core/components/userlist/userlist.component';
 
 const routes: Routes = [
   {path: "", component: HomeComponent},
+  { path: 'users', component: UserlistComponent },
   {path: "home", component: HomeComponent, canActivate: [authGuard]},
   {path: "user/details/:userId", component: UserDetailsComponent, canActivate: [authGuard]},
   {path: "user/details/cases/interactions/:caseId", component: UserCasesComponent, canActivate: [authGuard]},
