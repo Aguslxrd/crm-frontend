@@ -6,6 +6,8 @@ import { CaseInterface } from '../../interfaces/ICase';
 import { MatDialog } from '@angular/material/dialog';
 import { NewCaseFormModalComponent } from '../new-case-form-modal/new-case-form-modal.component';
 import { EditCaseFormModalComponent } from '../edit-case-form-modal/edit-case-form-modal.component';
+import { EnterprisesService } from '../../services/enterprises.service';
+import { EnterprisesInterface } from '../../interfaces/IEnterprises';
 
 @Component({
   selector: 'app-user-details',
@@ -16,11 +18,13 @@ export class UserDetailsComponent implements OnInit {
   user: any | null = null;
   userId: number | null = null;
   cases: CaseInterface[] = [];
+  enterprise: EnterprisesInterface | null = null;
 
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
     private casesService: CasesService,
+    private enterprisesService: EnterprisesService,
     private router: Router,
     public dialog: MatDialog
   ) { }
@@ -43,9 +47,28 @@ export class UserDetailsComponent implements OnInit {
       (user) => {
         this.user = user;
         console.log('User data:', this.user);
+        if (this.user && this.user.enterpriseid) {
+          this.loadEnterpriseDetails(this.user.enterpriseid);
+        }
       },
       (error) => {
         console.error('Error fetching user details:', error);
+      }
+    );
+  }
+
+  loadEnterpriseDetails(enterpriseId: number): void {
+    this.enterprisesService.getEnterpriseByEnterpriseId(enterpriseId).subscribe(
+      (enterprises) => {
+        if (enterprises && enterprises.length > 0) {
+          this.enterprise = enterprises[0];
+          console.log('Enterprise data:', this.enterprise);
+        } else {
+          console.log('No enterprise found for this user');
+        }
+      },
+      (error) => {
+        console.error('Error fetching enterprise details:', error);
       }
     );
   }
