@@ -50,4 +50,27 @@ export class CasesService {
     }
   }
 
+  getCases(): Observable<CaseInterface[]> {
+    const token = this.storageService.getToken();
+    if (token) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.get<CaseInterface[]>(this.apiUrl, { headers });
+    } else {
+      console.error('No token found in localStorage');
+      return new Observable<CaseInterface[]>(); 
+    }
+  }
+
+  deleteCaseById(caseId: number){
+    const token = this.storageService.getToken();
+    if(token) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.delete(`${this.apiUrl}/${caseId}`, {headers});
+    }else{
+      console.error("No token found in localStorage");
+      return new Observable<CaseInterface[]>();
+    }
+  }
+
+
 }
