@@ -24,7 +24,8 @@ import { UserCasesComponent } from './core/components/user-cases/user-cases.comp
 import { NewInteractionFormModalComponent } from './core/components/new-interaction-form-modal/new-interaction-form-modal.component';
 import { EditCaseFormModalComponent } from './core/components/edit-case-form-modal/edit-case-form-modal.component';
 import { EditInteractionFormModalComponent } from './core/components/edit-interaction-form-modal/edit-interaction-form-modal.component';
-import { CasesListComponent } from './core/components/cases-list/cases-list.component';
+import { CommonModule } from '@angular/common';
+import { CaseListComponent } from './core/components/cases-list/cases-list.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,7 @@ import { CasesListComponent } from './core/components/cases-list/cases-list.comp
     NewInteractionFormModalComponent,
     EditCaseFormModalComponent,
     EditInteractionFormModalComponent,
-    CasesListComponent
+    CaseListComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +56,7 @@ import { CasesListComponent } from './core/components/cases-list/cases-list.comp
     MatDialogModule,
     MatIconModule,
     MatSelectModule,
-    
+    CommonModule
   ],
   providers: [
     provideAnimationsAsync()
