@@ -8,6 +8,7 @@ import { NewCaseFormModalComponent } from '../new-case-form-modal/new-case-form-
 import { EditCaseFormModalComponent } from '../edit-case-form-modal/edit-case-form-modal.component';
 import { EnterprisesService } from '../../services/enterprises.service';
 import { EnterprisesInterface } from '../../interfaces/IEnterprises';
+import { UserEnterpriseInterface } from '../../interfaces/IUser-Enterprise';
 
 @Component({
   selector: 'app-user-details',
@@ -19,6 +20,7 @@ export class UserDetailsComponent implements OnInit {
   userId: number | null = null;
   cases: CaseInterface[] = [];
   enterprise: EnterprisesInterface | null = null;
+  hasEnterprise: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -36,6 +38,7 @@ export class UserDetailsComponent implements OnInit {
       if (!isNaN(this.userId)) {
         this.loadUserDetails(this.userId);
         this.loadUserCases(this.userId);
+        this.loadUserEnterprise(this.userId);
       } else {
         console.error('Invalid userId in URL');
       }
@@ -47,9 +50,6 @@ export class UserDetailsComponent implements OnInit {
       (user) => {
         this.user = user;
         console.log('User data:', this.user);
-        if (this.user && this.user.enterpriseid) {
-          this.loadEnterpriseDetails(this.user.enterpriseid);
-        }
       },
       (error) => {
         console.error('Error fetching user details:', error);
@@ -57,15 +57,33 @@ export class UserDetailsComponent implements OnInit {
     );
   }
 
+  loadUserEnterprise(userId: number): void {
+    this.enterprisesService.getUserEnterprise(userId).subscribe(
+      (userEnterprises: UserEnterpriseInterface[]) => {
+        console.log('User enterprise data:', userEnterprises);
+        if (userEnterprises && userEnterprises.length > 0 && userEnterprises[0].id && userEnterprises[0].id.enterpriseId) {
+          this.loadEnterpriseDetails(userEnterprises[0].id.enterpriseId);
+          this.hasEnterprise = true;
+        } else {
+          console.log('No enterprise associated with this user or unexpected data structure');
+          console.log('Received data:', userEnterprises);
+          this.hasEnterprise = false;
+          this.enterprise = null;
+        }
+      },
+      error => {
+        console.error('Error fetching user enterprise:', error);
+        this.hasEnterprise = false;
+        this.enterprise = null;
+      }
+    );
+  }
+
   loadEnterpriseDetails(enterpriseId: number): void {
     this.enterprisesService.getEnterpriseByEnterpriseId(enterpriseId).subscribe(
-      (enterprises) => {
-        if (enterprises && enterprises.length > 0) {
-          this.enterprise = enterprises[0];
-          console.log('Enterprise data:', this.enterprise);
-        } else {
-          console.log('No enterprise found for this user');
-        }
+      (enterprise: EnterprisesInterface) => {
+        this.enterprise = enterprise;
+        console.log('Enterprise data:', this.enterprise);
       },
       (error) => {
         console.error('Error fetching enterprise details:', error);

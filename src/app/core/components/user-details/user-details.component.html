@@ -21,15 +21,20 @@
 
     <div class="enterprise-box">
       <h3>Información de la Empresa</h3>
-      <div class="enterprise-details">
-        <p><strong>ID:</strong> {{ enterprise?.enterpriseid }}</p>
-        <p><strong>Nombre:</strong> {{ enterprise?.name_enterprise }}</p>
-        <p><strong>RUT:</strong> {{ enterprise?.rut }}</p>
-        <p><strong>Dirección:</strong> {{ enterprise?.address }}</p>
-        <p><strong>Teléfono:</strong> {{ enterprise?.phone }}</p>
-        <p><strong>Email:</strong> {{ enterprise?.email }}</p>
-        <p><strong>Sitio web:</strong> {{ enterprise?.website }}</p>
+      <div *ngIf="hasEnterprise; else noEnterprise">
+        <div class="enterprise-details">
+          <p><strong>ID:</strong> {{ enterprise?.enterpriseid }}</p>
+          <p><strong>Nombre:</strong> {{ enterprise?.name_enterprise }}</p>
+          <p><strong>RUT:</strong> {{ enterprise?.rut }}</p>
+          <p><strong>Dirección:</strong> {{ enterprise?.address }}</p>
+          <p><strong>Teléfono:</strong> {{ enterprise?.phone }}</p>
+          <p><strong>Email:</strong> {{ enterprise?.email }}</p>
+          <p><strong>Sitio web:</strong> {{ enterprise?.website }}</p>
+        </div>
       </div>
+      <ng-template #noEnterprise>
+        <p>Sin vinculación</p>
+      </ng-template>
     </div>
 
     <div class="cases-box">
