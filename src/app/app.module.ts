@@ -26,6 +26,7 @@ import { EditCaseFormModalComponent } from './core/components/edit-case-form-mod
 import { EditInteractionFormModalComponent } from './core/components/edit-interaction-form-modal/edit-interaction-form-modal.component';
 import { CommonModule } from '@angular/common';
 import { CaseListComponent } from './core/components/cases-list/cases-list.component';
+import { CaseDetailsComponent } from './core/components/cases-details/cases-details.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { CaseListComponent } from './core/components/cases-list/cases-list.compo
     NewInteractionFormModalComponent,
     EditCaseFormModalComponent,
     EditInteractionFormModalComponent,
-    CaseListComponent
+    CaseListComponent,
+    CaseDetailsComponent
   ],
   imports: [
     BrowserModule,

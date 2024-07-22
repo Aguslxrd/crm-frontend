@@ -3,7 +3,7 @@ import { CaseInterface } from '../../interfaces/ICase';
 import { MatDialog } from '@angular/material/dialog';
 import { NewCaseFormModalComponent } from '../new-case-form-modal/new-case-form-modal.component';
 import { EditCaseFormModalComponent } from '../edit-case-form-modal/edit-case-form-modal.component';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CasesService } from '../../services/cases.service';
 
 @Component({
@@ -16,10 +16,13 @@ export class CaseListComponent implements OnInit {
   searchCriteria: string = 'title';
   searchQuery: string = '';
 
-  constructor(private caseService: CasesService, public dialog: MatDialog, private router: Router) {}
+  constructor(private caseService: CasesService, public dialog: MatDialog, private router: Router, private route: ActivatedRoute) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.loadCases();
+    this.route.params.subscribe(params => {
+      const caseId = +params['caseId'];
+    });
   }
 
   loadCases(): void {
@@ -64,19 +67,6 @@ export class CaseListComponent implements OnInit {
     }
   }
 
-  openSaveCaseModal(): void {
-    const dialogRef = this.dialog.open(NewCaseFormModalComponent, {
-      width: '400px'
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log('Case saved:', result);
-        this.loadCases();
-      }
-    });
-  }
-
   editCase(caseItem: CaseInterface): void {
     const dialogRef = this.dialog.open(EditCaseFormModalComponent, {
       width: '400px',
@@ -98,6 +88,11 @@ export class CaseListComponent implements OnInit {
   }
 
   viewCaseDetails(caseId: number) {
-    this.router.navigate(['/case/details', caseId]);
+    console.log('View case details called with ID:', caseId);
+    if (caseId === undefined || caseId === null) {
+      console.error('Invalid caseId:', caseId);
+      return;
+    }
+    this.router.navigate(['/details/cases', caseId]);
   }
 }

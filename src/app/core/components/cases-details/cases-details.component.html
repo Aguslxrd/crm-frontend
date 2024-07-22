@@ -1,0 +1,18 @@
+<div class="case-details-container">
+    <h2>Detalles del Caso</h2>
+  
+    <div *ngIf="loading" class="loading-message">Cargando...</div>
+  
+    <div *ngIf="error" class="error-message">{{ error }}</div>
+  
+    <div *ngIf="!loading && !error && caseDetails" class="case-info">
+      <p><strong>ID del Caso:</strong> {{ caseDetails.caseId }}</p>
+      <p><strong>Título:</strong> {{ caseDetails.title }}</p>
+      <p><strong>Descripción:</strong> {{ caseDetails.description_case }}</p>
+      <p><strong>Fecha de Creación:</strong> {{ caseDetails.date_created | date:'medium' }}</p>
+      <p><strong>Estado:</strong> {{ caseDetails.case_status }}</p>
+    </div>
+  
+    <button class="back-button" (click)="goBack()">Volver a la lista de casos</button>
+  </div>
+  

@@ -17,7 +17,7 @@ import { EditInteractionFormModalComponent } from '../edit-interaction-form-moda
   styleUrls: ['./user-cases.component.css']
 })
 export class UserCasesComponent implements OnInit {
-  case: CaseInterface | null = null;
+  case: any | null = null;
   interactions: InteractionInterface[] = [];
   loading: boolean = true;
 

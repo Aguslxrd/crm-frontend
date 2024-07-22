@@ -7,6 +7,7 @@ import { UserDetailsComponent } from './core/components/user-details/user-detail
 import { UserCasesComponent } from './core/components/user-cases/user-cases.component';
 import { UserlistComponent } from './core/components/userlist/userlist.component';
 import { CaseListComponent } from './core/components/cases-list/cases-list.component';
+import { CaseDetailsComponent } from './core/components/cases-details/cases-details.component';
 
 const routes: Routes = [
   {path: "", component: HomeComponent},
@@ -14,6 +15,7 @@ const routes: Routes = [
   {path: 'cases', component: CaseListComponent, canActivate: [authGuard] },
   {path: "home", component: HomeComponent, canActivate: [authGuard]},
   {path: "user/details/:userId", component: UserDetailsComponent, canActivate: [authGuard]},
+  {path: "details/cases/:caseId", component: CaseDetailsComponent, canActivate: [authGuard]},
   {path: "user/details/cases/interactions/:caseId", component: UserCasesComponent, canActivate: [authGuard]},
   {path: "login", component: LoginComponent}
 ];
