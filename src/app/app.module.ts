@@ -29,6 +29,7 @@ import { CaseListComponent } from './core/components/cases-list/cases-list.compo
 import { CaseDetailsComponent } from './core/components/cases-details/cases-details.component';
 import { EnterprisesListComponent } from './core/components/enterprises-list/enterprises-list.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
