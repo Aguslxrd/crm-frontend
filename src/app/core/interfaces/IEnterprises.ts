@@ -5,5 +5,5 @@ export interface EnterprisesInterface{
     address: string,
     phone: string,
     email: string,
-    website: string
+    web_site: string
 }

@@ -4,7 +4,7 @@ import { EnterprisesService } from '../../services/enterprises.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { EditCaseFormModalComponent } from '../edit-case-form-modal/edit-case-form-modal.component';
-import { NewCaseFormModalComponent } from '../new-case-form-modal/new-case-form-modal.component';
+import { NewEnterpriseFormModalComponent } from '../new-enterprise-form-modal/new-enterprise-form-modal.component';
 
 @Component({
   selector: 'app-enterprises-list',
@@ -92,7 +92,7 @@ export class EnterprisesListComponent implements OnInit {
   }
 
   openSaveEnterpriseModal(): void {
-    const dialogRef = this.dialog.open(NewCaseFormModalComponent, {
+    const dialogRef = this.dialog.open(NewEnterpriseFormModalComponent, {
       width: '400px'
     });
 

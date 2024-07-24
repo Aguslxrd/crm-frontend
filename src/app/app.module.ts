@@ -28,6 +28,7 @@ import { CommonModule } from '@angular/common';
 import { CaseListComponent } from './core/components/cases-list/cases-list.component';
 import { CaseDetailsComponent } from './core/components/cases-details/cases-details.component';
 import { EnterprisesListComponent } from './core/components/enterprises-list/enterprises-list.component';
+import { NewEnterpriseFormModalComponent } from './core/components/new-enterprise-form-modal/new-enterprise-form-modal.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { EnterprisesListComponent } from './core/components/enterprises-list/ent
     EditInteractionFormModalComponent,
     CaseListComponent,
     CaseDetailsComponent,
-    EnterprisesListComponent
+    EnterprisesListComponent,
+    NewEnterpriseFormModalComponent
   ],
   imports: [
     BrowserModule,
