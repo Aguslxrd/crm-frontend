@@ -27,6 +27,7 @@ import { EditInteractionFormModalComponent } from './core/components/edit-intera
 import { CommonModule } from '@angular/common';
 import { CaseListComponent } from './core/components/cases-list/cases-list.component';
 import { CaseDetailsComponent } from './core/components/cases-details/cases-details.component';
+import { EnterprisesListComponent } from './core/components/enterprises-list/enterprises-list.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { CaseDetailsComponent } from './core/components/cases-details/cases-deta
     EditCaseFormModalComponent,
     EditInteractionFormModalComponent,
     CaseListComponent,
-    CaseDetailsComponent
+    CaseDetailsComponent,
+    EnterprisesListComponent
   ],
   imports: [
     BrowserModule,
