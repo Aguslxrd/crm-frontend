@@ -15,6 +15,7 @@
 
   <div *ngIf="interactions.length > 0" class="interactions-section">
     <h3>Interacciones</h3>
+    <button class="add-interaction-button" (click)="openAddInteractionModal()">Agregar Interacción</button>
     <div class="interactions-timeline">
       <div *ngFor="let interaction of interactions" class="interaction-item">
         <div class="interaction-date">
@@ -23,6 +24,7 @@
         </div>
         <div class="interaction-content">
           <p>{{ interaction.interaction_text }}</p>
+          <button class="edit-interaction-button" (click)="openEditInteractionModal(interaction)">Editar</button>
         </div>
       </div>
     </div>

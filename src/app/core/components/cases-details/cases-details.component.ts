@@ -55,6 +55,15 @@ export class CaseDetailsComponent implements OnInit {
     );
   }
 
+  openAddInteractionModal(): void {
+    console.log('Abriendo modal para agregar interacción');
+  }
+
+  openEditInteractionModal(interaction: InteractionInterface): void {
+    
+    console.log('Abriendo modal para editar interacción', interaction);
+  }
+
   goBack(): void {
     window.history.back();
   }

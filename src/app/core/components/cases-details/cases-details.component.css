@@ -138,3 +138,33 @@
   transform: translateY(-2px);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
+
+.add-interaction-button, .edit-interaction-button {
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.add-interaction-button:hover, .edit-interaction-button:hover {
+  background-color: #27ae60;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.edit-interaction-button {
+  background-color: #3498db;
+  margin-top: 10px;
+  font-size: 12px;
+  padding: 5px 10px;
+}
+
+.edit-interaction-button:hover {
+  background-color: #2980b9;
+}
