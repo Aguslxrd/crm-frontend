@@ -4,6 +4,9 @@ import { CaseInterface } from '../../interfaces/ICase';
 import { InteractionInterface } from '../../interfaces/IInteraction';
 import { CasesService } from '../../services/cases.service';
 import { InteractionsService } from '../../services/interactions.service';
+import { EditInteractionFormModalComponent } from '../edit-interaction-form-modal/edit-interaction-form-modal.component';
+import { MatDialog } from '@angular/material/dialog';
+import { NewInteractionFormModalComponent } from '../new-interaction-form-modal/new-interaction-form-modal.component';
 
 @Component({
   selector: 'app-cases-details',
@@ -19,6 +22,7 @@ export class CaseDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private caseService: CasesService,
+    private dialog: MatDialog,
     private interactionService: InteractionsService
   ) {}
 
@@ -56,12 +60,39 @@ export class CaseDetailsComponent implements OnInit {
   }
 
   openAddInteractionModal(): void {
-    console.log('Abriendo modal para agregar interacción');
+    if (!this.caseDetails) return;
+
+    const dialogRef = this.dialog.open(NewInteractionFormModalComponent, {
+      width: '400px',
+      data: { 
+        authId: localStorage.getItem('userId'), 
+        caseId: this.caseDetails.caseId 
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadInteractions(this.caseDetails!.caseId);
+      }
+    });
   }
 
   openEditInteractionModal(interaction: InteractionInterface): void {
-    
-    console.log('Abriendo modal para editar interacción', interaction);
+    if (!this.caseDetails) return;
+
+    const dialogRef = this.dialog.open(EditInteractionFormModalComponent, {
+      width: '400px',
+      data: { 
+        interactionId: interaction.interactionId, 
+        caseId: this.caseDetails.caseId 
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadInteractions(this.caseDetails!.caseId);
+      }
+    });
   }
 
   goBack(): void {
