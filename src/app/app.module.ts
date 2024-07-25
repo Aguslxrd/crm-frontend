@@ -29,6 +29,7 @@ import { CaseListComponent } from './core/components/cases-list/cases-list.compo
 import { CaseDetailsComponent } from './core/components/cases-details/cases-details.component';
 import { EnterprisesListComponent } from './core/components/enterprises-list/enterprises-list.component';
 import { NewEnterpriseFormModalComponent } from './core/components/new-enterprise-form-modal/new-enterprise-form-modal.component';
+import { EditEnterpriseFormModalComponent } from './core/components/edit-enterprise-form-modal/edit-enterprise-form-modal.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { NewEnterpriseFormModalComponent } from './core/components/new-enterpris
     CaseListComponent,
     CaseDetailsComponent,
     EnterprisesListComponent,
-    NewEnterpriseFormModalComponent
+    NewEnterpriseFormModalComponent,
+    EditEnterpriseFormModalComponent
   ],
   imports: [
     BrowserModule,
