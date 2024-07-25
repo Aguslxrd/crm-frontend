@@ -30,6 +30,7 @@ import { CaseDetailsComponent } from './core/components/cases-details/cases-deta
 import { EnterprisesListComponent } from './core/components/enterprises-list/enterprises-list.component';
 import { NewEnterpriseFormModalComponent } from './core/components/new-enterprise-form-modal/new-enterprise-form-modal.component';
 import { EditEnterpriseFormModalComponent } from './core/components/edit-enterprise-form-modal/edit-enterprise-form-modal.component';
+import { EnterpriseDetailsComponent } from './core/components/enterprise-details/enterprise-details.component';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import { EditEnterpriseFormModalComponent } from './core/components/edit-enterpr
     CaseDetailsComponent,
     EnterprisesListComponent,
     NewEnterpriseFormModalComponent,
-    EditEnterpriseFormModalComponent
+    EditEnterpriseFormModalComponent,
+    EnterpriseDetailsComponent
   ],
   imports: [
     BrowserModule,
