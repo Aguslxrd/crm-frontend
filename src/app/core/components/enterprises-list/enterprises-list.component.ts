@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { EditCaseFormModalComponent } from '../edit-case-form-modal/edit-case-form-modal.component';
 import { NewEnterpriseFormModalComponent } from '../new-enterprise-form-modal/new-enterprise-form-modal.component';
+import { EditEnterpriseFormModalComponent } from '../edit-enterprise-form-modal/edit-enterprise-form-modal.component';
 
 @Component({
   selector: 'app-enterprises-list',
@@ -105,7 +106,7 @@ export class EnterprisesListComponent implements OnInit {
   }
 
   editEnterprise(enterprise: EnterprisesInterface): void {
-    const dialogRef = this.dialog.open(EditCaseFormModalComponent, {
+    const dialogRef = this.dialog.open(EditEnterpriseFormModalComponent, {
       width: '400px',
       data: enterprise 
     });
