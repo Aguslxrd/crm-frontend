@@ -9,6 +9,7 @@ import { UserlistComponent } from './core/components/userlist/userlist.component
 import { CaseListComponent } from './core/components/cases-list/cases-list.component';
 import { CaseDetailsComponent } from './core/components/cases-details/cases-details.component';
 import { EnterprisesListComponent } from './core/components/enterprises-list/enterprises-list.component';
+import { EnterpriseDetailsComponent } from './core/components/enterprise-details/enterprise-details.component';
 
 const routes: Routes = [
   {path: "", component: HomeComponent},
@@ -18,6 +19,7 @@ const routes: Routes = [
   {path: "enterprises", component: EnterprisesListComponent, canActivate: [authGuard]},
   {path: "user/details/:userId", component: UserDetailsComponent, canActivate: [authGuard]},
   {path: "details/cases/:caseId", component: CaseDetailsComponent, canActivate: [authGuard]},
+  {path: "enterprises/details/:enterpriseId", component: EnterpriseDetailsComponent, canActivate: [authGuard]},
   {path: "user/details/cases/interactions/:caseId", component: UserCasesComponent, canActivate: [authGuard]},
   {path: "login", component: LoginComponent}
 ];

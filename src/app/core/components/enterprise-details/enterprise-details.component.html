@@ -1,1 +1,48 @@
-<p>enterprise-details works!</p>
+<div class="enterprise-details-container" *ngIf="!loading && !error">
+    <div class="card">
+      <h2>Detalles de la Empresa</h2>
+      <div *ngIf="enterprise" class="enterprise-info">
+        <div class="info-row">
+          <span class="label">ID:</span>
+          <span class="value">{{ enterprise.enterpriseid }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Nombre:</span>
+          <span class="value">{{ enterprise.name_enterprise }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">RUT:</span>
+          <span class="value">{{ enterprise.rut }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Dirección:</span>
+          <span class="value">{{ enterprise.address }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Teléfono:</span>
+          <span class="value">{{ enterprise.phone }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Email:</span>
+          <span class="value">{{ enterprise.email }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Sitio Web:</span>
+          <span class="value">
+            <a [href]="enterprise.web_site" target="_blank">{{ enterprise.web_site }}</a>
+          </span>
+        </div>
+      </div>
+      <button (click)="goBack()" class="back-button">Volver</button>
+    </div>
+  </div>
+  
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Cargando detalles de la empresa...</p>
+  </div>
+  
+  <div *ngIf="error" class="error">
+    <i class="fas fa-exclamation-circle"></i>
+    <p>{{ error }}</p>
+  </div>

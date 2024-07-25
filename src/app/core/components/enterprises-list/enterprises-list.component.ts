@@ -126,6 +126,6 @@ export class EnterprisesListComponent implements OnInit {
   }*/
 
   viewEnterpriseDetails(enterpriseId: number) {
-    this.router.navigate(['/enterprise/details', enterpriseId]);
+    this.router.navigate(['/enterprises/details', enterpriseId]);
   }
 }
