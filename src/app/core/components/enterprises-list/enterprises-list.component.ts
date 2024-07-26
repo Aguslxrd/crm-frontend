@@ -119,11 +119,11 @@ export class EnterprisesListComponent implements OnInit {
     });
   }
 
-  /*deleteEnterprise(enterpriseId: number): void {
+  deleteEnterprise(enterpriseId: number): void {
     this.enterpriseService.deleteEnterpriseById(enterpriseId).subscribe(
       () => this.loadEnterprises()
     );
-  }*/
+  }
 
   viewEnterpriseDetails(enterpriseId: number) {
     this.router.navigate(['/enterprises/details', enterpriseId]);

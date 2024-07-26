@@ -5,6 +5,7 @@ import { EnterprisesInterface } from '../interfaces/IEnterprises';
 import { Observable } from 'rxjs';
 import { UserEnterpriseInterface } from '../interfaces/IUser-Enterprise';
 import { UserEnterpriseAssociation } from '../interfaces/IUserEnterpriseAssociation';
+import { CaseInterface } from '../interfaces/ICase';
 
 @Injectable({
   providedIn: 'root'
@@ -68,6 +69,17 @@ export class EnterprisesService {
     }
     console.error('No token found in localStorage');
     return new Observable<EnterprisesInterface[]>();
+  }
+
+  deleteEnterpriseById(enterpriseId: number){
+    const token = this.storageService.getToken();
+    if(token){
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.delete(`${this.apiUrl}/${enterpriseId}`, {headers});
+    }else{
+      console.error("No token found in localstorage");
+      return new Observable<CaseInterface[]>();
+    }
   }
 
   getEnterpriseByEmail(enterpriseEmail: string) : Observable<EnterprisesInterface[]>{

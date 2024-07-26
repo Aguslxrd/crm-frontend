@@ -36,7 +36,7 @@
                 <td>{{ enterprise.web_site }}</td>
                 <td>
                     <button (click)="editEnterprise(enterprise)">Editar</button>
-                    <button >Eliminar</button>
+                    <button (click)="deleteEnterprise(enterprise.enterpriseid)">Eliminar</button>
                     <button (click)="viewEnterpriseDetails(enterprise.enterpriseid)">Detalles</button>
                 </td>
             </tr>
