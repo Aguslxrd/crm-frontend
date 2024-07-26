@@ -1,0 +1,44 @@
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
+import { EnterprisesService } from '../../services/enterprises.service';
+
+@Component({
+  selector: 'app-new-enterprise-form-modal',
+  templateUrl: './new-enterprise-form-modal.component.html',
+  styleUrl: './new-enterprise-form-modal.component.css'
+})
+export class NewEnterpriseFormModalComponent implements OnInit {
+  enterpriseForm: FormGroup;
+
+  constructor(
+    private fb: FormBuilder,
+    private dialogRef: MatDialogRef<NewEnterpriseFormModalComponent>,
+    private enterpriseService: EnterprisesService
+  ) {
+    this.enterpriseForm = this.fb.group({
+      name_enterprise: ['', Validators.required],
+      rut: [''],
+      address: ['', Validators.required],
+      phone: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      web_site: ['']
+    });
+  }
+
+  ngOnInit(): void {}
+
+  onSubmit(): void {
+    if (this.enterpriseForm.valid) {
+      this.enterpriseService.saveEnterprise(this.enterpriseForm.value).subscribe(
+        (response) => {
+          console.log('User saved successfully:', response);
+          this.dialogRef.close(); 
+        },
+        (error) => {
+          console.error('Error saving user:', error);
+        }
+      );
+    }
+  }
+}

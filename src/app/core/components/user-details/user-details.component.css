@@ -1,77 +1,97 @@
 .crm-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
-  font-family: Arial, sans-serif;
+  padding: 30px;
+  font-family: 'Arial', sans-serif;
+  background-color: #f5f7fa;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
 .crm-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #e0e0e0;
 }
 
 .crm-header h2 {
   margin: 0;
-  color: #333;
+  color: #2c3e50;
+  font-size: 28px;
 }
 
 .edit-button, .add-case-button, .edit-case-button, .view-case-button {
-  background-color: #007bff;
+  background-color: #3498db;
   color: white;
   border: none;
-  padding: 8px 15px;
+  padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: all 0.3s ease;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 14px;
 }
 
-.edit-button:hover, .add-case-button:hover, .edit-case-button:hover, .view-case-button:hover {
-  background-color: #0056b3;
+.edit-button:hover, .add-case-button:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .crm-content {
   display: flex;
-  gap: 20px;
+  gap: 30px;
 }
 
-.user-info-card {
+.user-info-card, .enterprise-box {
   flex: 1;
-  background-color: #f8f9fa;
+  background-color: #ffffff;
   border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 25px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.user-info-card:hover, .enterprise-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
 }
 
 .user-avatar {
   text-align: center;
   font-size: 80px;
-  color: #007bff;
+  color: #3498db;
   margin-bottom: 20px;
 }
 
-.user-details h3 {
+.user-details h3, .enterprise-box h3 {
   margin-top: 0;
-  color: #333;
+  color: #2c3e50;
+  font-size: 24px;
+  margin-bottom: 20px;
 }
 
-.user-details p {
-  margin: 10px 0;
-  color: #666;
+.user-details p, .enterprise-details p {
+  margin: 12px 0;
+  color: #34495e;
+  font-size: 16px;
 }
 
 .user-id {
   font-size: 0.9em;
-  color: #888;
+  color: #7f8c8d;
 }
 
 .cases-box {
   flex: 2;
   background-color: #ffffff;
   border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 25px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
 .cases-header {
@@ -79,21 +99,36 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.cases-header h3 {
+  color: #2c3e50;
+  font-size: 24px;
+  margin: 0;
 }
 
 .case-list {
-  max-height: 400px;
+  max-height: 500px;
   overflow-y: auto;
+  padding-right: 10px;
 }
 
 .case-item {
   background-color: #f8f9fa;
   border-radius: 5px;
-  padding: 15px;
-  margin-bottom: 10px;
+  padding: 20px;
+  margin-bottom: 15px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  transition: all 0.3s ease;
+}
+
+.case-item:hover {
+  background-color: #e9ecef;
+  transform: translateX(5px);
 }
 
 .case-content {
@@ -107,42 +142,61 @@
 
 .case-item h4 {
   margin-top: 0;
-  color: #333;
+  color: #2c3e50;
+  font-size: 18px;
 }
 
 .case-item p {
-  margin: 5px 0;
-  color: #666;
+  margin: 8px 0;
+  color: #34495e;
 }
 
 .loading-spinner {
   text-align: center;
   padding: 50px;
   font-size: 24px;
-  color: #007bff;
+  color: #3498db;
 }
 
 .loading-spinner i {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .fas {
   margin-right: 10px;
-  color: #007bff;
+  color: #3498db;
 }
 
 .edit-case-button {
-  background-color: #ffc107;
+  background-color: #f39c12;
 }
 
 .view-case-button {
-  background-color: #28a745;
+  background-color: #2ecc71;
 }
 
 .edit-case-button:hover {
-  background-color: #e0a800;
+  background-color: #d35400;
 }
 
 .view-case-button:hover {
-  background-color: #218838;
+  background-color: #27ae60;
+}
+
+.case-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.case-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.case-list::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.case-list::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

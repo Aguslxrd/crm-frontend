@@ -55,4 +55,6 @@ export class InteractionsService {
     console.error('No token found in localStorage');
     return new Observable<InteractionInterface[]>();
   }
+
+  
 }
