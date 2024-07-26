@@ -71,7 +71,7 @@ export class EnterpriseDetailsComponent implements OnInit {
       (error) => {
         console.error('Error fetching enterprise users:', error);
       }
-    );
+    ); //llegan como undefined
   }
 
   assignUserToEnterprise(): void {
