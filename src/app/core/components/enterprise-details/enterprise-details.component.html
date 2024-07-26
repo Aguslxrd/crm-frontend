@@ -13,14 +13,18 @@
 
     <div class="user-assignment">
       <h3>Asignar Usuario</h3>
-      <select [(ngModel)]="selectedUserId">
-        <option [ngValue]="null">Seleccionar usuario</option>
-        <option *ngFor="let user of users" [ngValue]="user.userid">
-          {{ user.firstname }} {{ user.firstlastname }}
-        </option>
-      </select>
+      <ng-select 
+        class="custom-select"
+        [items]="users"
+        bindLabel="firstname"
+        bindValue="userid"
+        [(ngModel)]="selectedUserId"
+        [searchable]="true"
+        placeholder="Persona seleccionada -">
+      </ng-select>
       <button (click)="assignUserToEnterprise()" [disabled]="!selectedUserId">Asignar</button>
     </div>
+    
 
     <div class="assigned-users">
       <h3>Usuarios Asignados</h3>
@@ -30,7 +34,6 @@
         </li>
       </ul>
     </div>
-    
 
     <button (click)="goBack()" class="back-button">Volver</button>
   </div>

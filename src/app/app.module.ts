@@ -31,7 +31,7 @@ import { EnterprisesListComponent } from './core/components/enterprises-list/ent
 import { NewEnterpriseFormModalComponent } from './core/components/new-enterprise-form-modal/new-enterprise-form-modal.component';
 import { EditEnterpriseFormModalComponent } from './core/components/edit-enterprise-form-modal/edit-enterprise-form-modal.component';
 import { EnterpriseDetailsComponent } from './core/components/enterprise-details/enterprise-details.component';
-
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -67,7 +67,8 @@ import { EnterpriseDetailsComponent } from './core/components/enterprise-details
     MatDialogModule,
     MatIconModule,
     MatSelectModule,
-    CommonModule
+    CommonModule,
+    NgSelectModule
   ],
   providers: [
     provideAnimationsAsync()
