@@ -25,16 +25,16 @@
       <button (click)="assignUserToEnterprise()" [disabled]="!selectedUserId">Asignar</button>
     </div>
     
-
     <div class="assigned-users">
       <h3>Usuarios Asignados</h3>
       <ul>
-        <li *ngFor="let enterpriseUser of enterpriseUsers">
-          {{ getUserFullName(enterpriseUser.userId) }}
+        <li *ngFor="let user of enterpriseUsers; trackBy: trackByUserId">
+          {{ user.fullName || 'Cargando...' }} (ID: {{ user.id?.userId }})
+          <span *ngIf="!user.fullName">(Nombre no cargado)</span>
         </li>
       </ul>
     </div>
-
+    
     <button (click)="goBack()" class="back-button">Volver</button>
   </div>
 </div>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 import { UserInterface } from '../interfaces/IUser';
 import { StorageService } from './storage-service.service';
 
@@ -68,17 +68,23 @@ export class UserService {
 
   }
 
-  searchUserByUserId(userId: number) : Observable<UserInterface[]>{
+  searchUserByUserId(userId: number): Observable<UserInterface> {
     const token = this.storageService.getToken();
-    if(token) {
-      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-      return this.http.get<UserInterface[]>(`${this.apiUrl}/${userId}`, {headers});
-    }else{
+    if (!token) {
       console.error("No token found in localStorage");
-      return new Observable<UserInterface[]>();
+      return throwError(() => new Error("No authentication token available"));
     }
-
+  
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<UserInterface>(`${this.apiUrl}/${userId}`, { headers }).pipe(
+      tap(user => console.log(`Raw response for user ${userId}:`, user)),
+      catchError(error => {
+        console.error(`Error fetching user with ID ${userId}:`, error);
+        return throwError(() => error);
+      })
+    );
   }
+  
 
   deleteUserById(userId: number){
     const token = this.storageService.getToken();

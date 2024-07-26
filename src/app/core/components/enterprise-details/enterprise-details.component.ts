@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EnterprisesInterface } from '../../interfaces/IEnterprises';
 import { EnterprisesService } from '../../services/enterprises.service';
 import { UserService } from '../../services/user.service';
 import { Location } from '@angular/common';
 import { UserInterface } from '../../interfaces/IUser';
-import { UserEnterpriseInterface } from '../../interfaces/IUser-Enterprise';
 import { UserEnterpriseAssociation } from '../../interfaces/IUserEnterpriseAssociation';
 
 @Component({
@@ -25,8 +24,9 @@ export class EnterpriseDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private enterpriseService: EnterprisesService,
     private userService: UserService,
-    private location: Location
-  ) { }
+    private location: Location,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -35,7 +35,9 @@ export class EnterpriseDetailsComponent implements OnInit {
       this.loadUsers();
       this.loadEnterpriseUsers(enterpriseId);
     });
+    console.log('Initial enterpriseUsers:', this.enterpriseUsers);
   }
+  
 
   loadEnterpriseDetails(enterpriseId: number): void {
     this.loading = true;
@@ -43,11 +45,13 @@ export class EnterpriseDetailsComponent implements OnInit {
       (enterprise) => {
         this.enterprise = enterprise;
         this.loading = false;
+        this.cdr.detectChanges();
       },
       (error) => {
         this.error = 'Error al cargar los detalles de la empresa';
         this.loading = false;
         console.error('Error fetching enterprise details:', error);
+        this.cdr.detectChanges();
       }
     );
   }
@@ -56,6 +60,7 @@ export class EnterpriseDetailsComponent implements OnInit {
     this.userService.getUsers().subscribe(
       (users) => {
         this.users = users;
+        this.cdr.detectChanges();
       },
       (error) => {
         console.error('Error fetching users:', error);
@@ -66,14 +71,53 @@ export class EnterpriseDetailsComponent implements OnInit {
   loadEnterpriseUsers(enterpriseId: number): void {
     this.enterpriseService.getUserEnterprise(enterpriseId).subscribe(
       (enterpriseUsers) => {
-        this.enterpriseUsers = enterpriseUsers;
+        console.log('Received enterprise users:', enterpriseUsers);
+        this.enterpriseUsers = enterpriseUsers.map(eu => ({...eu, fullName: null}));
+        enterpriseUsers.forEach(eu => {
+          if (eu && eu.id && eu.id.userId) {
+            this.getUserFullName(eu.id.userId);
+          } else {
+            console.error('Invalid user data:', eu);
+          }
+        });
+        console.log('Enterprise Users after initial mapping:', this.enterpriseUsers);
       },
       (error) => {
         console.error('Error fetching enterprise users:', error);
       }
-    ); //llegan como undefined
+    );
   }
-
+  
+  getUserFullName(userId: number): void {
+    console.log(`Fetching details for user ID: ${userId}`);
+    this.userService.searchUserByUserId(userId).subscribe(
+      (user: UserInterface) => {
+        console.log(`Received user data for ID ${userId}:`, user);
+        if (user) {
+          const fullName = `${user.firstname || ''} ${user.firstlastname || ''}`.trim();
+          console.log(`Full name for user ${userId}: ${fullName}`);
+          this.enterpriseUsers = this.enterpriseUsers.map(eu => {
+            if (eu.id && eu.id.userId === userId) {
+              console.log(`Updating user with ID ${userId} to fullName: ${fullName}`);
+              return { ...eu, fullName: fullName };
+            }
+            return eu;
+          });
+          console.log('Updated enterpriseUsers:', this.enterpriseUsers);
+          this.cdr.detectChanges();
+        } else {
+          console.warn(`User object is undefined for ID ${userId}`);
+        }
+      },
+      (error) => {
+        console.error(`Error fetching user details for userId ${userId}:`, error);
+        this.cdr.detectChanges();
+      }
+    );
+  }
+  
+  
+  
   assignUserToEnterprise(): void {
     if (this.enterprise && this.selectedUserId) {
       const userEnterpriseData: UserEnterpriseAssociation = {
@@ -86,6 +130,7 @@ export class EnterpriseDetailsComponent implements OnInit {
           console.log('User assigned to enterprise successfully', response);
           this.loadEnterpriseUsers(this.enterprise!.enterpriseid);
           this.selectedUserId = null;
+          this.cdr.detectChanges();
         },
         (error) => {
           console.error('Error assigning user to enterprise:', error);
@@ -94,10 +139,9 @@ export class EnterpriseDetailsComponent implements OnInit {
     }
   }
 
-  getUserFullName(userId: number): string {
-    const user = this.users.find(u => u.userid === userId);
-    return user ? `${user.firstname} ${user.firstlastname}` : 'Usuario desconocido';
-  }
+  trackByUserId(index: number, user: any): number {
+    return user.id.userId;
+  }  
 
   goBack(): void {
     this.location.back();
