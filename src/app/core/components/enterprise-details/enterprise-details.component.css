@@ -160,3 +160,23 @@ button:disabled {
 .ng-select .ng-option {
   padding: 8px 10px;
 }
+
+.btn-remove {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-left: 10px;
+}
+
+.btn-remove:hover {
+  background-color: #c82333;
+}
+
+.btn-remove:disabled {
+  background-color: #e2e6ea;
+  cursor: not-allowed;
+}

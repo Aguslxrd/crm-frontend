@@ -82,6 +82,17 @@ export class EnterprisesService {
     }
   }
 
+  deleteUserAssignedToEnterpriseById(userId: number,enterpriseId: number){
+    const token = this.storageService.getToken();
+    if(token){
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.delete(`${this.apiUrlEnterpriseUser}/${userId}/${enterpriseId}`, {headers});
+    }else{
+      console.error("No token found in localstorage");
+      return new Observable<CaseInterface[]>();
+    }
+  }
+
   getEnterpriseByEmail(enterpriseEmail: string) : Observable<EnterprisesInterface[]>{
     const token = this.storageService.getToken();
 

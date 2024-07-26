@@ -116,6 +116,19 @@ export class EnterpriseDetailsComponent implements OnInit {
     );
   }
   
+  removeUserFromEnterprise(userId: number): void {
+    if (this.enterprise) {
+      this.enterpriseService.deleteUserAssignedToEnterpriseById(userId, this.enterprise.enterpriseid).subscribe(
+        () => {
+          console.log(`User ${userId} removed from enterprise ${this.enterprise?.enterpriseid}`);
+        },
+        (error) => {
+          console.error('Error removing user from enterprise:', error);
+        }
+      );
+    }
+  }
+  
   
   
   assignUserToEnterprise(): void {

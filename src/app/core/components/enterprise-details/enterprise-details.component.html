@@ -30,14 +30,14 @@
       <ul>
         <li *ngFor="let user of enterpriseUsers; trackBy: trackByUserId">
           {{ user.fullName || 'Cargando...' }} (ID: {{ user.id?.userId }})
+          <button (click)="removeUserFromEnterprise(user.id.userId)" class="btn-remove">
+            Eliminar
+          </button>
           <span *ngIf="!user.fullName">(Nombre no cargado)</span>
         </li>
       </ul>
     </div>
     
-    <button (click)="goBack()" class="back-button">Volver</button>
-  </div>
-</div>
 
 <div *ngIf="loading" class="loading">
   <div class="spinner"></div>
