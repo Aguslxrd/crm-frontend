@@ -47,7 +47,7 @@ export class EditCaseFormModalComponent implements OnInit {
           this.dialogRef.close(response); 
         },
         error => {
-          this.toastr.success('Error al actualizar caso, revisa los datos ingresados!', 'ArcticCRM');
+          this.toastr.error('Error al actualizar caso, revisa los datos ingresados!', 'ArcticCRM');
         }
       );
     }
