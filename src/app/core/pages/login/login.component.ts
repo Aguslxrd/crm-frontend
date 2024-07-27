@@ -21,7 +21,6 @@ export class LoginComponent {
   onSubmit() {
     this.authService.authenticate(this.loginData).subscribe({
       next: (response) => {
-        console.log('Autenticación exitosa', response);
         this.router.navigate(['/home']);
       },
       error: (error) => {

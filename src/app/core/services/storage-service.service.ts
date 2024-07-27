@@ -33,7 +33,7 @@ export class StorageService {
     return localStorage.getItem(this.AUTH_ID_KEY);
   }
 
-  clearAuth(): void {
+  public clearAuth(): void {
     localStorage.removeItem(this.TOKEN_KEY);
     localStorage.removeItem(this.AUTH_ID_KEY);
   }
