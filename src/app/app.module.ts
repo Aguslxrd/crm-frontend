@@ -33,6 +33,7 @@ import { EditEnterpriseFormModalComponent } from './core/components/edit-enterpr
 import { EnterpriseDetailsComponent } from './core/components/enterprise-details/enterprise-details.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { AdminManagementComponent } from './core/components/admin-management/admin-management.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { AdminManagementComponent } from './core/components/admin-management/adm
     MatIconModule,
     MatSelectModule,
     CommonModule,
-    NgSelectModule
+    NgSelectModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     provideAnimationsAsync()
