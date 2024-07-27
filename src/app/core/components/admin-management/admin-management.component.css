@@ -101,3 +101,13 @@
     background-color: #e0a800;
   }
   
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .pagination button {
+    margin: 0 5px;
+  }
+  

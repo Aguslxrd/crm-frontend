@@ -1,5 +1,5 @@
 <div class="admin-panel">
-    <h2>Admin Users List</h2>
+    <h2>Panel de administradores</h2>
   
     <div class="search-container">
       <input type="text" [(ngModel)]="searchQuery" placeholder="Search by username or email...">
@@ -32,7 +32,7 @@
       </table>
     </div>
   
-    <h2>Registros del sistema</h2>
+    <h2>Logs</h2>
   
     <div class="scrollable-box">
       <table>
@@ -45,14 +45,20 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let log of logs">
+          <tr *ngFor="let log of paginatedLogs">
             <td>{{ log.log_id }}</td>
             <td>{{ log.createdAt | date:'short' }}</td>
             <td>{{ log.user_action }}</td>
-            <td>{{ log.details }}</td>
+            <td>{{ log.userId }}</td>
           </tr>
         </tbody>
       </table>
+    </div>
+  
+    <div class="pagination">
+      <button (click)="previousPage()" [disabled]="currentPage === 1">Anterior</button>
+      <span>Page {{currentPage}}</span>
+      <button (click)="nextPage()" [disabled]="(currentPage * itemsPerPage) >= logs.length">Siguiente</button>
     </div>
   </div>
   

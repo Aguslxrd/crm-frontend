@@ -13,6 +13,10 @@ export class AdminManagementComponent implements OnInit{
   logs: ILogsInterface[] = [];
   searchQuery: string = '';
 
+  currentPage: number = 1;
+  itemsPerPage: number = 5;
+  paginatedLogs: ILogsInterface[] = [];
+
   constructor(private adminService: AdminService) {}
 
   ngOnInit(): void {
@@ -39,18 +43,39 @@ export class AdminManagementComponent implements OnInit{
   }
 
   editAdmin(admin: AdminInterface): void {
-    // Implementa la lógica para editar un usuario administrativo
+
   }
 
   deleteAdmin(userId: number): void {
     this.adminService.deleteAdminById(userId).subscribe(() => {
-      this.getAdminUsers();  // Refrescar la lista después de eliminar un usuario
+      this.getAdminUsers();  
     });
   }
 
   getLogs(): void {
     this.adminService.getSystemLogs().subscribe((data) => {
       this.logs = data;
+      this.paginateLogs();
     });
+  }
+
+  paginateLogs(): void {
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    const end = start + this.itemsPerPage;
+    this.paginatedLogs = this.logs.slice(start, end);
+  }
+
+  nextPage(): void {
+    if ((this.currentPage * this.itemsPerPage) < this.logs.length) {
+      this.currentPage++;
+      this.paginateLogs();
+    }
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.paginateLogs();
+    }
   }
 }
