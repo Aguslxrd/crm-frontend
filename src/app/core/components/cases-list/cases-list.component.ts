@@ -81,12 +81,6 @@ export class CaseListComponent implements OnInit {
     });
   }
 
-  deleteCase(caseId: number): void {
-    this.caseService.deleteCaseById(caseId).subscribe(
-      () => this.loadCases()
-    );
-  }
-
   viewCaseDetails(caseId: number) {
     console.log('View case details called with ID:', caseId);
     if (caseId === undefined || caseId === null) {

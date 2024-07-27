@@ -109,7 +109,6 @@ export class AdminManagementComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('Case Edited:', result);
       }
     });
   }
@@ -122,7 +121,6 @@ export class AdminManagementComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('User Edited:', result);
       }
     });
   }
