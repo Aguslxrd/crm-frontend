@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CasesService } from '../../services/cases.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-edit-case-form-modal',
@@ -15,6 +16,7 @@ export class EditCaseFormModalComponent implements OnInit {
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<EditCaseFormModalComponent>,
     private caseService: CasesService,
+    private toastr: ToastrService,
     @Inject(MAT_DIALOG_DATA) public data: { caseId: number, userId: number } 
   ) {
     this.caseForm = this.fb.group({
@@ -41,11 +43,11 @@ export class EditCaseFormModalComponent implements OnInit {
       console.log('Submitting case form with:', this.caseForm.value);
       this.caseService.saveCase(this.caseForm.value).subscribe(
         response => {
-          console.log('Case updated successfully:', response);
+          this.toastr.success('Caso actualizado correctamente!', 'ArcticCRM');
           this.dialogRef.close(response); 
         },
         error => {
-          console.error('Error updating case:', error);
+          this.toastr.success('Error al actualizar caso, revisa los datos ingresados!', 'ArcticCRM');
         }
       );
     }

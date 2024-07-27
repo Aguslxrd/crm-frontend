@@ -4,7 +4,7 @@
     <mat-form-field appearance="fill">
       <mat-label>Title</mat-label>
       <input matInput formControlName="title" />
-      <mat-error *ngIf="caseForm.get('title')">
+      <mat-error *ngIf="caseForm.get('title')?.hasError('required')">
         Title is required
       </mat-error>
     </mat-form-field>
@@ -12,7 +12,7 @@
     <mat-form-field appearance="fill">
       <mat-label>Description</mat-label>
       <textarea matInput formControlName="description_case"></textarea>
-      <mat-error *ngIf="caseForm.get('description_case')">
+      <mat-error *ngIf="caseForm.get('description_case')?.hasError('required')">
         Description is required
       </mat-error>
     </mat-form-field>
@@ -24,14 +24,14 @@
         <mat-option value="EN_PROGRESO">En Progreso</mat-option>
         <mat-option value="CERRADO">Cerrado</mat-option>
       </mat-select>
-      <mat-error *ngIf="caseForm.get('case_status')">
+      <mat-error *ngIf="caseForm.get('case_status')?.hasError('required')">
         Estado es requerido
       </mat-error>
     </mat-form-field>
 
     <div mat-dialog-actions>
       <button mat-button type="submit" [disabled]="caseForm.invalid">Save</button>
-      <button mat-button (click)="onCancel()">Cancel</button>
+      <button mat-button type="button" (click)="onCancel()">Cancel</button>
     </div>
   </form>
 </div>
