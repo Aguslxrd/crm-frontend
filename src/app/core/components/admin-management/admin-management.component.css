@@ -40,19 +40,15 @@ h2 {
 }
 
 .scrollable-box {
-  max-height: 400px;
+  max-height: 300px;
   overflow-y: auto;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 10px;
-  background-color: #fff;
   margin-bottom: 20px;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 th, td {

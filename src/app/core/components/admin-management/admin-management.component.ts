@@ -4,17 +4,17 @@ import { AdminService } from '../../services/admin.service';
 import { ILogsInterface } from '../../interfaces/ILoggsInterface';
 import { CaseInterface } from '../../interfaces/ICase';
 import { CasesService } from '../../services/cases.service';
-import { EditCaseFormModalComponent } from '../edit-case-form-modal/edit-case-form-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { UserInterface } from '../../interfaces/IUser';
+import { EditCaseFormModalComponent } from '../edit-case-form-modal/edit-case-form-modal.component';
 import { EditUserFormModalComponent } from '../edit-user-form-modal/edit-user-form-modal.component';
 
 @Component({
   selector: 'app-admin-management',
   templateUrl: './admin-management.component.html',
-  styleUrl: './admin-management.component.css'
+  styleUrls: ['./admin-management.component.css']
 })
-export class AdminManagementComponent implements OnInit{
+export class AdminManagementComponent implements OnInit {
   adminUsers: AdminInterface[] = [];
   logs: ILogsInterface[] = [];
   closedCases: CaseInterface[] = [];
@@ -25,12 +25,13 @@ export class AdminManagementComponent implements OnInit{
   itemsPerPage: number = 5;
   paginatedLogs: ILogsInterface[] = [];
 
-  constructor(private adminService: AdminService, public dialog: MatDialog) {}
+  constructor(private adminService: AdminService, private caseService: CasesService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.getAdminUsers();
     this.getLogs();
     this.getClosedCases();
+    this.getSoftDeletedUsers();
   }
 
   getAdminUsers(): void {
@@ -52,12 +53,12 @@ export class AdminManagementComponent implements OnInit{
   }
 
   editAdmin(admin: AdminInterface): void {
-
+    
   }
 
   deleteAdmin(userId: number): void {
     this.adminService.deleteAdminById(userId).subscribe(() => {
-      this.getAdminUsers();  
+      this.getAdminUsers();
     });
   }
 
@@ -87,9 +88,16 @@ export class AdminManagementComponent implements OnInit{
       this.paginateLogs();
     }
   }
+
   getClosedCases(): void {
     this.adminService.getAllClosedCases().subscribe((data) => {
       this.closedCases = data;
+    });
+  }
+
+  getSoftDeletedUsers(): void {
+    this.adminService.getAllSoftDeletedUsers().subscribe((data) => {
+      this.deactivatedUsers = data;
     });
   }
 
@@ -111,12 +119,11 @@ export class AdminManagementComponent implements OnInit{
       width: '400px',
       data: userData
     });
-  
+
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log('User Edited:', result);
       }
     });
   }
-
 }

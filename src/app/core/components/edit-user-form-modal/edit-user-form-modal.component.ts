@@ -27,7 +27,8 @@ export class EditUserFormModalComponent implements OnInit {
       phone: [this.data.phone, Validators.required],
       email: [this.data.email, [Validators.required, Validators.email]],
       address: [this.data.address],
-      identifier: [this.data.identifier, Validators.required]
+      identifier: [this.data.identifier, Validators.required],
+      user_status: ['', Validators.required]
     });
   }
   

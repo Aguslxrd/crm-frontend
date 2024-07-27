@@ -8,6 +8,7 @@ import { AdminChangeRoleInterface } from '../interfaces/IAdminChangeRoleInterfac
 import { AdminEditInterface } from '../interfaces/IAdminEditInterface';
 import { ILogsInterface } from '../interfaces/ILoggsInterface';
 import { CaseInterface } from '../interfaces/ICase';
+import { UserInterface } from '../interfaces/IUser';
 
 @Injectable({
   providedIn: 'root'
@@ -48,6 +49,17 @@ export class AdminService {
     } else {
       console.error('No token found in localStorage');
       return new Observable<CaseInterface[]>(); 
+    }
+  }
+
+  getAllSoftDeletedUsers(): Observable<UserInterface[]> {
+    const token = this.storageService.getToken();
+    if (token) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.get<UserInterface[]>(this.apiUrl + '/softdeletedusers', { headers });
+    } else {
+      console.error('No token found in localStorage');
+      return new Observable<UserInterface[]>(); 
     }
   }
 

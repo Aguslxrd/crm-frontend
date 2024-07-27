@@ -40,7 +40,7 @@
           <tr>
             <th>ID de registro</th>
             <th>Fecha</th>
-            <th>Accion</th>
+            <th>Acción</th>
             <th>Usuario</th>
           </tr>
         </thead>
@@ -68,9 +68,9 @@
         <thead>
           <tr>
             <th>ID de Caso</th>
-            <th>Titulo</th>
-            <th>Descripcion</th>
-            <th>Fecha de Creacion</th>
+            <th>Título</th>
+            <th>Descripción</th>
+            <th>Fecha de Creación</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -94,10 +94,11 @@
       <table>
         <thead>
           <tr>
-            <th>Identificador</th>
+            <th>Codigo de cliente</th>
             <th>Nombre</th>
+            <th>Apellido</th>
             <th>Email</th>
-            <th>Rol</th>
+            <th>Identificador</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -105,6 +106,7 @@
           <tr *ngFor="let user of deactivatedUsers">
             <td>{{ user.userid }}</td>
             <td>{{ user.firstname }}</td>
+            <td>{{ user.firstlastname }}</td>
             <td>{{ user.email }}</td>
             <td>{{ user.identifier }}</td>
             <td>
