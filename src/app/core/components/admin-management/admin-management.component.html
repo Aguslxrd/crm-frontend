@@ -1,0 +1,58 @@
+<div class="admin-panel">
+    <h2>Admin Users List</h2>
+  
+    <div class="search-container">
+      <input type="text" [(ngModel)]="searchQuery" placeholder="Search by username or email...">
+      <button (click)="searchAdminUsers()">Buscar</button>
+    </div>
+  
+    <div class="scrollable-box">
+      <table>
+        <thead>
+          <tr>
+            <th>Identificador</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Rol</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let admin of adminUsers">
+            <td>{{ admin.userId }}</td>
+            <td>{{ admin.username }}</td>
+            <td>{{ admin.email }}</td>
+            <td>{{ admin.role }}</td>
+            <td>
+              <button (click)="editAdmin(admin)">Editar</button>
+              <button (click)="deleteAdmin(admin.userId)" class="delete-btn">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <h2>Registros del sistema</h2>
+  
+    <div class="scrollable-box">
+      <table>
+        <thead>
+          <tr>
+            <th>ID de registro</th>
+            <th>Fecha</th>
+            <th>Accion</th>
+            <th>Usuario</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let log of logs">
+            <td>{{ log.log_id }}</td>
+            <td>{{ log.createdAt | date:'short' }}</td>
+            <td>{{ log.user_action }}</td>
+            <td>{{ log.details }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

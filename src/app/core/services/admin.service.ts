@@ -6,6 +6,7 @@ import { AdminInterface } from '../interfaces/IAdminUsers';
 import { AdminRegisterInterface } from '../interfaces/IAdminRegister';
 import { AdminChangeRoleInterface } from '../interfaces/IAdminChangeRoleInterface';
 import { AdminEditInterface } from '../interfaces/IAdminEditInterface';
+import { ILogsInterface } from '../interfaces/ILoggsInterface';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,17 @@ export class AdminService {
     } else {
       console.error('No token found in localStorage');
       return new Observable<AdminInterface[]>(); 
+    }
+  }
+
+  getSystemLogs(): Observable<ILogsInterface[]> {
+    const token = this.storageService.getToken();
+    if (token) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.get<ILogsInterface[]>(this.apiUrl + '/logs', { headers });
+    } else {
+      console.error('No token found in localStorage');
+      return new Observable<ILogsInterface[]>(); 
     }
   }
 
