@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { EnterprisesService } from '../../services/enterprises.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-new-enterprise-form-modal',
@@ -14,7 +15,8 @@ export class NewEnterpriseFormModalComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<NewEnterpriseFormModalComponent>,
-    private enterpriseService: EnterprisesService
+    private enterpriseService: EnterprisesService,
+    private toastr: ToastrService,
   ) {
     this.enterpriseForm = this.fb.group({
       name_enterprise: ['', Validators.required],
@@ -32,11 +34,11 @@ export class NewEnterpriseFormModalComponent implements OnInit {
     if (this.enterpriseForm.valid) {
       this.enterpriseService.saveEnterprise(this.enterpriseForm.value).subscribe(
         (response) => {
-          console.log('User saved successfully:', response);
+          this.toastr.success('Empresa creada correctamente!', 'ArcticCRM');
           this.dialogRef.close(); 
         },
         (error) => {
-          console.error('Error saving user:', error);
+          this.toastr.success('Error al crear empresa!', 'ArcticCRM');
         }
       );
     }
