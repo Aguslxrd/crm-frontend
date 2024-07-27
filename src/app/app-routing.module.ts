@@ -12,7 +12,7 @@ import { EnterprisesListComponent } from './core/components/enterprises-list/ent
 import { EnterpriseDetailsComponent } from './core/components/enterprise-details/enterprise-details.component';
 
 const routes: Routes = [
-  {path: "", component: HomeComponent},
+  {path: "", component: HomeComponent, canActivate: [authGuard] },
   {path: 'users', component: UserlistComponent, canActivate: [authGuard] },
   {path: 'cases', component: CaseListComponent, canActivate: [authGuard] },
   {path: "home", component: HomeComponent, canActivate: [authGuard]},

@@ -9,6 +9,7 @@ import { CaseInterface } from '../interfaces/ICase';
 })
 export class CasesService {
   private readonly apiUrl = 'http://localhost:8080/api/v1/cases';
+  private readonly openAndInProgressCasesEndpoint = '/open-and-in-progress';
 
   constructor(private http: HttpClient, private storageService: StorageService) {}
 
@@ -51,6 +52,17 @@ export class CasesService {
     if (token) {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
       return this.http.get<CaseInterface[]>(this.apiUrl, { headers });
+    } else {
+      console.error('No token found in localStorage');
+      return new Observable<CaseInterface[]>(); 
+    }
+  }
+
+  getOpenAndInProgressCases(): Observable<CaseInterface[]> {
+    const token = this.storageService.getToken();
+    if (token) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.get<CaseInterface[]>(this.apiUrl + this.openAndInProgressCasesEndpoint, { headers });
     } else {
       console.error('No token found in localStorage');
       return new Observable<CaseInterface[]>(); 

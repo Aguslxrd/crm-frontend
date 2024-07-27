@@ -26,7 +26,7 @@ export class CaseListComponent implements OnInit {
   }
 
   loadCases(): void {
-    this.caseService.getCases().subscribe(
+    this.caseService.getOpenAndInProgressCases().subscribe(
       (response) => {
         this.cases = response;
       },
