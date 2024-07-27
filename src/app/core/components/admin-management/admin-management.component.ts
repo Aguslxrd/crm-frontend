@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AdminInterface } from '../../interfaces/IAdminUsers';
 import { AdminService } from '../../services/admin.service';
 import { ILogsInterface } from '../../interfaces/ILoggsInterface';
+import { CaseInterface } from '../../interfaces/ICase';
+import { CasesService } from '../../services/cases.service';
 
 @Component({
   selector: 'app-admin-management',
@@ -11,17 +13,21 @@ import { ILogsInterface } from '../../interfaces/ILoggsInterface';
 export class AdminManagementComponent implements OnInit{
   adminUsers: AdminInterface[] = [];
   logs: ILogsInterface[] = [];
+  closedCases: CaseInterface[] = [];
+  deactivatedUsers: AdminInterface[] = [];
   searchQuery: string = '';
 
   currentPage: number = 1;
   itemsPerPage: number = 5;
   paginatedLogs: ILogsInterface[] = [];
 
-  constructor(private adminService: AdminService) {}
+  constructor(private adminService: AdminService, private caseService: CasesService) {}
 
   ngOnInit(): void {
     this.getAdminUsers();
     this.getLogs();
+    this.getClosedCases();
+    this.getDeactivatedUsers();
   }
 
   getAdminUsers(): void {
@@ -78,4 +84,18 @@ export class AdminManagementComponent implements OnInit{
       this.paginateLogs();
     }
   }
+  getClosedCases(): void {
+    /*
+    this.caseService.getClosedCases().subscribe((data) => {
+      this.closedCases = data;
+    });*/
+  }
+
+  getDeactivatedUsers(): void {
+    /*
+    this.adminService.getDeactivatedUsers().subscribe((data) => {
+      this.deactivatedUsers = data;
+    });*/
+  }
+
 }
