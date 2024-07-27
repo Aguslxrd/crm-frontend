@@ -4,6 +4,10 @@ import { AdminService } from '../../services/admin.service';
 import { ILogsInterface } from '../../interfaces/ILoggsInterface';
 import { CaseInterface } from '../../interfaces/ICase';
 import { CasesService } from '../../services/cases.service';
+import { EditCaseFormModalComponent } from '../edit-case-form-modal/edit-case-form-modal.component';
+import { MatDialog } from '@angular/material/dialog';
+import { UserInterface } from '../../interfaces/IUser';
+import { EditUserFormModalComponent } from '../edit-user-form-modal/edit-user-form-modal.component';
 
 @Component({
   selector: 'app-admin-management',
@@ -14,20 +18,19 @@ export class AdminManagementComponent implements OnInit{
   adminUsers: AdminInterface[] = [];
   logs: ILogsInterface[] = [];
   closedCases: CaseInterface[] = [];
-  deactivatedUsers: AdminInterface[] = [];
+  deactivatedUsers: UserInterface[] = [];
   searchQuery: string = '';
 
   currentPage: number = 1;
   itemsPerPage: number = 5;
   paginatedLogs: ILogsInterface[] = [];
 
-  constructor(private adminService: AdminService, private caseService: CasesService) {}
+  constructor(private adminService: AdminService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.getAdminUsers();
     this.getLogs();
     this.getClosedCases();
-    this.getDeactivatedUsers();
   }
 
   getAdminUsers(): void {
@@ -85,17 +88,35 @@ export class AdminManagementComponent implements OnInit{
     }
   }
   getClosedCases(): void {
-    /*
-    this.caseService.getClosedCases().subscribe((data) => {
+    this.adminService.getAllClosedCases().subscribe((data) => {
       this.closedCases = data;
-    });*/
+    });
   }
 
-  getDeactivatedUsers(): void {
-    /*
-    this.adminService.getDeactivatedUsers().subscribe((data) => {
-      this.deactivatedUsers = data;
-    });*/
+  reactivateCase(caseItem: CaseInterface): void {
+    const dialogRef = this.dialog.open(EditCaseFormModalComponent, {
+      width: '400px',
+      data: caseItem
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Case Edited:', result);
+      }
+    });
+  }
+
+  reactivateUser(userData: UserInterface): void {
+    const dialogRef = this.dialog.open(EditUserFormModalComponent, {
+      width: '400px',
+      data: userData
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('User Edited:', result);
+      }
+    });
   }
 
 }

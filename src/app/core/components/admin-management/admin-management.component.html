@@ -31,9 +31,7 @@
         </tbody>
       </table>
     </div>
-    
-    <hr>
-
+  
     <h2>Logs</h2>
   
     <div class="scrollable-box">
@@ -62,9 +60,7 @@
       <span>Page {{currentPage}}</span>
       <button (click)="nextPage()" [disabled]="(currentPage * itemsPerPage) >= logs.length">Siguiente</button>
     </div>
-    
-    <hr>
-
+  
     <h2>Casos Cerrados</h2>
   
     <div class="scrollable-box">
@@ -75,6 +71,7 @@
             <th>Titulo</th>
             <th>Descripcion</th>
             <th>Fecha de Creacion</th>
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -83,11 +80,13 @@
             <td>{{ closedCase.title }}</td>
             <td>{{ closedCase.description_case }}</td>
             <td>{{ closedCase.date_created | date:'short' }}</td>
+            <td>
+              <button (click)="reactivateCase(closedCase)" class="reactivate-btn">Reactivar</button>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <hr>
   
     <h2>Usuarios Desactivados</h2>
   
@@ -99,14 +98,18 @@
             <th>Nombre</th>
             <th>Email</th>
             <th>Rol</th>
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let user of deactivatedUsers">
-            <td>{{ user.userId }}</td>
-            <td>{{ user.username }}</td>
+            <td>{{ user.userid }}</td>
+            <td>{{ user.firstname }}</td>
             <td>{{ user.email }}</td>
-            <td>{{ user.role }}</td>
+            <td>{{ user.identifier }}</td>
+            <td>
+              <button (click)="reactivateUser(user)" class="reactivate-btn">Reactivar</button>
+            </td>
           </tr>
         </tbody>
       </table>
