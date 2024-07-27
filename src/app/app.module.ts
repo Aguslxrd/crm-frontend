@@ -32,6 +32,8 @@ import { NewEnterpriseFormModalComponent } from './core/components/new-enterpris
 import { EditEnterpriseFormModalComponent } from './core/components/edit-enterprise-form-modal/edit-enterprise-form-modal.component';
 import { EnterpriseDetailsComponent } from './core/components/enterprise-details/enterprise-details.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { AdminManagementComponent } from './core/components/admin-management/admin-management.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     EnterprisesListComponent,
     NewEnterpriseFormModalComponent,
     EditEnterpriseFormModalComponent,
-    EnterpriseDetailsComponent
+    EnterpriseDetailsComponent,
+    AdminManagementComponent
   ],
   imports: [
     BrowserModule,
@@ -68,7 +71,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     MatIconModule,
     MatSelectModule,
     CommonModule,
-    NgSelectModule
+    NgSelectModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     provideAnimationsAsync()

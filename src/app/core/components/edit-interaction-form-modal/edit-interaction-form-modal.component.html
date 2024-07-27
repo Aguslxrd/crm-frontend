@@ -1,4 +1,3 @@
-<!-- edit-interaction-form-modal.component.html -->
 <h1 mat-dialog-title>Editar Interacción</h1>
 <div mat-dialog-content>
   <form [formGroup]="interactionForm" (ngSubmit)="onSubmit()">
@@ -24,7 +23,7 @@
 
     <div mat-dialog-actions>
       <button mat-button type="submit" [disabled]="!interactionForm.valid">Guardar</button>
-      <button mat-button (click)="onCancel()">Cancelar</button>
+      <button mat-button type="button" (click)="onCancel()">Cancelar</button>
     </div>
   </form>
 </div>

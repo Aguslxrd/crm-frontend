@@ -1,19 +1,19 @@
-<h1 mat-dialog-title>Edit Case</h1>
+<h1 mat-dialog-title>Editar Caso</h1>
 <div mat-dialog-content>
   <form [formGroup]="caseForm" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="fill">
-      <mat-label>Title</mat-label>
+      <mat-label>Titulo</mat-label>
       <input matInput formControlName="title" />
-      <mat-error *ngIf="caseForm.get('title')">
-        Title is required
+      <mat-error *ngIf="caseForm.get('title')?.hasError('required')">
+        Se requiere titulo
       </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label>Description</mat-label>
+      <mat-label>Descripcion</mat-label>
       <textarea matInput formControlName="description_case"></textarea>
-      <mat-error *ngIf="caseForm.get('description_case')">
-        Description is required
+      <mat-error *ngIf="caseForm.get('description_case')?.hasError('required')">
+        Se requiere descripcion de caso
       </mat-error>
     </mat-form-field>
 
@@ -24,14 +24,14 @@
         <mat-option value="EN_PROGRESO">En Progreso</mat-option>
         <mat-option value="CERRADO">Cerrado</mat-option>
       </mat-select>
-      <mat-error *ngIf="caseForm.get('case_status')">
+      <mat-error *ngIf="caseForm.get('case_status')?.hasError('required')">
         Estado es requerido
       </mat-error>
     </mat-form-field>
 
     <div mat-dialog-actions>
-      <button mat-button type="submit" [disabled]="caseForm.invalid">Save</button>
-      <button mat-button (click)="onCancel()">Cancel</button>
+      <button mat-button type="submit" [disabled]="caseForm.invalid">Guardar</button>
+      <button mat-button type="button" (click)="onCancel()">Cancelar</button>
     </div>
   </form>
 </div>

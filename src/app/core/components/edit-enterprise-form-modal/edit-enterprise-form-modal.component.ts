@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { EnterprisesService } from '../../services/enterprises.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-edit-enterprise-form-modal',
@@ -15,6 +16,7 @@ export class EditEnterpriseFormModalComponent implements OnInit {
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<EditEnterpriseFormModalComponent>,
     private enterpriseService: EnterprisesService,
+    private toastr: ToastrService,
     @Inject(MAT_DIALOG_DATA) public data: { 
       enterpriseId: number, 
       name_enterprise : string,
@@ -43,11 +45,11 @@ export class EditEnterpriseFormModalComponent implements OnInit {
     if (this.enterpriseForm.valid) {
       this.enterpriseService.saveEnterprise(this.enterpriseForm.value).subscribe(
         (response) => {
-          console.log('enterprise edited successfully:', response);
+          this.toastr.success('Empresa actualizado correctamente!', 'ArcticCRM');
           this.dialogRef.close(); 
         },
         (error) => {
-          console.error('Error editing enterprise:', error);
+          this.toastr.error('Error al actualizar la empresa!', 'ArcticCRM');
         }
       );
     }

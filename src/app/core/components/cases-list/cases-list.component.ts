@@ -26,7 +26,7 @@ export class CaseListComponent implements OnInit {
   }
 
   loadCases(): void {
-    this.caseService.getCases().subscribe(
+    this.caseService.getOpenAndInProgressCases().subscribe(
       (response) => {
         this.cases = response;
       },
@@ -46,7 +46,7 @@ export class CaseListComponent implements OnInit {
       case 'caseId':
         const caseId = parseInt(this.searchQuery, 10);
         if (!isNaN(caseId)) {
-          this.caseService.getCaseById(caseId).subscribe(
+          this.caseService.getCaseOpenedAndInProgressById(caseId).subscribe(
             (response) => {
               this.cases = Array.isArray(response) ? response : [response];
             },
@@ -79,12 +79,6 @@ export class CaseListComponent implements OnInit {
       }
       this.loadCases();
     });
-  }
-
-  deleteCase(caseId: number): void {
-    this.caseService.deleteCaseById(caseId).subscribe(
-      () => this.loadCases()
-    );
   }
 
   viewCaseDetails(caseId: number) {

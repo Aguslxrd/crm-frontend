@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NewUserFormModalComponent } from '../new-user-form-modal/new-user-form-modal.component';
 import { CasesService } from '../../services/cases.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-new-case-form-modal',
@@ -16,6 +17,7 @@ export class NewCaseFormModalComponent implements OnInit {
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<NewCaseFormModalComponent>,
     private caseService: CasesService,
+    private toastr: ToastrService,
     @Inject(MAT_DIALOG_DATA) public data: { userId: number }
   ) {
     this.caseForm = this.fb.group({
@@ -32,11 +34,11 @@ export class NewCaseFormModalComponent implements OnInit {
     if (this.caseForm.valid) {
       this.caseService.saveCase(this.caseForm.value).subscribe(
         (response) => {
-          console.log('Case saved successfully:', response);
+          this.toastr.success('Caso creado correctamente!', 'ArcticCRM');
           this.dialogRef.close(); 
         },
         (error) => {
-          console.error('Error saving user:', error);
+          this.toastr.error('Error al crear usuario!', 'ArcticCRM');
         }
       );
     }
