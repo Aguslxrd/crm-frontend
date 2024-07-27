@@ -67,6 +67,6 @@ export class EditInteractionFormModalComponent implements OnInit {
   
 
   onCancel(): void {
-    this.dialogRef.close(); 
+    this.dialogRef.close(null); 
   }
 }
