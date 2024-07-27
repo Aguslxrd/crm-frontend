@@ -46,7 +46,7 @@ export class CaseListComponent implements OnInit {
       case 'caseId':
         const caseId = parseInt(this.searchQuery, 10);
         if (!isNaN(caseId)) {
-          this.caseService.getCaseById(caseId).subscribe(
+          this.caseService.getCaseOpenedAndInProgressById(caseId).subscribe(
             (response) => {
               this.cases = Array.isArray(response) ? response : [response];
             },
