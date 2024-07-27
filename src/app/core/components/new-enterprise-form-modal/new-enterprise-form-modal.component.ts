@@ -38,7 +38,7 @@ export class NewEnterpriseFormModalComponent implements OnInit {
           this.dialogRef.close(); 
         },
         (error) => {
-          this.toastr.success('Error al crear empresa!', 'ArcticCRM');
+          this.toastr.error('Error al crear empresa!', 'ArcticCRM');
         }
       );
     }

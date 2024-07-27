@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { InteractionsService } from '../../services/interactions.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-new-interaction-form-modal',
@@ -15,7 +16,8 @@ export class NewInteractionFormModalComponent {
     public dialogRef: MatDialogRef<NewInteractionFormModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { caseId: number, authId: number },
     private fb: FormBuilder,
-    private interactionService: InteractionsService
+    private interactionService: InteractionsService,
+    private toastr: ToastrService
   ) {
 
     this.interactionForm = this.fb.group({
@@ -29,11 +31,11 @@ export class NewInteractionFormModalComponent {
     if (this.interactionForm.valid) {
       this.interactionService.saveInteraction(this.interactionForm.value).subscribe(
         (response) => {
-          console.log('Interaction saved successfully:', response);
+          this.toastr.success('Interaccion guardada correctamente!', 'ArcticCRM');
           this.dialogRef.close(); 
         },
         (error) => {
-          console.error('Error saving interaction:', error);
+          this.toastr.error('Error al guardar interaccion!', 'ArcticCRM');
         }
       );
     }
