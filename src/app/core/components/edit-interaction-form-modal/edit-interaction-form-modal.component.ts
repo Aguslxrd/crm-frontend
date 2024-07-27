@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { InteractionsService } from '../../services/interactions.service';
 import { StorageService } from '../../services/storage-service.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-edit-interaction-form-modal',
@@ -17,6 +18,7 @@ export class EditInteractionFormModalComponent implements OnInit {
     private dialogRef: MatDialogRef<EditInteractionFormModalComponent>,
     private interactionService: InteractionsService,
     private storageService: StorageService,
+    private toastr: ToastrService,
     @Inject(MAT_DIALOG_DATA) public data: { interactionId: number, caseId: number }
   ) {
     this.interactionForm = this.fb.group({
@@ -30,18 +32,16 @@ export class EditInteractionFormModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('Initializing EditInteractionFormModalComponent with data:', this.data);
     this.loadInteractionDetails();
   }
 
   loadInteractionDetails(): void {
     this.interactionService.getInteractionById(this.data.interactionId).subscribe(
       interactionData => {
-        console.log('Loaded interaction data:', interactionData);
         this.interactionForm.patchValue(interactionData);
       },
       error => {
-        console.error('Error loading interaction details:', error);
+        this.toastr.warning('Error al cargar los datos de interaccion!', 'ArcticCRM');
       }
     );
   }
@@ -50,18 +50,17 @@ export class EditInteractionFormModalComponent implements OnInit {
 
   onSubmit(): void {
     if (this.interactionForm.valid) {
-      console.log('Submitting interaction form with:', this.interactionForm.value);
       this.interactionService.saveInteraction(this.interactionForm.value).subscribe(
         response => {
-          console.log('Interaction updated successfully:', response);
+          this.toastr.success('Interaccion actualizada correctamente!', 'ArcticCRM');
           this.dialogRef.close(response); 
         },
         error => {
-          console.error('Error updating interaction:', error);
+          this.toastr.success('Error al actualizar interaccion, contacta un administrador!', 'ArcticCRM');
         }
       );
     } else {
-      console.log('Form is invalid');
+      this.toastr.warning('Error al actualizar interaccion, revisa los datos ingresados!', 'ArcticCRM');
     }
   }
   
