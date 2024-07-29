@@ -1,9 +1,12 @@
 <div class="admin-panel">
   <h2>Panel de administradores</h2>
 
-  <div class="search-container">
-    <input type="text" [(ngModel)]="searchQuery" placeholder="Buscar por email...">
-    <button (click)="searchAdminUsers()">Buscar</button>
+  <div class="action-container">
+    <div class="search-container">
+      <input type="text" [(ngModel)]="searchQuery" placeholder="Buscar por email...">
+      <button (click)="searchAdminUsers()">Buscar</button>
+    </div>
+    <button (click)="addNewAdministrador()" class="add-admin-btn">Agregar Nuevo Administrador</button>
   </div>
 
   <div class="scrollable-box">

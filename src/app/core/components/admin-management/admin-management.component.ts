@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserInterface } from '../../interfaces/IUser';
 import { EditCaseFormModalComponent } from '../edit-case-form-modal/edit-case-form-modal.component';
 import { EditUserFormModalComponent } from '../edit-user-form-modal/edit-user-form-modal.component';
+import { NewAdminFormModalComponent } from '../new-admin-form-modal/new-admin-form-modal.component';
 
 @Component({
   selector: 'app-admin-management',
@@ -121,6 +122,18 @@ export class AdminManagementComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+      }
+    });
+  }
+
+  addNewAdministrador(): void {
+    const dialogRef = this.dialog.open(NewAdminFormModalComponent, {
+      width: '400px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.getAdminUsers();
       }
     });
   }
