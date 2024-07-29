@@ -24,6 +24,16 @@ import { UserCasesComponent } from './core/components/user-cases/user-cases.comp
 import { NewInteractionFormModalComponent } from './core/components/new-interaction-form-modal/new-interaction-form-modal.component';
 import { EditCaseFormModalComponent } from './core/components/edit-case-form-modal/edit-case-form-modal.component';
 import { EditInteractionFormModalComponent } from './core/components/edit-interaction-form-modal/edit-interaction-form-modal.component';
+import { CommonModule } from '@angular/common';
+import { CaseListComponent } from './core/components/cases-list/cases-list.component';
+import { CaseDetailsComponent } from './core/components/cases-details/cases-details.component';
+import { EnterprisesListComponent } from './core/components/enterprises-list/enterprises-list.component';
+import { NewEnterpriseFormModalComponent } from './core/components/new-enterprise-form-modal/new-enterprise-form-modal.component';
+import { EditEnterpriseFormModalComponent } from './core/components/edit-enterprise-form-modal/edit-enterprise-form-modal.component';
+import { EnterpriseDetailsComponent } from './core/components/enterprise-details/enterprise-details.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { AdminManagementComponent } from './core/components/admin-management/admin-management.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -39,7 +49,14 @@ import { EditInteractionFormModalComponent } from './core/components/edit-intera
     UserCasesComponent,
     NewInteractionFormModalComponent,
     EditCaseFormModalComponent,
-    EditInteractionFormModalComponent
+    EditInteractionFormModalComponent,
+    CaseListComponent,
+    CaseDetailsComponent,
+    EnterprisesListComponent,
+    NewEnterpriseFormModalComponent,
+    EditEnterpriseFormModalComponent,
+    EnterpriseDetailsComponent,
+    AdminManagementComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +70,9 @@ import { EditInteractionFormModalComponent } from './core/components/edit-intera
     MatDialogModule,
     MatIconModule,
     MatSelectModule,
-    
+    CommonModule,
+    NgSelectModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     provideAnimationsAsync()

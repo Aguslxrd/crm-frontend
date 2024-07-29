@@ -1,0 +1,50 @@
+<div class="enterprise-details-container" *ngIf="!loading && !error">
+  <div class="card">
+    <h2>Detalles de la Empresa</h2>
+    <div *ngIf="enterprise" class="enterprise-info">
+      <p><strong>ID:</strong> {{ enterprise.enterpriseid }}</p>
+      <p><strong>Nombre:</strong> {{ enterprise.name_enterprise }}</p>
+      <p><strong>RUT:</strong> {{ enterprise.rut }}</p>
+      <p><strong>Dirección:</strong> {{ enterprise.address }}</p>
+      <p><strong>Teléfono:</strong> {{ enterprise.phone }}</p>
+      <p><strong>Email:</strong> {{ enterprise.email }}</p>
+      <p><strong>Sitio Web:</strong> {{ enterprise.web_site }}</p>
+    </div>
+
+    <div class="user-assignment">
+      <h3>Asignar Usuario</h3>
+      <ng-select 
+        class="custom-select"
+        [items]="users"
+        bindLabel="firstname"
+        bindValue="userid"
+        [(ngModel)]="selectedUserId"
+        [searchable]="true"
+        placeholder="Persona seleccionada -">
+      </ng-select>
+      <button (click)="assignUserToEnterprise()" [disabled]="!selectedUserId">Asignar</button>
+    </div>
+    
+    <div class="assigned-users">
+      <h3>Usuarios Asignados</h3>
+      <ul>
+        <li *ngFor="let user of enterpriseUsers; trackBy: trackByUserId">
+          {{ user.fullName || 'Cargando...' }} (ID: {{ user.id?.userId }})
+          <button (click)="removeUserFromEnterprise(user.id.userId)" class="btn-remove">
+            Eliminar
+          </button>
+          <span *ngIf="!user.fullName">(Nombre no cargado)</span>
+        </li>
+      </ul>
+    </div>
+    
+
+<div *ngIf="loading" class="loading">
+  <div class="spinner"></div>
+  <p>Cargando detalles de la empresa...</p>
+</div>
+
+<div *ngIf="error" class="error">
+  <i class="fas fa-exclamation-circle"></i>
+  <p>{{ error }}</p>
+</div>

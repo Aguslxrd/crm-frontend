@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { UserService } from '../../services/user.service';
 import { UserInterface } from '../../interfaces/IUser';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-edit-user-form-modal',
@@ -16,6 +17,7 @@ export class EditUserFormModalComponent implements OnInit {
     private fb: FormBuilder,
     private userService: UserService,
     public dialogRef: MatDialogRef<EditUserFormModalComponent>,
+    public toastr: ToastrService,
     @Inject(MAT_DIALOG_DATA) public data: UserInterface
   ) {
     this.userForm = this.fb.group({
@@ -27,7 +29,8 @@ export class EditUserFormModalComponent implements OnInit {
       phone: [this.data.phone, Validators.required],
       email: [this.data.email, [Validators.required, Validators.email]],
       address: [this.data.address],
-      identifier: [this.data.identifier, Validators.required]
+      identifier: [this.data.identifier, Validators.required],
+      user_status: ['', Validators.required]
     });
   }
   
@@ -50,16 +53,17 @@ export class EditUserFormModalComponent implements OnInit {
     if (this.userForm.valid) {
       this.userService.saveUser(this.userForm.value).subscribe(
         (updatedUser) => {
+          this.toastr.success('Usuario actualizado correctamente!', 'ArcticCRM');
           this.dialogRef.close(updatedUser);
         },
         (error) => {
-          console.error('Error updating user:', error);
+          this.toastr.error('Error al actualizar usuario, revisa los datos ingresados!', 'ArcticCRM');
         }
       );
     }
   }
 
   onCancel(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(null);
   }
 }

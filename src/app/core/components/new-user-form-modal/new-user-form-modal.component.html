@@ -2,27 +2,27 @@
 <div mat-dialog-content>
   <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="fill">
-      <mat-label>First Name</mat-label>
+      <mat-label>Primer nombre</mat-label>
       <input matInput formControlName="firstname" required>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label>Second Name</mat-label>
+      <mat-label>Segundo nombre</mat-label>
       <input matInput formControlName="secondname">
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label>First Last Name</mat-label>
+      <mat-label>Primer apellido</mat-label>
       <input matInput formControlName="firstlastname" required>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label>Second Last Name</mat-label>
+      <mat-label>Seugndo apellido</mat-label>
       <input matInput formControlName="secondlastname">
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label>Phone</mat-label>
+      <mat-label>Celular/Telefono</mat-label>
       <input matInput formControlName="phone" required>
     </mat-form-field>
 
@@ -32,17 +32,17 @@
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label>Address</mat-label>
+      <mat-label>Direccion</mat-label>
       <input matInput formControlName="address">
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label>Identifier</mat-label>
+      <mat-label>Identificador</mat-label>
       <input matInput formControlName="identifier" required>
     </mat-form-field>
 
     <div mat-dialog-actions>
-      <button mat-button mat-dialog-close>Cancel</button>
+      <button mat-button mat-dialog-close>Cancelar</button>
       <button mat-button type="submit" [disabled]="!userForm.valid">Save</button>
     </div>
   </form>

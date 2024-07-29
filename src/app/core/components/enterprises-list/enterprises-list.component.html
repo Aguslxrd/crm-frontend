@@ -1,0 +1,45 @@
+<div class="enterprise-list-container">
+    <h2>Panel de Empresas</h2>
+    <div class="search-container">
+        <select [(ngModel)]="searchCriteria">
+            <option value="name">Nombre</option>
+            <option value="rut">RUT</option>
+            <option value="enterpriseId">ID de Empresa</option>
+        </select>
+        <input [(ngModel)]="searchQuery" placeholder="Buscar por: ">
+        <button (click)="searchEnterprises()">Buscar</button>
+    </div>
+    
+    <button (click)="openSaveEnterpriseModal()">Agregar Empresa</button>
+  
+    <table class="enterprise-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>RUT</th>
+                <th>Dirección</th>
+                <th>Teléfono</th>
+                <th>Email</th>
+                <th>Sitio Web</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let enterprise of enterprises">
+                <td>{{ enterprise.enterpriseid }}</td>
+                <td>{{ enterprise.name_enterprise }}</td>
+                <td>{{ enterprise.rut }}</td>
+                <td>{{ enterprise.address }}</td>
+                <td>{{ enterprise.phone }}</td>
+                <td>{{ enterprise.email }}</td>
+                <td>{{ enterprise.web_site }}</td>
+                <td>
+                    <button (click)="editEnterprise(enterprise)">Editar</button>
+                    <button (click)="deleteEnterprise(enterprise.enterpriseid)">Eliminar</button>
+                    <button (click)="viewEnterpriseDetails(enterprise.enterpriseid)">Detalles</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

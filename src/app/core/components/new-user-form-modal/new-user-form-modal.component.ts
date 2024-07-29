@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog'; // Ajusta la ruta según sea necesario
 import { UserService } from '../../services/user.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-user-form-modal',
@@ -14,7 +15,8 @@ export class NewUserFormModalComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<NewUserFormModalComponent>,
-    private userService: UserService
+    private userService: UserService,
+    private toastr: ToastrService
   ) {
     this.userForm = this.fb.group({
       firstname: ['', Validators.required],
@@ -34,11 +36,11 @@ export class NewUserFormModalComponent implements OnInit {
     if (this.userForm.valid) {
       this.userService.saveUser(this.userForm.value).subscribe(
         (response) => {
-          console.log('User saved successfully:', response);
+          this.toastr.success('Usuario creado correctamente!', 'ArcticCRM');
           this.dialogRef.close(); 
         },
         (error) => {
-          console.error('Error saving user:', error);
+          this.toastr.error('Error al crear usuario!', 'ArcticCRM');
         }
       );
     }
