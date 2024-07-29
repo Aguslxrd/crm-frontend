@@ -1,120 +1,119 @@
 <div class="admin-panel">
-    <h2>Panel de administradores</h2>
-  
-    <div class="search-container">
-      <input type="text" [(ngModel)]="searchQuery" placeholder="Buscar por email...">
-      <button (click)="searchAdminUsers()">Buscar</button>
-    </div>
-  
-    <div class="scrollable-box">
-      <table>
-        <thead>
-          <tr>
-            <th>Identificador</th>
-            <th>Nombre</th>
-            <th>Email</th>
-            <th>Rol</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let admin of adminUsers">
-            <td>{{ admin.userId }}</td>
-            <td>{{ admin.username }}</td>
-            <td>{{ admin.email }}</td>
-            <td>{{ admin.role }}</td>
-            <td>
-              <button (click)="editAdmin(admin)">Editar</button>
-              <button (click)="deleteAdmin(admin.userId)" class="delete-btn">Eliminar</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  
-    <h2>Logs</h2>
-  
-    <div class="scrollable-box">
-      <table>
-        <thead>
-          <tr>
-            <th>ID de registro</th>
-            <th>Fecha</th>
-            <th>Acción</th>
-            <th>Usuario</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let log of paginatedLogs">
-            <td>{{ log.log_id }}</td>
-            <td>{{ log.createdAt | date:'short' }}</td>
-            <td>{{ log.user_action }}</td>
-            <td>{{ log.userId }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  
-    <div class="pagination">
-      <button (click)="previousPage()" [disabled]="currentPage === 1">Anterior</button>
-      <span>Page {{currentPage}}</span>
-      <button (click)="nextPage()" [disabled]="(currentPage * itemsPerPage) >= logs.length">Siguiente</button>
-    </div>
-  
-    <h2>Casos Cerrados</h2>
-  
-    <div class="scrollable-box">
-      <table>
-        <thead>
-          <tr>
-            <th>ID de Caso</th>
-            <th>Título</th>
-            <th>Descripción</th>
-            <th>Fecha de Creación</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let closedCase of closedCases">
-            <td>{{ closedCase.caseId }}</td>
-            <td>{{ closedCase.title }}</td>
-            <td>{{ closedCase.description_case }}</td>
-            <td>{{ closedCase.date_created | date:'short' }}</td>
-            <td>
-              <button (click)="reactivateCase(closedCase)" class="reactivate-btn">Reactivar</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  
-    <h2>Usuarios Desactivados</h2>
-  
-    <div class="scrollable-box">
-      <table>
-        <thead>
-          <tr>
-            <th>Codigo de cliente</th>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Email</th>
-            <th>Identificador</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let user of deactivatedUsers">
-            <td>{{ user.userid }}</td>
-            <td>{{ user.firstname }}</td>
-            <td>{{ user.firstlastname }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.identifier }}</td>
-            <td>
-              <button (click)="reactivateUser(user)" class="reactivate-btn">Reactivar</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  <h2>Panel de administradores</h2>
+
+  <div class="search-container">
+    <input type="text" [(ngModel)]="searchQuery" placeholder="Buscar por email...">
+    <button (click)="searchAdminUsers()">Buscar</button>
   </div>
-  
+
+  <div class="scrollable-box">
+    <table>
+      <thead>
+        <tr>
+          <th>Identificador</th>
+          <th>Nombre</th>
+          <th>Email</th>
+          <th>Rol</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let admin of adminUsers">
+          <td>{{ admin.userId }}</td>
+          <td>{{ admin.username }}</td>
+          <td>{{ admin.email }}</td>
+          <td>{{ admin.role }}</td>
+          <td>
+            <button (click)="editAdmin(admin)" class="edit-btn">Editar</button>
+            <button (click)="deleteAdmin(admin.userId)" class="delete-btn">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Logs</h2>
+
+  <div class="scrollable-box">
+    <table>
+      <thead>
+        <tr>
+          <th>ID de registro</th>
+          <th>Fecha</th>
+          <th>Acción</th>
+          <th>Usuario</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let log of paginatedLogs">
+          <td>{{ log.log_id }}</td>
+          <td>{{ log.createdAt | date:'short' }}</td>
+          <td>{{ log.user_action }}</td>
+          <td>{{ log.userId }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination">
+    <button (click)="previousPage()" [disabled]="currentPage === 1">Anterior</button>
+    <span>Page {{currentPage}}</span>
+    <button (click)="nextPage()" [disabled]="(currentPage * itemsPerPage) >= logs.length">Siguiente</button>
+  </div>
+
+  <h2>Casos Cerrados</h2>
+
+  <div class="scrollable-box">
+    <table>
+      <thead>
+        <tr>
+          <th>ID de Caso</th>
+          <th>Título</th>
+          <th>Descripción</th>
+          <th>Fecha de Creación</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let closedCase of closedCases">
+          <td>{{ closedCase.caseId }}</td>
+          <td>{{ closedCase.title }}</td>
+          <td>{{ closedCase.description_case }}</td>
+          <td>{{ closedCase.date_created | date:'short' }}</td>
+          <td>
+            <button (click)="reactivateCase(closedCase)" class="reactivate-btn">Reactivar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Usuarios Desactivados</h2>
+
+  <div class="scrollable-box">
+    <table>
+      <thead>
+        <tr>
+          <th>Codigo de cliente</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Email</th>
+          <th>Identificador</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of deactivatedUsers">
+          <td>{{ user.userid }}</td>
+          <td>{{ user.firstname }}</td>
+          <td>{{ user.firstlastname }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.identifier }}</td>
+          <td>
+            <button (click)="reactivateUser(user)" class="reactivate-btn">Reactivar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
