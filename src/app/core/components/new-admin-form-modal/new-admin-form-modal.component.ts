@@ -1,29 +1,30 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { NewCaseFormModalComponent } from '../new-case-form-modal/new-case-form-modal.component';
+import { MatDialogRef } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { AdminService } from '../../services/admin.service';
 
 @Component({
   selector: 'app-new-admin-form-modal',
   templateUrl: './new-admin-form-modal.component.html',
-  styleUrl: './new-admin-form-modal.component.css'
+  styleUrls: ['./new-admin-form-modal.component.css']
 })
 export class NewAdminFormModalComponent implements OnInit {
   adminForm: FormGroup;
   hidePassword = true;
+  roles: string[] = ['USER', 'SUPPORT', 'ADMIN'];
 
   constructor(
     private fb: FormBuilder,
-    private dialogRef: MatDialogRef<NewCaseFormModalComponent>,
+    private dialogRef: MatDialogRef<NewAdminFormModalComponent>,
     private adminService: AdminService,
     private toastr: ToastrService,
   ) {
     this.adminForm = this.fb.group({
-      email: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       adminname: ['', Validators.required],
-      passwd: ['', Validators.required]
+      passwd: ['', [Validators.required, Validators.minLength(8)]],
+      adminRole: ['', Validators.required]
     });
   }
 
@@ -33,11 +34,13 @@ export class NewAdminFormModalComponent implements OnInit {
     if (this.adminForm.valid) {
       this.adminService.saveAdminData(this.adminForm.value).subscribe(
         (response) => {
-          this.toastr.success('Administrador creado correctamente con el nombre!', 'ArcticCRM');
-          this.dialogRef.close(); 
+          this.toastr.success('Usuario creado correctamente!', 'ArcticCRM');
+          console.log(response);
+          
+          this.dialogRef.close();
         },
         (error) => {
-          this.toastr.error('Error al crear administrador!', 'ArcticCRM');
+          this.toastr.error('Error al crear usuario!', 'ArcticCRM');
         }
       );
     }
@@ -46,5 +49,4 @@ export class NewAdminFormModalComponent implements OnInit {
   onCancel() {
     this.dialogRef.close();
   }
-
 }
