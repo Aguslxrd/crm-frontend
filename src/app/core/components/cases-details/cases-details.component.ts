@@ -7,6 +7,7 @@ import { InteractionsService } from '../../services/interactions.service';
 import { EditInteractionFormModalComponent } from '../edit-interaction-form-modal/edit-interaction-form-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { NewInteractionFormModalComponent } from '../new-interaction-form-modal/new-interaction-form-modal.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-cases-details',
@@ -23,7 +24,8 @@ export class CaseDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private caseService: CasesService,
     private dialog: MatDialog,
-    private interactionService: InteractionsService
+    private interactionService: InteractionsService,
+    private toastrService: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -33,31 +35,38 @@ export class CaseDetailsComponent implements OnInit {
       this.loadInteractions(caseId);
     });
   }
-
+  
   loadCaseDetails(caseId: number): void {
+    this.loading = true;
     this.caseService.getCaseById(caseId).subscribe(
       (caseData) => {
         this.caseDetails = caseData;
         this.loading = false;
       },
       (error) => {
-        this.error = 'Error loading case details';
+        console.error('Error al cargar los detalles del caso:', error);
+        this.error = 'Error al cargar los detalles del caso. Por favor, intente de nuevo.';
         this.loading = false;
       }
     );
   }
 
-  loadInteractions(caseId: number): void {
-    this.interactionService.getInteractionsByCaseId(caseId).subscribe(
-      (interactions) => {
-        this.interactions = interactions;
-      },
-      (error) => {
-        console.error('Error loading interactions:', error);
-        this.error = 'Error loading interactions';
+
+loadInteractions(caseId: number): void {
+  this.interactionService.getInteractionsByCaseId(caseId).subscribe(
+    (interactions) => {
+      this.interactions = interactions;
+    },
+    (error) => {
+      if (error.status === 404) {
+        // No hay interacciones, establecer como un arreglo vacío
+        this.interactions = [];
+      } else {
+        this.toastrService.error("Error al cargar detalles del caso! ", "ArcticCRM");
       }
-    );
-  }
+    }
+  );
+}
 
   openAddInteractionModal(): void {
     if (!this.caseDetails) return;
@@ -72,7 +81,7 @@ export class CaseDetailsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.loadInteractions(this.caseDetails!.caseId);
+        this.loadInteractions(this.caseDetails.caseId);
       }
     });
   }
@@ -90,7 +99,7 @@ export class CaseDetailsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.loadInteractions(this.caseDetails!.caseId);
+        this.loadInteractions(this.caseDetails?.caseId);
       }
     });
   }
