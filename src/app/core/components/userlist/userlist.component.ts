@@ -148,8 +148,6 @@ export class UserlistComponent implements OnInit {
         );
       }
     });
-
-
   }
 
   viewUserDetails(userId: number | string) {
