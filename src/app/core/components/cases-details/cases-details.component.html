@@ -13,10 +13,11 @@
     <p><strong>Estado:</strong> {{ caseDetails.case_status }}</p>
   </div>
 
-  <div *ngIf="interactions.length > 0" class="interactions-section">
+  <div class="interactions-section">
     <h3>Interacciones</h3>
     <button class="add-interaction-button" (click)="openAddInteractionModal()">Agregar Interacción</button>
-    <div class="interactions-timeline">
+    
+    <div *ngIf="interactions.length > 0; else noInteractions" class="interactions-timeline">
       <div *ngFor="let interaction of interactions" class="interaction-item">
         <div class="interaction-date">
           <span class="date">{{ interaction.interaction_date | date:'dd/MM/yyyy' }}</span>
@@ -28,6 +29,9 @@
         </div>
       </div>
     </div>
+    <ng-template #noInteractions>
+      <p>No hay interacciones para este casos.</p>
+    </ng-template>
   </div>
 
   <button class="back-button" (click)="goBack()">Volver a la lista de casos</button>

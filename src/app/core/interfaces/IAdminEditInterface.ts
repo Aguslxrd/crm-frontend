@@ -1,7 +1,7 @@
 export interface AdminEditInterface{
     id: number,
     email: string,
-    adminname: string,
+    adminName: string,
     passwd: string,
-    userrole: string
+    userrole: string,
 }

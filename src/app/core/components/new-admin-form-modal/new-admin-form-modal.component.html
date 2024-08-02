@@ -1,0 +1,41 @@
+<h2 mat-dialog-title>Agregar Nuevo Administrador</h2>
+<mat-dialog-content>
+  <form [formGroup]="adminForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email" required>
+      <mat-error *ngIf="adminForm.get('email')?.hasError('required')">Email es requerido</mat-error>
+      <mat-error *ngIf="adminForm.get('email')?.hasError('email')">Email inválido</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nombre de Usuario</mat-label>
+      <input matInput formControlName="adminname" required>
+      <mat-error *ngIf="adminForm.get('adminname')?.hasError('required')">Nombre de usuario es requerido</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Contraseña</mat-label>
+      <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="passwd" required>
+      <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+        <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+      <mat-error *ngIf="adminForm.get('passwd')?.hasError('required')">Contraseña es requerida</mat-error>
+      <mat-error *ngIf="adminForm.get('passwd')?.hasError('minlength')">La contraseña debe tener al menos 8 caracteres</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Rol</mat-label>
+      <mat-select formControlName="adminRole" required>
+        <mat-option *ngFor="let role of roles" [value]="role">
+          {{role}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="adminForm.get('adminRole')?.hasError('required')">Rol es requerido</mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-raised-button color="primary" [disabled]="adminForm.invalid" (click)="onSubmit()">Crear Usuario</button>
+</mat-dialog-actions>

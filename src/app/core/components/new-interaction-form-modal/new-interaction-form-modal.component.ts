@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { InteractionsService } from '../../services/interactions.service';
 import { ToastrService } from 'ngx-toastr';
+import { StorageService } from '../../services/storage-service.service';
 
 @Component({
   selector: 'app-new-interaction-form-modal',
@@ -14,14 +15,15 @@ export class NewInteractionFormModalComponent {
 
   constructor(
     public dialogRef: MatDialogRef<NewInteractionFormModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { caseId: number, authId: number },
+    @Inject(MAT_DIALOG_DATA) public data: { caseId: number},
     private fb: FormBuilder,
     private interactionService: InteractionsService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private storageService: StorageService
   ) {
 
     this.interactionForm = this.fb.group({
-      authId: [data.authId, Validators.required],
+      authId: [storageService.getUserId(), Validators.required],
       caseId: [data.caseId, Validators.required],
       interaction_text: ['', Validators.required]
     });

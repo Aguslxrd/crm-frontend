@@ -91,6 +91,38 @@ export class CasesService {
       return new Observable<CaseInterface[]>();
     }
   }
+  
+  getAllCasesCount(): Observable<number> {
+    const token = this.storageService.getToken();
+    if (token) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.get<number>(`${this.apiUrl}/all`, { headers });
+    } else {
+      console.error('No token found in localStorage');
+      return new Observable<number>();
+    }
+  }
 
+  getAllOpenedCasesCount(): Observable<number> {
+    const token = this.storageService.getToken();
+    if (token) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.get<number>(`${this.apiUrl}/all/opened`, { headers });
+    } else {
+      console.error('No token found in localStorage');
+      return new Observable<number>();
+    }
+  }
+
+  getAllInProgressCasesCount(): Observable<number> {
+    const token = this.storageService.getToken();
+    if (token) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.get<number>(`${this.apiUrl}/all/inprogress`, { headers });
+    } else {
+      console.error('No token found in localStorage');
+      return new Observable<number>();
+    }
+  }
 
 }

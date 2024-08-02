@@ -8,6 +8,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserInterface } from '../../interfaces/IUser';
 import { EditCaseFormModalComponent } from '../edit-case-form-modal/edit-case-form-modal.component';
 import { EditUserFormModalComponent } from '../edit-user-form-modal/edit-user-form-modal.component';
+import { NewAdminFormModalComponent } from '../new-admin-form-modal/new-admin-form-modal.component';
+import { EditAdminFormModalComponent } from '../edit-admin-form-modal/edit-admin-form-modal.component';
+import { AdminEditInterface } from '../../interfaces/IAdminEditInterface';
+import { AdminRegisterInterface } from '../../interfaces/IAdminRegister';
 
 @Component({
   selector: 'app-admin-management',
@@ -52,8 +56,23 @@ export class AdminManagementComponent implements OnInit {
     }
   }
 
-  editAdmin(admin: AdminInterface): void {
-    
+  editAdmin(adminData: AdminInterface): void {
+    const adminEditData: AdminEditInterface = {
+      id: adminData.userId,
+      email: adminData.email,
+      adminName: adminData.username,
+      passwd: '',  
+      userrole: adminData.role
+    };
+
+    const dialogRef = this.dialog.open(EditAdminFormModalComponent, {
+      width: '400px',
+      data: adminEditData
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.getAdminUsers();
+    });
   }
 
   deleteAdmin(userId: number): void {
@@ -121,6 +140,18 @@ export class AdminManagementComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+      }
+    });
+  }
+
+  addNewAdministrador(): void {
+    const dialogRef = this.dialog.open(NewAdminFormModalComponent, {
+      width: '400px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.getAdminUsers();
       }
     });
   }

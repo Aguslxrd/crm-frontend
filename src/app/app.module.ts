@@ -34,6 +34,8 @@ import { EnterpriseDetailsComponent } from './core/components/enterprise-details
 import { NgSelectModule } from '@ng-select/ng-select';
 import { AdminManagementComponent } from './core/components/admin-management/admin-management.component';
 import { ToastrModule } from 'ngx-toastr';
+import { NewAdminFormModalComponent } from './core/components/new-admin-form-modal/new-admin-form-modal.component';
+import { EditAdminFormModalComponent } from './core/components/edit-admin-form-modal/edit-admin-form-modal.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,9 @@ import { ToastrModule } from 'ngx-toastr';
     NewEnterpriseFormModalComponent,
     EditEnterpriseFormModalComponent,
     EnterpriseDetailsComponent,
-    AdminManagementComponent
+    AdminManagementComponent,
+    NewAdminFormModalComponent,
+    EditAdminFormModalComponent
   ],
   imports: [
     BrowserModule,
