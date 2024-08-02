@@ -59,7 +59,6 @@ loadInteractions(caseId: number): void {
     },
     (error) => {
       if (error.status === 404) {
-        // No hay interacciones, establecer como un arreglo vacío
         this.interactions = [];
       } else {
         this.toastrService.error("Error al cargar detalles del caso! ", "ArcticCRM");

@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { EditCaseFormModalComponent } from '../edit-case-form-modal/edit-case-form-modal.component';
 import { NewEnterpriseFormModalComponent } from '../new-enterprise-form-modal/new-enterprise-form-modal.component';
 import { EditEnterpriseFormModalComponent } from '../edit-enterprise-form-modal/edit-enterprise-form-modal.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-enterprises-list',
@@ -120,9 +121,27 @@ export class EnterprisesListComponent implements OnInit {
   }
 
   deleteEnterprise(enterpriseId: number): void {
-    this.enterpriseService.deleteEnterpriseById(enterpriseId).subscribe(
-      () => this.loadEnterprises()
-    );
+    Swal.fire({
+      title: "Confirmacion",
+      text: "Seguro que deseas eliminar esta empresa?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, deseo eliminarla!",
+      cancelButtonText: "Cancelar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Eliminado!",
+          text: "Esta empresa fue eliminada.",
+          icon: "success"
+        });
+        this.enterpriseService.deleteEnterpriseById(enterpriseId).subscribe(
+          () => this.loadEnterprises()
+        );
+      }
+    });
   }
 
   viewEnterpriseDetails(enterpriseId: number) {

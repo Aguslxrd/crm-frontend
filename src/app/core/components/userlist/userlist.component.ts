@@ -6,6 +6,7 @@ import { NewUserFormModalComponent } from '../new-user-form-modal/new-user-form-
 import { Observable } from 'rxjs';
 import { EditUserFormModalComponent } from '../edit-user-form-modal/edit-user-form-modal.component';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-userlist',
@@ -126,9 +127,27 @@ export class UserlistComponent implements OnInit {
   }
 
   deleteUser(userId: number): void {
-    this.userService.deleteUserById(userId).subscribe(
-      () => this.loadUsers()
-    );
+    Swal.fire({
+      title: "Confirmacion",
+      text: "Seguro que deseas eliminar este cliente?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, deseo eliminarlo!",
+      cancelButtonText: "Cancelar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Eliminado!",
+          text: "Este usuario fue eliminado.",
+          icon: "success"
+        });
+        this.userService.deleteUserById(userId).subscribe(
+          () => this.loadUsers()
+        );
+      }
+    });
   }
 
   viewUserDetails(userId: number | string) {
