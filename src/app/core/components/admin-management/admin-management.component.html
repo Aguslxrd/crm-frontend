@@ -61,7 +61,7 @@
           <td>{{ enterprise.email }}</td>
           <td>{{ enterprise.web_site }}</td>
           <td>
-            <button (click)="reactivateEnterprise()" class="reactivate-btn">Reactivar</button>
+            <button (click)="reactivateEnterprise(enterprise.enterpriseid)" class="reactivate-btn">Reactivar</button>
           </td>
         </tr>
       </tbody>

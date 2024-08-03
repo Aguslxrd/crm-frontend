@@ -14,6 +14,7 @@ import { AdminEditInterface } from '../../interfaces/IAdminEditInterface';
 import { AdminRegisterInterface } from '../../interfaces/IAdminRegister';
 import { EnterprisesService } from '../../services/enterprises.service';
 import { EnterprisesInterface } from '../../interfaces/IEnterprises';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-admin-management',
@@ -27,6 +28,7 @@ export class AdminManagementComponent implements OnInit {
   deactivatedUsers: UserInterface[] = [];
   searchQuery: string = '';
   deletedEnterprises: EnterprisesInterface[] = [];
+  activateEnterprise = false;
 
   currentPage: number = 1;
   itemsPerPage: number = 5;
@@ -35,7 +37,8 @@ export class AdminManagementComponent implements OnInit {
   constructor(private adminService: AdminService, 
     private caseService: CasesService, 
     public dialog: MatDialog,
-    public enterpriseService: EnterprisesService) {}
+    public enterpriseService: EnterprisesService,
+    public toastr: ToastrService) {}
 
   ngOnInit(): void {
     this.getAdminUsers();
@@ -169,8 +172,15 @@ export class AdminManagementComponent implements OnInit {
     });
   }
 
-  reactivateEnterprise(): void {
-    this.getDeletedEnterprises();
+  reactivateEnterprise(enterpriseId: number): void {
+    this.adminService.activateEnterpriseById(enterpriseId).subscribe(
+      (data) => {
+        this.toastr.success('Empresa re-activada!', 'ArcticCRM');
+      },
+      (error) => {
+        this.toastr.error('Error al reactivar la empresa!', 'ArcticCRM');
+      }
+    );
   }
 
 }
