@@ -12,6 +12,8 @@ import { NewAdminFormModalComponent } from '../new-admin-form-modal/new-admin-fo
 import { EditAdminFormModalComponent } from '../edit-admin-form-modal/edit-admin-form-modal.component';
 import { AdminEditInterface } from '../../interfaces/IAdminEditInterface';
 import { AdminRegisterInterface } from '../../interfaces/IAdminRegister';
+import { EnterprisesService } from '../../services/enterprises.service';
+import { EnterprisesInterface } from '../../interfaces/IEnterprises';
 
 @Component({
   selector: 'app-admin-management',
@@ -24,18 +26,23 @@ export class AdminManagementComponent implements OnInit {
   closedCases: CaseInterface[] = [];
   deactivatedUsers: UserInterface[] = [];
   searchQuery: string = '';
+  deletedEnterprises: EnterprisesInterface[] = [];
 
   currentPage: number = 1;
   itemsPerPage: number = 5;
   paginatedLogs: ILogsInterface[] = [];
 
-  constructor(private adminService: AdminService, private caseService: CasesService, public dialog: MatDialog) {}
+  constructor(private adminService: AdminService, 
+    private caseService: CasesService, 
+    public dialog: MatDialog,
+    public enterpriseService: EnterprisesService) {}
 
   ngOnInit(): void {
     this.getAdminUsers();
     this.getLogs();
     this.getClosedCases();
     this.getSoftDeletedUsers();
+    this.getDeletedEnterprises();
   }
 
   getAdminUsers(): void {
@@ -155,4 +162,15 @@ export class AdminManagementComponent implements OnInit {
       }
     });
   }
+
+  getDeletedEnterprises(): void {
+    this.adminService.getAllSoftDeletedEnterprises().subscribe((data) => {
+      this.deletedEnterprises = data;
+    });
+  }
+
+  reactivateEnterprise(): void {
+    this.getDeletedEnterprises();
+  }
+
 }

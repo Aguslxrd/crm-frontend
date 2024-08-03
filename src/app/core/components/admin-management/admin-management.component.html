@@ -35,6 +35,40 @@
     </table>
   </div>
 
+  <h2>Empresas Eliminadas</h2>
+
+  <div class="scrollable-box">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>RUT</th>
+          <th>Dirección</th>
+          <th>Teléfono</th>
+          <th>Email</th>
+          <th>Sitio Web</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let enterprise of deletedEnterprises">
+          <td>{{ enterprise.enterpriseid }}</td>
+          <td>{{ enterprise.name_enterprise }}</td>
+          <td>{{ enterprise.rut }}</td>
+          <td>{{ enterprise.address }}</td>
+          <td>{{ enterprise.phone }}</td>
+          <td>{{ enterprise.email }}</td>
+          <td>{{ enterprise.web_site }}</td>
+          <td>
+            <button (click)="reactivateEnterprise()" class="reactivate-btn">Reactivar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
   <h2>Logs</h2>
 
   <div class="scrollable-box">

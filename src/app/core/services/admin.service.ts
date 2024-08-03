@@ -109,14 +109,14 @@ export class AdminService {
     }
   }
 
-  getAllSoftDeletedEnterprises(enterpriseData: EnterprisesInterface): Observable<EnterprisesInterface> {
+  getAllSoftDeletedEnterprises(): Observable<EnterprisesInterface[]> {
     const token = this.storageService.getToken();
     if (token) {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-      return this.http.patch<EnterprisesInterface>(`${this.apiUrl}/softdeletedenterprises`, enterpriseData, { headers });
+      return this.http.get<EnterprisesInterface[]>(`${this.apiUrl}/softdeletedenterprises`, { headers });
     } else {
       console.error('No token found in localStorage');
-      return new Observable<EnterprisesInterface>();
+      return new Observable<EnterprisesInterface[]>();
     }
   }
 
