@@ -9,6 +9,7 @@ import { AdminEditInterface } from '../interfaces/IAdminEditInterface';
 import { ILogsInterface } from '../interfaces/ILoggsInterface';
 import { CaseInterface } from '../interfaces/ICase';
 import { UserInterface } from '../interfaces/IUser';
+import { EnterprisesInterface } from '../interfaces/IEnterprises';
 
 @Injectable({
   providedIn: 'root'
@@ -105,6 +106,17 @@ export class AdminService {
     } else {
       console.error('No token found in localStorage');
       return new Observable<AdminEditInterface>();
+    }
+  }
+
+  getAllSoftDeletedEnterprises(enterpriseData: EnterprisesInterface): Observable<EnterprisesInterface> {
+    const token = this.storageService.getToken();
+    if (token) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.patch<EnterprisesInterface>(`${this.apiUrl}/softdeletedenterprises`, enterpriseData, { headers });
+    } else {
+      console.error('No token found in localStorage');
+      return new Observable<EnterprisesInterface>();
     }
   }
 
