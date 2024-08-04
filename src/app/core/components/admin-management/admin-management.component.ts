@@ -37,6 +37,9 @@ export class AdminManagementComponent implements OnInit {
   currentEnterprisePage: number = 0;
   totalEnterprisePages: number = 0;
 
+  currentDeactivatedUsersPage: number = 0; 
+  totalDeactivatedUsersPages: number = 0; 
+
   constructor(
     private adminService: AdminService, 
     private caseService: CasesService, 
@@ -49,7 +52,7 @@ export class AdminManagementComponent implements OnInit {
     this.getAdminUsers();
     this.getLogs(this.currentPage, this.pageSize);
     this.getClosedCases();
-    this.getSoftDeletedUsers();
+    this.getSoftDeletedUsers(this.currentDeactivatedUsersPage, this.pageSize);
     this.getDeletedEnterprises(this.currentEnterprisePage, this.pageSize);
   }
 
@@ -134,19 +137,21 @@ export class AdminManagementComponent implements OnInit {
     });
   }
 
-  getSoftDeletedUsers(): void {
-    this.adminService.getAllSoftDeletedUsers().subscribe((data) => {
-      this.deactivatedUsers = data;
+  getSoftDeletedUsers(page: number, size: number): void {
+    this.adminService.getAllSoftDeletedUsers(page, size).subscribe((response) => {
+      this.deactivatedUsers = response.content;
+      this.totalElements = response.totalElements;
+      this.totalDeactivatedUsersPages = response.totalPages; 
     });
   }
-
+  
   reactivateCase(caseItem: CaseInterface): void {
     this.openDialog(EditCaseFormModalComponent, caseItem, () => this.getClosedCases());
   }
 
   reactivateUser(userData: UserInterface): void {
-    this.openDialog(EditUserFormModalComponent, userData, () => this.getSoftDeletedUsers());
-  }
+    this.openDialog(EditUserFormModalComponent, userData, () => this.getSoftDeletedUsers(this.currentDeactivatedUsersPage, this.pageSize));
+  }  
 
   addNewAdmin(): void {
     this.openDialog(NewAdminFormModalComponent, null, () => this.getAdminUsers());
@@ -156,7 +161,7 @@ export class AdminManagementComponent implements OnInit {
     this.adminService.getAllSoftDeletedEnterprises(page, size).subscribe((response) => {
       this.deletedEnterprises = response.content;
       this.totalElements = response.totalElements;
-      this.totalEnterprisePages = response.totalPages; // Update this value
+      this.totalEnterprisePages = response.totalPages;
     });
   }
 
@@ -185,4 +190,20 @@ export class AdminManagementComponent implements OnInit {
       this.getDeletedEnterprises(this.currentEnterprisePage, this.pageSize);
     }
   }
+
+  previousDeactivatedUsersPage(): void {
+    if (this.currentDeactivatedUsersPage > 0) {
+      this.currentDeactivatedUsersPage--;
+      this.getSoftDeletedUsers(this.currentDeactivatedUsersPage, this.pageSize);
+    }
+  }
+  
+  nextDeactivatedUsersPage(): void {
+    if (this.currentDeactivatedUsersPage < this.totalDeactivatedUsersPages - 1) {
+      this.currentDeactivatedUsersPage++;
+      this.getSoftDeletedUsers(this.currentDeactivatedUsersPage, this.pageSize);
+    }
+  }
+  
+  
 }

@@ -7,5 +7,6 @@ export interface UserInterface{
     phone: string,
     email: string,
     address: string,
-    identifier: string
+    identifier: string,
+    softDelete: string
 }

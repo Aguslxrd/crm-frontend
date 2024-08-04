@@ -129,30 +129,36 @@
   </div>
 
   <h3>Usuarios Desactivados</h3>
-  <div class="scrollable-box">
-    <table>
-      <thead>
-        <tr>
-          <th>Código de Cliente</th>
-          <th>Nombre</th>
-          <th>Apellido</th>
-          <th>Email</th>
-          <th>Identificador</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of deactivatedUsers">
-          <td>{{ user.userid }}</td>
-          <td>{{ user.firstname }}</td>
-          <td>{{ user.firstlastname }}</td>
-          <td>{{ user.email }}</td>
-          <td>{{ user.identifier }}</td>
-          <td>
-            <button (click)="reactivateUser(user)" class="reactivate-btn">Reactivar</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+<div class="scrollable-box">
+  <table>
+    <thead>
+      <tr>
+        <th>Código de Cliente</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Email</th>
+        <th>Identificador</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of deactivatedUsers">
+        <td>{{ user.userid }}</td>
+        <td>{{ user.firstname }}</td>
+        <td>{{ user.firstlastname }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.identifier }}</td>
+        <td>
+          <button (click)="reactivateUser(user)" class="reactivate-btn">Reactivar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
+
+<div class="pagination">
+  <button (click)="previousDeactivatedUsersPage()" [disabled]="currentDeactivatedUsersPage === 0">Anterior</button>
+  <span>Página {{currentDeactivatedUsersPage + 1}}</span>
+  <button (click)="nextDeactivatedUsersPage()" [disabled]="currentDeactivatedUsersPage >= totalDeactivatedUsersPages - 1">Siguiente</button>
+</div>
+

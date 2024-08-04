@@ -48,14 +48,14 @@
 
     <mat-form-field appearance="fill">
       <mat-label>Estado</mat-label>
-      <mat-select formControlName="case_status">
-        <mat-option value="TRUE">Activado</mat-option>
-        <mat-option value="FALSE">Desactivado</mat-option>
+      <mat-select formControlName="softDelete">
+        <mat-option value="true">Activado</mat-option>
+        <mat-option value="false">Desactivado</mat-option>
       </mat-select>
-      <mat-error *ngIf="userForm.get('user_status')">
+      <mat-error *ngIf="userForm.get('softDelete')?.hasError('required')">
         Estado es requerido
       </mat-error>
-    </mat-form-field>
+    </mat-form-field>    
 
   </mat-dialog-content>
   
