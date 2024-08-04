@@ -1,6 +1,6 @@
 import { UserInterface } from "./IUser";
 
-export interface CaseResponse {
+export interface UserResponse {
     totalElements: number;
     totalPages: number;
     size: number;

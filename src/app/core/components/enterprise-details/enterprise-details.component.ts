@@ -57,15 +57,15 @@ export class EnterpriseDetailsComponent implements OnInit {
   }
 
   loadUsers(): void {
-    this.userService.getUsers().subscribe(
-      (users) => {
-        this.users = users;
-        this.cdr.detectChanges();
-      },
-      (error) => {
-        console.error('Error fetching users:', error);
-      }
-    );
+    // this.userService.getUsers().subscribe(
+    //   (users) => {
+    //     this.users = users;
+    //     this.cdr.detectChanges();
+    //   },
+    //   (error) => {
+    //     console.error('Error fetching users:', error);
+    //   }
+    // ); esto se rompe porque no tiene paginacion, se utiliza para selecionar un usuario a una empresa
   }
 
   loadEnterpriseUsers(enterpriseId: number): void {

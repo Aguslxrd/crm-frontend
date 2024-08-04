@@ -17,6 +17,9 @@ export class UserlistComponent implements OnInit {
   users: UserInterface[] = [];
   searchCriteria: string = 'email';
   searchQuery: string = '';
+  currentPage: number = 0;
+  totalPages: number = 0;
+  size: number = 10;
 
   constructor(private userService: UserService, public dialog: MatDialog, private router: Router) {}
 
@@ -25,9 +28,10 @@ export class UserlistComponent implements OnInit {
   }
 
   loadUsers(): void {
-    this.userService.getUsers().subscribe(
+    this.userService.getUsers(this.currentPage, this.size).subscribe(
       (response) => {
-        this.users = response;
+        this.users = response.content;
+        this.totalPages = response.totalPages;
       },
       (error) => {
         console.error('Error fetching users:', error);
@@ -40,7 +44,7 @@ export class UserlistComponent implements OnInit {
       this.loadUsers();
       return;
     }
-  
+
     switch (this.searchCriteria) {
       case 'email':
         this.userService.searchUsersByEmail(this.searchQuery).subscribe(
@@ -53,51 +57,52 @@ export class UserlistComponent implements OnInit {
           }
         );
         break;
-        case 'identifier':
-          this.userService.searchUserByIdentifier(this.searchQuery).subscribe(
-            (response) => {
-              this.users = Array.isArray(response) ? response : [response];
-            },
-            (error) => {
-              console.error('Error searching users by identifier:', error);
-              this.users = [];
-            }
-          );
-        break;
-        case 'phoneNumber':
-          this.userService.searchUserByPhone(this.searchQuery).subscribe(
-            (response) => {
-              this.users = Array.isArray(response) ? response : [response];
-            },
-            (error) => {
-              console.error('Error searching users by phone number:', error);
-              this.users = [];
-            }
-          );
-        break;
-        case 'userId':
-          const userId = parseInt(this.searchQuery, 10);
-          if (!isNaN(userId)) {
-            this.userService.searchUserByUserId(userId).subscribe(
-              (response) => {
-                this.users = Array.isArray(response) ? response : [response];
-              },
-              (error) => {
-                console.error('Error searching users by user ID:', error);
-                this.users = [];
-              }
-            );
-          } else {
-            console.error('Invalid user ID');
+      case 'identifier':
+        this.userService.searchUserByIdentifier(this.searchQuery).subscribe(
+          (response) => {
+            this.users = Array.isArray(response) ? response : [response];
+          },
+          (error) => {
+            console.error('Error searching users by identifier:', error);
             this.users = [];
           }
-          break;
-        default:
-          console.error('Invalid search criteria:', this.searchCriteria);
-          this.users = []; 
-          break;
-      }
+        );
+        break;
+      case 'phoneNumber':
+        this.userService.searchUserByPhone(this.searchQuery).subscribe(
+          (response) => {
+            this.users = Array.isArray(response) ? response : [response];
+          },
+          (error) => {
+            console.error('Error searching users by phone number:', error);
+            this.users = [];
+          }
+        );
+        break;
+      case 'userId':
+        const userId = parseInt(this.searchQuery, 10);
+        if (!isNaN(userId)) {
+          this.userService.searchUserByUserId(userId).subscribe(
+            (response) => {
+              this.users = Array.isArray(response) ? response : [response];
+            },
+            (error) => {
+              console.error('Error searching users by user ID:', error);
+              this.users = [];
+            }
+          );
+        } else {
+          console.error('Invalid user ID');
+          this.users = [];
+        }
+        break;
+      default:
+        console.error('Invalid search criteria:', this.searchCriteria);
+        this.users = []; 
+        break;
     }
+  }
+
   openSaveUserModal(): void {
     const dialogRef = this.dialog.open(NewUserFormModalComponent, {
       width: '400px'
@@ -123,7 +128,6 @@ export class UserlistComponent implements OnInit {
       }
       this.loadUsers();
     });
-    
   }
 
   deleteUser(userId: number): void {
@@ -154,4 +158,24 @@ export class UserlistComponent implements OnInit {
     this.router.navigate(['/user/details', userId]);
   }
 
+  goToPage(page: number): void {
+    if (page >= 0 && page < this.totalPages) {
+      this.currentPage = page;
+      this.loadUsers();
+    }
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages - 1) {
+      this.currentPage++;
+      this.loadUsers();
+    }
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+      this.loadUsers();
+    }
+  }
 }
