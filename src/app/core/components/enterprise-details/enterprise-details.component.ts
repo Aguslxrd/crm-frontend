@@ -37,9 +37,7 @@ export class EnterpriseDetailsComponent implements OnInit {
       this.loadUsers();
       this.loadEnterpriseUsers(enterpriseId);
     });
-    console.log('Initial enterpriseUsers:', this.enterpriseUsers);
   }
-  
 
   loadEnterpriseDetails(enterpriseId: number): void {
     this.loading = true;
@@ -71,44 +69,37 @@ export class EnterpriseDetailsComponent implements OnInit {
         this.loading = false;
       }
     );
-  } //No es seguro utilizarlo y no es practico, agregar un modal para asignar un usuario mediante id de usuario y id de empresa.
+  }
 
   loadEnterpriseUsers(enterpriseId: number): void {
     this.enterpriseService.getUserEnterprise(enterpriseId).subscribe(
       (enterpriseUsers) => {
-        console.log('Received enterprise users:', enterpriseUsers);
         this.enterpriseUsers = enterpriseUsers.map(eu => ({...eu, fullName: null}));
-        enterpriseUsers.forEach(eu => {
+        this.enterpriseUsers.forEach(eu => {
           if (eu && eu.id && eu.id.userId) {
             this.getUserFullName(eu.id.userId);
           } else {
             console.error('Invalid user data:', eu);
           }
         });
-        console.log('Enterprise Users after initial mapping:', this.enterpriseUsers);
       },
       (error) => {
         console.error('Error fetching enterprise users:', error);
       }
     );
   }
-  
+
   getUserFullName(userId: number): void {
-    console.log(`Fetching details for user ID: ${userId}`);
     this.userService.searchUserByUserId(userId).subscribe(
       (user: UserInterface) => {
-        console.log(`Received user data for ID ${userId}:`, user);
         if (user) {
           const fullName = `${user.firstname || ''} ${user.firstlastname || ''}`.trim();
-          console.log(`Full name for user ${userId}: ${fullName}`);
           this.enterpriseUsers = this.enterpriseUsers.map(eu => {
             if (eu.id && eu.id.userId === userId) {
-              console.log(`Updating user with ID ${userId} to fullName: ${fullName}`);
               return { ...eu, fullName: fullName };
             }
             return eu;
           });
-          console.log('Updated enterpriseUsers:', this.enterpriseUsers);
           this.cdr.detectChanges();
         } else {
           console.warn(`User object is undefined for ID ${userId}`);
@@ -120,12 +111,13 @@ export class EnterpriseDetailsComponent implements OnInit {
       }
     );
   }
-  
+
   removeUserFromEnterprise(userId: number): void {
-    if (this.enterprise) {
-      this.enterpriseService.deleteUserAssignedToEnterpriseById(userId, this.enterprise.enterpriseid).subscribe(
+    const enterpriseId = this.enterprise?.enterpriseid;
+    if (enterpriseId) {
+      this.enterpriseService.deleteUserAssignedToEnterpriseById(userId, enterpriseId).subscribe(
         () => {
-          console.log(`User ${userId} removed from enterprise ${this.enterprise?.enterpriseid}`);
+          this.loadEnterpriseUsers(enterpriseId);
         },
         (error) => {
           console.error('Error removing user from enterprise:', error);
@@ -133,20 +125,18 @@ export class EnterpriseDetailsComponent implements OnInit {
       );
     }
   }
-  
-  
-  
+
   assignUserToEnterprise(): void {
-    if (this.enterprise && this.selectedUserId) {
+    const enterpriseId = this.enterprise?.enterpriseid;
+    if (enterpriseId && this.selectedUserId) {
       const userEnterpriseData: UserEnterpriseAssociation = {
         userId: this.selectedUserId,
-        enterpriseId: this.enterprise.enterpriseid
+        enterpriseId: enterpriseId
       };
 
       this.enterpriseService.saveUserEnterprise(userEnterpriseData).subscribe(
         (response) => {
-          console.log('User assigned to enterprise successfully', response);
-          this.loadEnterpriseUsers(this.enterprise!.enterpriseid);
+          this.loadEnterpriseUsers(enterpriseId);
           this.selectedUserId = null;
           this.cdr.detectChanges();
         },
@@ -159,7 +149,7 @@ export class EnterpriseDetailsComponent implements OnInit {
 
   trackByUserId(index: number, user: any): number {
     return user.id.userId;
-  }  
+  }
 
   goBack(): void {
     this.location.back();

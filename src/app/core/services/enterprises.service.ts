@@ -17,7 +17,6 @@ export class EnterprisesService {
 
   constructor(private http: HttpClient, private storageService: StorageService) {}
 
-
   getEnterpriseByEnterpriseId(enterpriseId: number): Observable<EnterprisesInterface> {
     const token = this.storageService.getToken();
     if (token) {
@@ -50,7 +49,6 @@ export class EnterprisesService {
       return new Observable<EnterpriseResponse>();
     }
   }  
-
 
   getEnterprisesByName(enterpriseName: string) : Observable<EnterprisesInterface[]>{
     const token = this.storageService.getToken();
@@ -118,11 +116,11 @@ export class EnterprisesService {
     return new Observable<EnterprisesInterface[]>();
   }
 
-  getUserEnterprise(userId: number): Observable<UserEnterpriseInterface[]> {
+  getUserEnterprise(enterpriseId: number): Observable<UserEnterpriseInterface[]> {
     const token = this.storageService.getToken();
     if (token) {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-      return this.http.get<UserEnterpriseInterface[]>(`${this.apiUrlEnterpriseUser}/user/${userId}`, { headers });
+      return this.http.get<UserEnterpriseInterface[]>(`${this.apiUrlEnterpriseUser}/enterprise/${enterpriseId}`, { headers });
     } else {
       console.error('No token found in localStorage');
       return new Observable<UserEnterpriseInterface[]>();
