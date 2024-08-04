@@ -1,5 +1,5 @@
 <div class="admin-panel">
-  <h2>Panel de administradores</h2>
+  <h2>Panel de Administradores</h2>
 
   <div class="action-container">
     <div class="search-container">
@@ -9,6 +9,7 @@
     <button (click)="addNewAdmin()" class="add-admin-btn">Agregar Nuevo Administrador</button>
   </div>
 
+  <h3>Administradores</h3>
   <div class="scrollable-box">
     <table>
       <thead>
@@ -35,8 +36,7 @@
     </table>
   </div>
 
-  <h2>Empresas Eliminadas</h2>
-
+  <h3>Empresas Eliminadas</h3>
   <div class="scrollable-box">
     <table>
       <thead>
@@ -68,13 +68,18 @@
     </table>
   </div>
 
-  <h2>Logs</h2>
+  <div class="pagination">
+    <button (click)="previousEnterprisePage()" [disabled]="currentEnterprisePage === 0">Anterior</button>
+    <span>Página {{currentEnterprisePage + 1}}</span>
+    <button (click)="nextEnterprisePage()" [disabled]="currentEnterprisePage >= totalEnterprisePages - 1">Siguiente</button>
+  </div>
 
+  <h3>Logs</h3>
   <div class="scrollable-box">
     <table>
       <thead>
         <tr>
-          <th>ID de registro</th>
+          <th>ID de Registro</th>
           <th>Fecha</th>
           <th>Acción</th>
           <th>Usuario</th>
@@ -97,8 +102,7 @@
     <button (click)="nextPage()" [disabled]="currentPage >= totalPages - 1">Siguiente</button>
   </div>
 
-  <h2>Casos Cerrados</h2>
-
+  <h3>Casos Cerrados</h3>
   <div class="scrollable-box">
     <table>
       <thead>
@@ -124,13 +128,12 @@
     </table>
   </div>
 
-  <h2>Usuarios Desactivados</h2>
-
+  <h3>Usuarios Desactivados</h3>
   <div class="scrollable-box">
     <table>
       <thead>
         <tr>
-          <th>Codigo de cliente</th>
+          <th>Código de Cliente</th>
           <th>Nombre</th>
           <th>Apellido</th>
           <th>Email</th>

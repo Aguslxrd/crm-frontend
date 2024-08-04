@@ -11,11 +11,9 @@ import { EditUserFormModalComponent } from '../edit-user-form-modal/edit-user-fo
 import { NewAdminFormModalComponent } from '../new-admin-form-modal/new-admin-form-modal.component';
 import { EditAdminFormModalComponent } from '../edit-admin-form-modal/edit-admin-form-modal.component';
 import { AdminEditInterface } from '../../interfaces/IAdminEditInterface';
-import { AdminRegisterInterface } from '../../interfaces/IAdminRegister';
 import { EnterprisesService } from '../../services/enterprises.service';
 import { EnterprisesInterface } from '../../interfaces/IEnterprises';
 import { ToastrService } from 'ngx-toastr';
-import { LogsResponse } from '../../interfaces/ILogsResponse';
 
 @Component({
   selector: 'app-admin-management',
@@ -36,6 +34,9 @@ export class AdminManagementComponent implements OnInit {
   totalElements: number = 0;
   totalPages: number = 0;
 
+  currentEnterprisePage: number = 0;
+  totalEnterprisePages: number = 0;
+
   constructor(
     private adminService: AdminService, 
     private caseService: CasesService, 
@@ -49,7 +50,7 @@ export class AdminManagementComponent implements OnInit {
     this.getLogs(this.currentPage, this.pageSize);
     this.getClosedCases();
     this.getSoftDeletedUsers();
-    this.getDeletedEnterprises();
+    this.getDeletedEnterprises(this.currentEnterprisePage, this.pageSize);
   }
 
   getAdminUsers(): void {
@@ -151,9 +152,11 @@ export class AdminManagementComponent implements OnInit {
     this.openDialog(NewAdminFormModalComponent, null, () => this.getAdminUsers());
   }
 
-  getDeletedEnterprises(): void {
-    this.adminService.getAllSoftDeletedEnterprises().subscribe((data) => {
-      this.deletedEnterprises = data;
+  getDeletedEnterprises(page: number, size: number): void {
+    this.adminService.getAllSoftDeletedEnterprises(page, size).subscribe((response) => {
+      this.deletedEnterprises = response.content;
+      this.totalElements = response.totalElements;
+      this.totalEnterprisePages = response.totalPages; // Update this value
     });
   }
 
@@ -161,13 +164,25 @@ export class AdminManagementComponent implements OnInit {
     this.adminService.activateEnterpriseById(enterpriseId).subscribe(
       () => {
         this.toastr.success('Empresa re-activada!', 'ArcticCRM');
-        this.getDeletedEnterprises();
+        this.getDeletedEnterprises(this.currentEnterprisePage, this.pageSize);
       },
       (error) => {
         this.toastr.error('Error al reactivar la empresa!', 'ArcticCRM');
       }
     );
   }
+
+  previousEnterprisePage(): void {
+    if (this.currentEnterprisePage > 0) {
+      this.currentEnterprisePage--;
+      this.getDeletedEnterprises(this.currentEnterprisePage, this.pageSize);
+    }
+  }
+  
+  nextEnterprisePage(): void {
+    if (this.currentEnterprisePage < this.totalEnterprisePages - 1) {
+      this.currentEnterprisePage++;
+      this.getDeletedEnterprises(this.currentEnterprisePage, this.pageSize);
+    }
+  }
 }
-
-

@@ -11,6 +11,7 @@ import { CaseInterface } from '../interfaces/ICase';
 import { UserInterface } from '../interfaces/IUser';
 import { EnterprisesInterface } from '../interfaces/IEnterprises';
 import { LogsResponse } from '../interfaces/ILogsResponse';
+import { AdminEnterpriseResponse } from '../interfaces/IAdminEnterpriseResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -112,14 +113,15 @@ export class AdminService {
     }
   }
 
-  getAllSoftDeletedEnterprises(): Observable<EnterprisesInterface[]> {
+  getAllSoftDeletedEnterprises(page: number, size: number): Observable<AdminEnterpriseResponse> {
     const token = this.storageService.getToken();
     if (token) {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-      return this.http.get<EnterprisesInterface[]>(`${this.apiUrl}/softdeletedenterprises`, { headers });
+      const params = new HttpParams().set('page', page.toString()).set('size', size.toString());
+      return this.http.get<AdminEnterpriseResponse>(`${this.apiUrl}/softdeletedenterprises`, { headers, params });
     } else {
       console.error('No token found in localStorage');
-      return new Observable<EnterprisesInterface[]>();
+      return new Observable<AdminEnterpriseResponse>();
     }
   }
 
