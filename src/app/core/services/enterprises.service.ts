@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { StorageService } from './storage-service.service';
 import { EnterprisesInterface } from '../interfaces/IEnterprises';
@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { UserEnterpriseInterface } from '../interfaces/IUser-Enterprise';
 import { UserEnterpriseAssociation } from '../interfaces/IUserEnterpriseAssociation';
 import { CaseInterface } from '../interfaces/ICase';
+import { EnterpriseResponse } from '../interfaces/IEnterpriseResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -38,16 +39,18 @@ export class EnterprisesService {
     }
   }
 
-  getEnterprises(): Observable<EnterprisesInterface[]> {
+  getEnterprises(page: number, size: number): Observable<EnterpriseResponse> {
     const token = this.storageService.getToken();
     if (token) {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-      return this.http.get<EnterprisesInterface[]>(this.apiUrl, { headers });
+      const params = new HttpParams().set('page', page.toString()).set('size', size.toString());
+      return this.http.get<EnterpriseResponse>(`${this.apiUrl}`, { headers, params });
     } else {
       console.error('No token found in localStorage');
-      return new Observable<EnterprisesInterface[]>(); 
+      return new Observable<EnterpriseResponse>();
     }
-  }
+  }  
+
 
   getEnterprisesByName(enterpriseName: string) : Observable<EnterprisesInterface[]>{
     const token = this.storageService.getToken();
