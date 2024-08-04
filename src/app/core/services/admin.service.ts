@@ -13,6 +13,7 @@ import { EnterprisesInterface } from '../interfaces/IEnterprises';
 import { LogsResponse } from '../interfaces/ILogsResponse';
 import { AdminEnterpriseResponse } from '../interfaces/IAdminEnterpriseResponse';
 import { UserResponse } from '../interfaces/IUserResponse';
+import { CaseResponse } from '../interfaces/ICaseResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -47,14 +48,15 @@ export class AdminService {
   }
   
 
-  getAllClosedCases(): Observable<CaseInterface[]> {
+  getAllClosedCases(page: number, size: number): Observable<CaseResponse> {
     const token = this.storageService.getToken();
     if (token) {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-      return this.http.get<CaseInterface[]>(this.apiUrl + '/closedcases', { headers });
+      const params = new HttpParams().set('page', page.toString()).set('size', size.toString());
+      return this.http.get<CaseResponse>(`${this.apiUrl}/closedcases`, { headers, params });
     } else {
       console.error('No token found in localStorage');
-      return new Observable<CaseInterface[]>(); 
+      return new Observable<CaseResponse>();
     }
   }
 

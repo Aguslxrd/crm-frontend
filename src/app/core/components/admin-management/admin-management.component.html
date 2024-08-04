@@ -102,31 +102,38 @@
     <button (click)="nextPage()" [disabled]="currentPage >= totalPages - 1">Siguiente</button>
   </div>
 
-  <h3>Casos Cerrados</h3>
-  <div class="scrollable-box">
-    <table>
-      <thead>
-        <tr>
-          <th>ID de Caso</th>
-          <th>Título</th>
-          <th>Descripción</th>
-          <th>Fecha de Creación</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let closedCase of closedCases">
-          <td>{{ closedCase.caseId }}</td>
-          <td>{{ closedCase.title }}</td>
-          <td>{{ closedCase.description_case }}</td>
-          <td>{{ closedCase.date_created | date:'short' }}</td>
-          <td>
-            <button (click)="reactivateCase(closedCase)" class="reactivate-btn">Reactivar</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <h3>Casos Eliminados</h3>
+<div class="scrollable-box">
+  <table>
+    <thead>
+      <tr>
+        <th>ID de Caso</th>
+        <th>Título</th>
+        <th>Descripción</th>
+        <th>Fecha de Creación</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let closedCase of closedCases">
+        <td>{{ closedCase.caseId }}</td>
+        <td>{{ closedCase.title }}</td>
+        <td>{{ closedCase.description_case }}</td>
+        <td>{{ closedCase.date_created | date:'short' }}</td>
+        <td>
+          <button (click)="reactivateCase(closedCase)" class="reactivate-btn">Reactivar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="pagination">
+  <button (click)="previousClosedCasesPage()" [disabled]="currentClosedCasesPage === 0">Anterior</button>
+  <span>Página {{currentClosedCasesPage + 1}}</span>
+  <button (click)="nextClosedCasesPage()" [disabled]="currentClosedCasesPage >= totalClosedCasesPages - 1">Siguiente</button>
+</div>
+
 
   <h3>Usuarios Desactivados</h3>
 <div class="scrollable-box">

@@ -40,6 +40,9 @@ export class AdminManagementComponent implements OnInit {
   currentDeactivatedUsersPage: number = 0; 
   totalDeactivatedUsersPages: number = 0; 
 
+  currentClosedCasesPage: number = 0;
+  totalClosedCasesPages: number = 0;
+
   constructor(
     private adminService: AdminService, 
     private caseService: CasesService, 
@@ -51,7 +54,7 @@ export class AdminManagementComponent implements OnInit {
   ngOnInit(): void {
     this.getAdminUsers();
     this.getLogs(this.currentPage, this.pageSize);
-    this.getClosedCases();
+    this.getClosedCases(this.currentClosedCasesPage, this.pageSize);
     this.getSoftDeletedUsers(this.currentDeactivatedUsersPage, this.pageSize);
     this.getDeletedEnterprises(this.currentEnterprisePage, this.pageSize);
   }
@@ -131,9 +134,10 @@ export class AdminManagementComponent implements OnInit {
     }
   }
 
-  getClosedCases(): void {
-    this.adminService.getAllClosedCases().subscribe((data) => {
-      this.closedCases = data;
+  getClosedCases(page: number, size: number): void {
+    this.adminService.getAllClosedCases(page, size).subscribe((response) => {
+      this.closedCases = response.content;
+      this.totalClosedCasesPages = response.totalPages;
     });
   }
 
@@ -146,7 +150,7 @@ export class AdminManagementComponent implements OnInit {
   }
   
   reactivateCase(caseItem: CaseInterface): void {
-    this.openDialog(EditCaseFormModalComponent, caseItem, () => this.getClosedCases());
+    this.openDialog(EditCaseFormModalComponent, caseItem, () => this.getClosedCases(this.currentClosedCasesPage, this.pageSize));
   }
 
   reactivateUser(userData: UserInterface): void {
@@ -202,6 +206,20 @@ export class AdminManagementComponent implements OnInit {
     if (this.currentDeactivatedUsersPage < this.totalDeactivatedUsersPages - 1) {
       this.currentDeactivatedUsersPage++;
       this.getSoftDeletedUsers(this.currentDeactivatedUsersPage, this.pageSize);
+    }
+  }
+
+  previousClosedCasesPage(): void {
+    if (this.currentClosedCasesPage > 0) {
+      this.currentClosedCasesPage--;
+      this.getClosedCases(this.currentClosedCasesPage, this.pageSize);
+    }
+  }
+
+  nextClosedCasesPage(): void {
+    if (this.currentClosedCasesPage < this.totalClosedCasesPages - 1) {
+      this.currentClosedCasesPage++;
+      this.getClosedCases(this.currentClosedCasesPage, this.pageSize);
     }
   }
   
