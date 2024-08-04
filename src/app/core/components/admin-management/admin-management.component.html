@@ -6,7 +6,7 @@
       <input type="text" [(ngModel)]="searchQuery" placeholder="Buscar por email...">
       <button (click)="searchAdminUsers()">Buscar</button>
     </div>
-    <button (click)="addNewAdministrador()" class="add-admin-btn">Agregar Nuevo Administrador</button>
+    <button (click)="addNewAdmin()" class="add-admin-btn">Agregar Nuevo Administrador</button>
   </div>
 
   <div class="scrollable-box">
@@ -68,7 +68,6 @@
     </table>
   </div>
 
-
   <h2>Logs</h2>
 
   <div class="scrollable-box">
@@ -82,7 +81,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let log of paginatedLogs">
+        <tr *ngFor="let log of logs">
           <td>{{ log.log_id }}</td>
           <td>{{ log.createdAt | date:'short' }}</td>
           <td>{{ log.user_action }}</td>
@@ -93,9 +92,9 @@
   </div>
 
   <div class="pagination">
-    <button (click)="previousPage()" [disabled]="currentPage === 1">Anterior</button>
-    <span>Page {{currentPage}}</span>
-    <button (click)="nextPage()" [disabled]="(currentPage * itemsPerPage) >= logs.length">Siguiente</button>
+    <button (click)="previousPage()" [disabled]="currentPage === 0">Anterior</button>
+    <span>Página {{currentPage + 1}}</span>
+    <button (click)="nextPage()" [disabled]="currentPage >= totalPages - 1">Siguiente</button>
   </div>
 
   <h2>Casos Cerrados</h2>

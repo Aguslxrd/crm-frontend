@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { StorageService } from './storage-service.service';
 import { Observable, throwError } from 'rxjs';
@@ -10,6 +10,7 @@ import { ILogsInterface } from '../interfaces/ILoggsInterface';
 import { CaseInterface } from '../interfaces/ICase';
 import { UserInterface } from '../interfaces/IUser';
 import { EnterprisesInterface } from '../interfaces/IEnterprises';
+import { LogsResponse } from '../interfaces/ILogsResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -31,16 +32,18 @@ export class AdminService {
     }
   }
 
-  getSystemLogs(): Observable<ILogsInterface[]> {
+  getSystemLogs(page: number, size: number): Observable<LogsResponse> {
     const token = this.storageService.getToken();
     if (token) {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-      return this.http.get<ILogsInterface[]>(this.apiUrl + '/logs', { headers });
+      const params = new HttpParams().set('page', page.toString()).set('size', size.toString());
+      return this.http.get<LogsResponse>(`${this.apiUrl}/logs`, { headers, params });
     } else {
       console.error('No token found in localStorage');
-      return new Observable<ILogsInterface[]>(); 
+      return new Observable<LogsResponse>();
     }
   }
+  
 
   getAllClosedCases(): Observable<CaseInterface[]> {
     const token = this.storageService.getToken();

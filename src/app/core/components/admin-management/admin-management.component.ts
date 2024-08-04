@@ -15,6 +15,7 @@ import { AdminRegisterInterface } from '../../interfaces/IAdminRegister';
 import { EnterprisesService } from '../../services/enterprises.service';
 import { EnterprisesInterface } from '../../interfaces/IEnterprises';
 import { ToastrService } from 'ngx-toastr';
+import { LogsResponse } from '../../interfaces/ILogsResponse';
 
 @Component({
   selector: 'app-admin-management',
@@ -30,19 +31,22 @@ export class AdminManagementComponent implements OnInit {
   deletedEnterprises: EnterprisesInterface[] = [];
   activateEnterprise = false;
 
-  currentPage: number = 1;
-  itemsPerPage: number = 5;
-  paginatedLogs: ILogsInterface[] = [];
+  currentPage: number = 0;
+  pageSize: number = 10;
+  totalElements: number = 0;
+  totalPages: number = 0;
 
-  constructor(private adminService: AdminService, 
+  constructor(
+    private adminService: AdminService, 
     private caseService: CasesService, 
     public dialog: MatDialog,
     public enterpriseService: EnterprisesService,
-    public toastr: ToastrService) {}
+    public toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.getAdminUsers();
-    this.getLogs();
+    this.getLogs(this.currentPage, this.pageSize);
     this.getClosedCases();
     this.getSoftDeletedUsers();
     this.getDeletedEnterprises();
@@ -66,6 +70,19 @@ export class AdminManagementComponent implements OnInit {
     }
   }
 
+  openDialog(component: any, data: any, callback: () => void): void {
+    const dialogRef = this.dialog.open(component, {
+      width: '400px',
+      data: data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        callback();
+      }
+    });
+  }
+
   editAdmin(adminData: AdminInterface): void {
     const adminEditData: AdminEditInterface = {
       id: adminData.userId,
@@ -74,15 +91,7 @@ export class AdminManagementComponent implements OnInit {
       passwd: '',  
       userrole: adminData.role
     };
-
-    const dialogRef = this.dialog.open(EditAdminFormModalComponent, {
-      width: '400px',
-      data: adminEditData
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      this.getAdminUsers();
-    });
+    this.openDialog(EditAdminFormModalComponent, adminEditData, () => this.getAdminUsers());
   }
 
   deleteAdmin(userId: number): void {
@@ -91,30 +100,30 @@ export class AdminManagementComponent implements OnInit {
     });
   }
 
-  getLogs(): void {
-    this.adminService.getSystemLogs().subscribe((data) => {
-      this.logs = data;
-      this.paginateLogs();
-    });
-  }
-
-  paginateLogs(): void {
-    const start = (this.currentPage - 1) * this.itemsPerPage;
-    const end = start + this.itemsPerPage;
-    this.paginatedLogs = this.logs.slice(start, end);
-  }
-
-  nextPage(): void {
-    if ((this.currentPage * this.itemsPerPage) < this.logs.length) {
-      this.currentPage++;
-      this.paginateLogs();
-    }
+  getLogs(page: number, size: number): void {
+    this.adminService.getSystemLogs(page, size).subscribe(
+      (response) => {
+        this.logs = response.content;
+        this.totalElements = response.totalElements;
+        this.totalPages = response.totalPages;
+      },
+      (error) => {
+        console.error('Error fetching logs:', error);
+      }
+    );
   }
 
   previousPage(): void {
-    if (this.currentPage > 1) {
+    if (this.currentPage > 0) {
       this.currentPage--;
-      this.paginateLogs();
+      this.getLogs(this.currentPage, this.pageSize);
+    }
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages - 1) {
+      this.currentPage++;
+      this.getLogs(this.currentPage, this.pageSize);
     }
   }
 
@@ -131,39 +140,15 @@ export class AdminManagementComponent implements OnInit {
   }
 
   reactivateCase(caseItem: CaseInterface): void {
-    const dialogRef = this.dialog.open(EditCaseFormModalComponent, {
-      width: '400px',
-      data: caseItem
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-      }
-    });
+    this.openDialog(EditCaseFormModalComponent, caseItem, () => this.getClosedCases());
   }
 
   reactivateUser(userData: UserInterface): void {
-    const dialogRef = this.dialog.open(EditUserFormModalComponent, {
-      width: '400px',
-      data: userData
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-      }
-    });
+    this.openDialog(EditUserFormModalComponent, userData, () => this.getSoftDeletedUsers());
   }
 
-  addNewAdministrador(): void {
-    const dialogRef = this.dialog.open(NewAdminFormModalComponent, {
-      width: '400px'
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.getAdminUsers();
-      }
-    });
+  addNewAdmin(): void {
+    this.openDialog(NewAdminFormModalComponent, null, () => this.getAdminUsers());
   }
 
   getDeletedEnterprises(): void {
@@ -174,13 +159,15 @@ export class AdminManagementComponent implements OnInit {
 
   reactivateEnterprise(enterpriseId: number): void {
     this.adminService.activateEnterpriseById(enterpriseId).subscribe(
-      (data) => {
+      () => {
         this.toastr.success('Empresa re-activada!', 'ArcticCRM');
+        this.getDeletedEnterprises();
       },
       (error) => {
         this.toastr.error('Error al reactivar la empresa!', 'ArcticCRM');
       }
     );
   }
-
 }
+
+
