@@ -1,11 +1,11 @@
 <div class="case-list-container">
-  <h2>Case List</h2>
+  <h2>Lista de casos</h2>
   
   <div class="search-container">
     <select [(ngModel)]="searchCriteria">
       <option value="caseId">Numero de caso ID</option>
     </select>
-    <input type="text" [(ngModel)]="searchQuery" placeholder="Search...">
+    <input type="text" [(ngModel)]="searchQuery" placeholder="Buscar por...">
     <button (click)="searchCases()">Buscar</button>
   </div>
 
