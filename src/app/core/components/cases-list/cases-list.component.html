@@ -1,37 +1,42 @@
 <div class="case-list-container">
-    <h2>Case List</h2>
-    
-    <div class="search-container">
-      <select [(ngModel)]="searchCriteria">
-        <option value="caseId">Numero de caso ID</option>
-      </select>
-      <input type="text" [(ngModel)]="searchQuery" placeholder="Search...">
-      <button (click)="searchCases()">Buscar</button>
-    </div>
+  <h2>Case List</h2>
   
-    <table>
-      <thead>
-        <tr>
-          <th>Numero de caso</th>
-          <th>Titulo</th>
-          <th>Descripcion</th>
-          <th>Fecha de creacion</th>
-          <th>Estado</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let case of cases">
-          <td>{{ case.caseId }}</td>
-          <td>{{ case.title }}</td>
-          <td>{{ case.description_case }}</td>
-          <td>{{ case.date_created | date:'short' }}</td>
-          <td>{{ case.case_status }}</td>
-          <td>
-            <button (click)="viewCaseDetails(case.caseId)">Ver Caso</button>
-            <button (click)="editCase(case)">Editar</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="search-container">
+    <select [(ngModel)]="searchCriteria">
+      <option value="caseId">Numero de caso ID</option>
+    </select>
+    <input type="text" [(ngModel)]="searchQuery" placeholder="Search...">
+    <button (click)="searchCases()">Buscar</button>
   </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Numero de caso</th>
+        <th>Titulo</th>
+        <th>Descripcion</th>
+        <th>Fecha de creacion</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let case of cases">
+        <td>{{ case.caseId }}</td>
+        <td>{{ case.title }}</td>
+        <td>{{ case.description_case }}</td>
+        <td>{{ case.date_created | date:'short' }}</td>
+        <td>{{ case.case_status }}</td>
+        <td>
+          <button (click)="viewCaseDetails(case.caseId)">Ver Caso</button>
+          <button (click)="editCase(case)">Editar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="pagination-controls">
+    <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 0">Casos previos</button>
+    <button (click)="onPageChange(currentPage + 1)">Casos siguientes</button>
+  </div>
+</div>
