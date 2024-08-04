@@ -19,6 +19,8 @@ export class EnterpriseDetailsComponent implements OnInit {
   selectedUserId: number | null = null;
   loading: boolean = true;
   error: string | null = null;
+  currentPage: number = 0;
+  pageSize: number = 10;
 
   constructor(
     private route: ActivatedRoute,
@@ -57,16 +59,19 @@ export class EnterpriseDetailsComponent implements OnInit {
   }
 
   loadUsers(): void {
-    // this.userService.getUsers().subscribe(
-    //   (users) => {
-    //     this.users = users;
-    //     this.cdr.detectChanges();
-    //   },
-    //   (error) => {
-    //     console.error('Error fetching users:', error);
-    //   }
-    // ); esto se rompe porque no tiene paginacion, se utiliza para selecionar un usuario a una empresa
-  }
+    this.loading = true;
+    this.userService.getAllUsers().subscribe(
+      (response) => {
+        this.users = [...this.users, ...response.content];
+        this.currentPage += 1;
+        this.loading = false;
+      },
+      (error) => {
+        console.error('Error fetching users:', error);
+        this.loading = false;
+      }
+    );
+  } //No es seguro utilizarlo y no es practico, agregar un modal para asignar un usuario mediante id de usuario y id de empresa.
 
   loadEnterpriseUsers(enterpriseId: number): void {
     this.enterpriseService.getUserEnterprise(enterpriseId).subscribe(

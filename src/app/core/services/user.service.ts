@@ -36,6 +36,18 @@ export class UserService {
     }
   }  
 
+  getAllUsers(): Observable<UserResponse> {
+    const token = this.storageService.getToken();
+    if (token) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      const params = new HttpParams().set('page', '0').set('size', '1000');
+      return this.http.get<UserResponse>(`${this.apiUrl}`, { headers, params });
+    } else {
+      console.error('No token found in localStorage');
+      return new Observable<UserResponse>();
+    }
+  }
+
   saveUser(user: UserInterface): Observable<UserInterface> {
     const token = this.storageService.getToken();
     if (token) {
