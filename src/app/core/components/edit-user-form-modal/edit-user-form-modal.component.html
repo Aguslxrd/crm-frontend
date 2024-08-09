@@ -49,8 +49,8 @@
     <mat-form-field appearance="fill">
       <mat-label>Estado</mat-label>
       <mat-select formControlName="softDelete">
-        <mat-option value="true">Activado</mat-option>
-        <mat-option value="false">Desactivado</mat-option>
+        <mat-option value="false">Activado</mat-option>
+        <mat-option value="true">Desactivado</mat-option>
       </mat-select>
       <mat-error *ngIf="userForm.get('softDelete')?.hasError('required')">
         Estado es requerido
