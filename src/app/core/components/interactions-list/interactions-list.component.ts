@@ -46,6 +46,6 @@ export class InteractionsListComponent implements OnInit {
   }
 
   goToCase(caseId: number): void {
-    this.router.navigate(['/cases', caseId]);
+    this.router.navigate(['/details/cases/', caseId]);
   }
 }
