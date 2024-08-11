@@ -11,11 +11,13 @@ import { CaseDetailsComponent } from './core/components/cases-details/cases-deta
 import { EnterprisesListComponent } from './core/components/enterprises-list/enterprises-list.component';
 import { EnterpriseDetailsComponent } from './core/components/enterprise-details/enterprise-details.component';
 import { AdminManagementComponent } from './core/components/admin-management/admin-management.component';
+import { InteractionsListComponent } from './core/components/interactions-list/interactions-list.component';
 
 const routes: Routes = [
   {path: "", component: HomeComponent, canActivate: [authGuard] },
   {path: 'users', component: UserlistComponent, canActivate: [authGuard] },
   {path: 'cases', component: CaseListComponent, canActivate: [authGuard] },
+  {path: "interactions", component: InteractionsListComponent, canActivate: [authGuard]},
   {path: "home", component: HomeComponent, canActivate: [authGuard]},
   {path: "enterprises", component: EnterprisesListComponent, canActivate: [authGuard]},
   {path: "user/details/:userId", component: UserDetailsComponent, canActivate: [authGuard]},

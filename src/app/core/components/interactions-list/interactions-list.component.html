@@ -1,1 +1,17 @@
-<p>interactions-list works!</p>
+<div class="interaction-list">
+    <h3>Interacciones realizadas</h3>
+    <div *ngIf="interactions.length > 0; else noInteractions">
+      <div *ngFor="let interaction of interactions" class="interaction-item">
+        <div class="interaction-details">
+          <h4>{{ interaction.adminName }}</h4>
+          <p class="interaction-text">{{ interaction.interaction_text }}</p>
+          <p class="interaction-date">{{ interaction.interaction_date | date: 'short' }}</p>
+          <button (click)="goToCase(interaction.caseId)" class="view-case-btn">Ver Caso</button>
+        </div>
+      </div>
+    </div>
+    <ng-template #noInteractions>
+      <p>Servicio de interacciones no disponibles.</p>
+    </ng-template>
+  </div>
+  
