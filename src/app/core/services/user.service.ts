@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { UserInterface } from '../interfaces/IUser';
 import { StorageService } from './storage-service.service';
+import { UserResponse } from '../interfaces/IUserResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -12,14 +13,38 @@ export class UserService {
 
   constructor(private http: HttpClient, private storageService: StorageService) {}
 
-  getUsers(): Observable<UserInterface[]> {
+  // getUsers(): Observable<UserInterface[]> {
+  //   const token = this.storageService.getToken();
+  //   if (token) {
+  //     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  //     return this.http.get<UserInterface[]>(this.apiUrl, { headers });
+  //   } else {
+  //     console.error('No token found in localStorage');
+  //     return new Observable<UserInterface[]>(); 
+  //   }
+  // }
+
+  getUsers(page: number, size: number): Observable<UserResponse> {
     const token = this.storageService.getToken();
     if (token) {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-      return this.http.get<UserInterface[]>(this.apiUrl, { headers });
+      const params = new HttpParams().set('page', page.toString()).set('size', size.toString());
+      return this.http.get<UserResponse>(`${this.apiUrl}`, { headers, params });
     } else {
       console.error('No token found in localStorage');
-      return new Observable<UserInterface[]>(); 
+      return new Observable<UserResponse>();
+    }
+  }  
+
+  getAllUsers(): Observable<UserResponse> {
+    const token = this.storageService.getToken();
+    if (token) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      const params = new HttpParams().set('page', '0').set('size', '1000');
+      return this.http.get<UserResponse>(`${this.apiUrl}`, { headers, params });
+    } else {
+      console.error('No token found in localStorage');
+      return new Observable<UserResponse>();
     }
   }
 

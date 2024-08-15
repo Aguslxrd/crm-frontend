@@ -20,7 +20,7 @@ export class NewEnterpriseFormModalComponent implements OnInit {
   ) {
     this.enterpriseForm = this.fb.group({
       name_enterprise: ['', Validators.required],
-      rut: [''],
+      rut: ['', Validators.required],
       address: ['', Validators.required],
       phone: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],

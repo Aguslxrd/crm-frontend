@@ -95,7 +95,7 @@ export class UserCasesComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log('Interaction added:', result);
-        this.loadInteractions(this.case?.caseId as number); // Reload interactions after adding
+        this.loadInteractions(this.case?.caseId as number);
       }
     });
   }

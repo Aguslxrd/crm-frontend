@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>Add New User</h2>
+<h2 mat-dialog-title>Cargar nuevo cliente</h2>
 <div mat-dialog-content>
   <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="fill">
@@ -17,7 +17,7 @@
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label>Seugndo apellido</mat-label>
+      <mat-label>Segundo apellido</mat-label>
       <input matInput formControlName="secondlastname">
     </mat-form-field>
 
@@ -37,13 +37,13 @@
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label>Identificador</mat-label>
+      <mat-label>Identificador (CI,DNI, etc)</mat-label>
       <input matInput formControlName="identifier" required>
     </mat-form-field>
 
     <div mat-dialog-actions>
       <button mat-button mat-dialog-close>Cancelar</button>
-      <button mat-button type="submit" [disabled]="!userForm.valid">Save</button>
+      <button mat-button type="submit" [disabled]="!userForm.valid">Guardar</button>
     </div>
   </form>
 </div>

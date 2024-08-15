@@ -1,14 +1,15 @@
 <div class="admin-panel">
-  <h2>Panel de administradores</h2>
+  <h2>Panel de Administradores</h2>
 
   <div class="action-container">
     <div class="search-container">
       <input type="text" [(ngModel)]="searchQuery" placeholder="Buscar por email...">
       <button (click)="searchAdminUsers()">Buscar</button>
     </div>
-    <button (click)="addNewAdministrador()" class="add-admin-btn">Agregar Nuevo Administrador</button>
+    <button (click)="addNewAdmin()" class="add-admin-btn">Agregar Nuevo Administrador</button>
   </div>
 
+  <h3>Administradores</h3>
   <div class="scrollable-box">
     <table>
       <thead>
@@ -35,20 +36,57 @@
     </table>
   </div>
 
-  <h2>Logs</h2>
-
+  <h3>Empresas Eliminadas</h3>
   <div class="scrollable-box">
     <table>
       <thead>
         <tr>
-          <th>ID de registro</th>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>RUT</th>
+          <th>Dirección</th>
+          <th>Teléfono</th>
+          <th>Email</th>
+          <th>Sitio Web</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let enterprise of deletedEnterprises">
+          <td>{{ enterprise.enterpriseid }}</td>
+          <td>{{ enterprise.name_enterprise }}</td>
+          <td>{{ enterprise.rut }}</td>
+          <td>{{ enterprise.address }}</td>
+          <td>{{ enterprise.phone }}</td>
+          <td>{{ enterprise.email }}</td>
+          <td>{{ enterprise.web_site }}</td>
+          <td>
+            <button (click)="reactivateEnterprise(enterprise.enterpriseid)" class="reactivate-btn">Reactivar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination">
+    <button (click)="previousEnterprisePage()" [disabled]="currentEnterprisePage === 0">Anterior</button>
+    <span>Página {{currentEnterprisePage + 1}}</span>
+    <button (click)="nextEnterprisePage()" [disabled]="currentEnterprisePage >= totalEnterprisePages - 1">Siguiente</button>
+  </div>
+
+  <h3>Logs</h3>
+  <div class="scrollable-box">
+    <table>
+      <thead>
+        <tr>
+          <th>ID de Registro</th>
           <th>Fecha</th>
           <th>Acción</th>
           <th>Usuario</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let log of paginatedLogs">
+        <tr *ngFor="let log of logs">
           <td>{{ log.log_id }}</td>
           <td>{{ log.createdAt | date:'short' }}</td>
           <td>{{ log.user_action }}</td>
@@ -59,64 +97,75 @@
   </div>
 
   <div class="pagination">
-    <button (click)="previousPage()" [disabled]="currentPage === 1">Anterior</button>
-    <span>Page {{currentPage}}</span>
-    <button (click)="nextPage()" [disabled]="(currentPage * itemsPerPage) >= logs.length">Siguiente</button>
+    <button (click)="previousPage()" [disabled]="currentPage === 0">Anterior</button>
+    <span>Página {{currentPage + 1}}</span>
+    <button (click)="nextPage()" [disabled]="currentPage >= totalPages - 1">Siguiente</button>
   </div>
 
-  <h2>Casos Cerrados</h2>
-
-  <div class="scrollable-box">
-    <table>
-      <thead>
-        <tr>
-          <th>ID de Caso</th>
-          <th>Título</th>
-          <th>Descripción</th>
-          <th>Fecha de Creación</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let closedCase of closedCases">
-          <td>{{ closedCase.caseId }}</td>
-          <td>{{ closedCase.title }}</td>
-          <td>{{ closedCase.description_case }}</td>
-          <td>{{ closedCase.date_created | date:'short' }}</td>
-          <td>
-            <button (click)="reactivateCase(closedCase)" class="reactivate-btn">Reactivar</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <h2>Usuarios Desactivados</h2>
-
-  <div class="scrollable-box">
-    <table>
-      <thead>
-        <tr>
-          <th>Codigo de cliente</th>
-          <th>Nombre</th>
-          <th>Apellido</th>
-          <th>Email</th>
-          <th>Identificador</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of deactivatedUsers">
-          <td>{{ user.userid }}</td>
-          <td>{{ user.firstname }}</td>
-          <td>{{ user.firstlastname }}</td>
-          <td>{{ user.email }}</td>
-          <td>{{ user.identifier }}</td>
-          <td>
-            <button (click)="reactivateUser(user)" class="reactivate-btn">Reactivar</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <h3>Casos Cerrados</h3>
+<div class="scrollable-box">
+  <table>
+    <thead>
+      <tr>
+        <th>ID de Caso</th>
+        <th>Título</th>
+        <th>Descripción</th>
+        <th>Fecha de Creación</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let closedCase of closedCases">
+        <td>{{ closedCase.caseId }}</td>
+        <td>{{ closedCase.title }}</td>
+        <td>{{ closedCase.description_case }}</td>
+        <td>{{ closedCase.date_created | date:'short' }}</td>
+        <td>
+          <button (click)="reactivateCase(closedCase)" class="reactivate-btn">Reactivar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
+
+<div class="pagination">
+  <button (click)="previousClosedCasesPage()" [disabled]="currentClosedCasesPage === 0">Anterior</button>
+  <span>Página {{currentClosedCasesPage + 1}}</span>
+  <button (click)="nextClosedCasesPage()" [disabled]="currentClosedCasesPage >= totalClosedCasesPages - 1">Siguiente</button>
+</div>
+
+
+  <h3>Usuarios Desactivados</h3>
+<div class="scrollable-box">
+  <table>
+    <thead>
+      <tr>
+        <th>Código de Cliente</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Email</th>
+        <th>Identificador</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of deactivatedUsers">
+        <td>{{ user.userid }}</td>
+        <td>{{ user.firstname }}</td>
+        <td>{{ user.firstlastname }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.identifier }}</td>
+        <td>
+          <button (click)="reactivateUser(user)" class="reactivate-btn">Reactivar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="pagination">
+  <button (click)="previousDeactivatedUsersPage()" [disabled]="currentDeactivatedUsersPage === 0">Anterior</button>
+  <span>Página {{currentDeactivatedUsersPage + 1}}</span>
+  <button (click)="nextDeactivatedUsersPage()" [disabled]="currentDeactivatedUsersPage >= totalDeactivatedUsersPages - 1">Siguiente</button>
+</div>
+

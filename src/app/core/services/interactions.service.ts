@@ -56,5 +56,16 @@ export class InteractionsService {
     return new Observable<InteractionInterface[]>();
   }
 
+    getAllUserInteractionsByAuthId(authId: string): Observable<InteractionInterface[]> {
+    const token = this.storageService.getToken();
+    if (token) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.get<InteractionInterface[]>(`${this.apiUrl}/user/${authId}`, { headers });
+    } else {
+      console.error('No token found in localStorage');
+      return new Observable<InteractionInterface[]>(); 
+    }
+  }
+
   
 }

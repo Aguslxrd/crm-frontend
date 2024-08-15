@@ -3,10 +3,10 @@ import { EnterprisesInterface } from '../../interfaces/IEnterprises';
 import { EnterprisesService } from '../../services/enterprises.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { EditCaseFormModalComponent } from '../edit-case-form-modal/edit-case-form-modal.component';
 import { NewEnterpriseFormModalComponent } from '../new-enterprise-form-modal/new-enterprise-form-modal.component';
 import { EditEnterpriseFormModalComponent } from '../edit-enterprise-form-modal/edit-enterprise-form-modal.component';
 import Swal from 'sweetalert2';
+import { EnterpriseResponse } from '../../interfaces/IEnterpriseResponse';
 
 @Component({
   selector: 'app-enterprises-list',
@@ -18,6 +18,9 @@ export class EnterprisesListComponent implements OnInit {
   enterprises: EnterprisesInterface[] = [];
   searchCriteria: string = 'name';
   searchQuery: string = '';
+  currentPage: number = 0;
+  pageSize: number = 10;
+  totalPages: number = 0;
 
   constructor(
     private enterpriseService: EnterprisesService, 
@@ -30,9 +33,10 @@ export class EnterprisesListComponent implements OnInit {
   }
 
   loadEnterprises(): void {
-    this.enterpriseService.getEnterprises().subscribe(
-      (response) => {
-        this.enterprises = response;
+    this.enterpriseService.getEnterprises(this.currentPage, this.pageSize).subscribe(
+      (response: EnterpriseResponse) => {
+        this.enterprises = response.content;
+        this.totalPages = response.totalPages;
       },
       (error) => {
         console.error('Error fetching enterprises:', error);
@@ -147,4 +151,19 @@ export class EnterprisesListComponent implements OnInit {
   viewEnterpriseDetails(enterpriseId: number) {
     this.router.navigate(['/enterprises/details', enterpriseId]);
   }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages - 1) {
+      this.currentPage++;
+      this.loadEnterprises();
+    }
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+      this.loadEnterprises();
+    }
+  }
+  
 }

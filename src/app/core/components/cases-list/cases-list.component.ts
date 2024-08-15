@@ -15,20 +15,23 @@ export class CaseListComponent implements OnInit {
   cases: CaseInterface[] = [];
   searchCriteria: string = 'title';
   searchQuery: string = '';
+  currentPage: number = 0;
+  pageSize: number = 10;
+  totalElements: number = 0;
+  totalPages: number = 0;
 
   constructor(private caseService: CasesService, public dialog: MatDialog, private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.loadCases();
-    this.route.params.subscribe(params => {
-      const caseId = +params['caseId'];
-    });
+    this.loadCases(this.currentPage, this.pageSize);
   }
 
-  loadCases(): void {
-    this.caseService.getOpenAndInProgressCases().subscribe(
+  loadCases(page: number, size: number): void {
+    this.caseService.getOpenAndInProgressCases(page, size).subscribe(
       (response) => {
-        this.cases = response;
+        this.cases = response.content;
+        this.totalElements = response.totalElements;
+        this.totalPages = response.totalPages;
       },
       (error) => {
         console.error('Error fetching cases:', error);
@@ -38,7 +41,7 @@ export class CaseListComponent implements OnInit {
 
   searchCases(): void {
     if (this.searchQuery.trim() === '') {
-      this.loadCases();
+      this.loadCases(this.currentPage, this.pageSize);
       return;
     }
 
@@ -77,7 +80,7 @@ export class CaseListComponent implements OnInit {
       if (result) {
         console.log('Case Edited:', result);
       }
-      this.loadCases();
+      this.loadCases(this.currentPage, this.pageSize);
     });
   }
 
@@ -88,5 +91,10 @@ export class CaseListComponent implements OnInit {
       return;
     }
     this.router.navigate(['/details/cases', caseId]);
+  }
+
+  onPageChange(page: number): void {
+    this.currentPage = page;
+    this.loadCases(this.currentPage, this.pageSize);
   }
 }

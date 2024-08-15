@@ -36,6 +36,7 @@ import { AdminManagementComponent } from './core/components/admin-management/adm
 import { ToastrModule } from 'ngx-toastr';
 import { NewAdminFormModalComponent } from './core/components/new-admin-form-modal/new-admin-form-modal.component';
 import { EditAdminFormModalComponent } from './core/components/edit-admin-form-modal/edit-admin-form-modal.component';
+import { InteractionsListComponent } from './core/components/interactions-list/interactions-list.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { EditAdminFormModalComponent } from './core/components/edit-admin-form-m
     EnterpriseDetailsComponent,
     AdminManagementComponent,
     NewAdminFormModalComponent,
-    EditAdminFormModalComponent
+    EditAdminFormModalComponent,
+    InteractionsListComponent
   ],
   imports: [
     BrowserModule,
