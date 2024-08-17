@@ -19,6 +19,7 @@ export interface AuthResponse {
 })
 export class AuthenticationService {
   private apiUrl = 'http://arcticnode.duckdns.org:4300/api/auth/authenticate';
+  private loggedIn = false;
 
   constructor(
     private http: HttpClient,
