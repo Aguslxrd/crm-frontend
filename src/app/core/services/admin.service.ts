@@ -14,12 +14,13 @@ import { LogsResponse } from '../interfaces/ILogsResponse';
 import { AdminEnterpriseResponse } from '../interfaces/IAdminEnterpriseResponse';
 import { UserResponse } from '../interfaces/IUserResponse';
 import { CaseResponse } from '../interfaces/ICaseResponse';
+import { environment } from '../../../environment.dev';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
-  private readonly apiUrl = 'http://localhost:8080/api/admin';
+  private readonly apiUrl = environment.apiAdminUrl;
 
   constructor(private http: HttpClient, private storageService: StorageService) {}
   

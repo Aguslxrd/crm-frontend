@@ -7,13 +7,14 @@ import { UserEnterpriseInterface } from '../interfaces/IUser-Enterprise';
 import { UserEnterpriseAssociation } from '../interfaces/IUserEnterpriseAssociation';
 import { CaseInterface } from '../interfaces/ICase';
 import { EnterpriseResponse } from '../interfaces/IEnterpriseResponse';
+import { environment } from '../../../environment.dev';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EnterprisesService {
-  private readonly apiUrl = 'http://localhost:8080/api/v1/enterprises';
-  private readonly apiUrlEnterpriseUser = 'http://localhost:8080/api/v1/user-enterprises';
+  private readonly apiUrl = `${environment.apiUrl}/enterprises`;
+  private readonly apiUrlEnterpriseUser = 'http://arcticnode.duckdns.org:4300/api/v1/user-enterprises';
 
   constructor(private http: HttpClient, private storageService: StorageService) {}
 

@@ -4,12 +4,13 @@ import { catchError, Observable, tap, throwError } from 'rxjs';
 import { UserInterface } from '../interfaces/IUser';
 import { StorageService } from './storage-service.service';
 import { UserResponse } from '../interfaces/IUserResponse';
+import { environment } from '../../../environment.dev';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private readonly apiUrl = 'http://localhost:8080/api/v1/users';
+  private readonly apiUrl = `${environment.apiUrl}/users`;
 
   constructor(private http: HttpClient, private storageService: StorageService) {}
 

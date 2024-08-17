@@ -4,12 +4,13 @@ import { Observable, throwError } from 'rxjs';
 import { StorageService } from './storage-service.service';
 import { InteractionInterface } from '../interfaces/IInteraction';
 import { catchError } from 'rxjs/operators';
+import { environment } from '../../../environment.dev';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InteractionsService {
-  private readonly apiUrl = 'http://localhost:8080/api/v1/interactions';
+  private readonly apiUrl = `${environment.apiUrl}/interactions`;
 
   constructor(private http: HttpClient, private storageService: StorageService) {}
 

@@ -4,12 +4,14 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { catchError, Observable, of } from 'rxjs';
 import { CaseInterface } from '../interfaces/ICase';
 import { CaseResponse } from '../interfaces/ICaseResponse';
+import { environment } from '../../../environment.dev';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CasesService {
-  private readonly apiUrl = 'http://localhost:8080/api/v1/cases';
+  
+  private readonly apiUrl = `${environment.apiUrl}/cases`;
   private readonly openAndInProgressCasesEndpoint = 'open-and-in-progress';
 
   constructor(private http: HttpClient, private storageService: StorageService) {}
