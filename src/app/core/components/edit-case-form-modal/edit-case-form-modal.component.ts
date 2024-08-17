@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CasesService } from '../../services/cases.service';
 import { ToastrService } from 'ngx-toastr';
+import { StorageService } from '../../services/storage-service.service';
 
 @Component({
   selector: 'app-edit-case-form-modal',
@@ -17,11 +18,13 @@ export class EditCaseFormModalComponent implements OnInit {
     private dialogRef: MatDialogRef<EditCaseFormModalComponent>,
     private caseService: CasesService,
     private toastr: ToastrService,
+    private localStorage: StorageService,
     @Inject(MAT_DIALOG_DATA) public data: { caseId: number, userId: number } 
   ) {
     this.caseForm = this.fb.group({
       caseId: [data.caseId, Validators.required],
-      userId: [data.userId, Validators.required], 
+      userId: [data.userId, Validators.required],
+      authId: [localStorage.getUserId()], 
       title: ['', Validators.required],
       description_case: ['', Validators.required],
       case_status: ['', Validators.required]
