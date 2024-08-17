@@ -5,6 +5,7 @@ import { NewCaseFormModalComponent } from '../new-case-form-modal/new-case-form-
 import { EditCaseFormModalComponent } from '../edit-case-form-modal/edit-case-form-modal.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CasesService } from '../../services/cases.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-cases-list',
@@ -20,7 +21,9 @@ export class CaseListComponent implements OnInit {
   totalElements: number = 0;
   totalPages: number = 0;
 
-  constructor(private caseService: CasesService, public dialog: MatDialog, private router: Router, private route: ActivatedRoute) {}
+  constructor(private caseService: CasesService, public dialog: MatDialog, private router: Router, private route: ActivatedRoute,
+  private toastr: ToastrService
+  ) {}
 
   ngOnInit() {
     this.loadCases(this.currentPage, this.pageSize);
@@ -34,7 +37,7 @@ export class CaseListComponent implements OnInit {
         this.totalPages = response.totalPages;
       },
       (error) => {
-        console.error('Error fetching cases:', error);
+        this.toastr.error("Error al cargar lista de casos! ", "ArcticCRM");
       }
     );
   }
@@ -54,17 +57,17 @@ export class CaseListComponent implements OnInit {
               this.cases = Array.isArray(response) ? response : [response];
             },
             (error) => {
-              console.error('Error searching cases by case ID:', error);
+              this.toastr.error("Error al buscar casos por id! ", "ArcticCRM");
               this.cases = [];
             }
           );
         } else {
-          console.error('Invalid case ID');
+          this.toastr.warning('No existe ningun caso con ese ID', 'ArctiCRM');
           this.cases = [];
         }
         break;
       default:
-        console.error('Invalid search criteria:', this.searchCriteria);
+        this.toastr.error('Tipo de busqueda invalido', 'ArcticCRM');
         this.cases = [];
         break;
     }
@@ -78,16 +81,15 @@ export class CaseListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('Case Edited:', result);
+        this.toastr.warning('Caso editado', 'ArcticCRM');
       }
       this.loadCases(this.currentPage, this.pageSize);
     });
   }
 
   viewCaseDetails(caseId: number) {
-    console.log('View case details called with ID:', caseId);
     if (caseId === undefined || caseId === null) {
-      console.error('Invalid caseId:', caseId);
+      this.toastr.error('Caso invalido}', 'ArcticCRM');
       return;
     }
     this.router.navigate(['/details/cases', caseId]);

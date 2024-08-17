@@ -43,7 +43,6 @@ export class EditCaseFormModalComponent implements OnInit {
 
   onSubmit(): void {
     if (this.caseForm.valid) {
-      console.log('Submitting case form with:', this.caseForm.value);
       this.caseService.saveCase(this.caseForm.value).subscribe(
         response => {
           this.toastr.success('Caso actualizado correctamente!', 'ArcticCRM');

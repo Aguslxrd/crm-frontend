@@ -6,6 +6,7 @@ import { UserService } from '../../services/user.service';
 import { Location } from '@angular/common';
 import { UserInterface } from '../../interfaces/IUser';
 import { UserEnterpriseAssociation } from '../../interfaces/IUserEnterpriseAssociation';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-enterprise-details',
@@ -27,7 +28,8 @@ export class EnterpriseDetailsComponent implements OnInit {
     private enterpriseService: EnterprisesService,
     private userService: UserService,
     private location: Location,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -48,9 +50,8 @@ export class EnterpriseDetailsComponent implements OnInit {
         this.cdr.detectChanges();
       },
       (error) => {
-        this.error = 'Error al cargar los detalles de la empresa';
         this.loading = false;
-        console.error('Error fetching enterprise details:', error);
+        this.toastr.error('Error al cargar detalles de la empresa', 'ArcticCRM');
         this.cdr.detectChanges();
       }
     );
@@ -65,7 +66,7 @@ export class EnterpriseDetailsComponent implements OnInit {
         this.loading = false;
       },
       (error) => {
-        console.error('Error fetching users:', error);
+        this.toastr.warning('No se encontraron usuarios', 'ArcticCRM');
         this.loading = false;
       }
     );
@@ -79,12 +80,12 @@ export class EnterpriseDetailsComponent implements OnInit {
           if (eu && eu.id && eu.id.userId) {
             this.getUserFullName(eu.id.userId);
           } else {
-            console.error('Invalid user data:', eu);
+            this.toastr.error('Datos de usuarios invalidos', 'ArcticCRM');
           }
         });
       },
       (error) => {
-        console.error('Error fetching enterprise users:', error);
+        this.toastr.error('Error al cargar datos de usuarios', 'ArcticCRM');
       }
     );
   }
@@ -102,11 +103,11 @@ export class EnterpriseDetailsComponent implements OnInit {
           });
           this.cdr.detectChanges();
         } else {
-          console.warn(`User object is undefined for ID ${userId}`);
+          //nothing
         }
       },
       (error) => {
-        console.error(`Error fetching user details for userId ${userId}:`, error);
+        this.toastr.warning('No se encontraron detalles de casos del usuario', 'ArcticCRM');
         this.cdr.detectChanges();
       }
     );
@@ -120,7 +121,7 @@ export class EnterpriseDetailsComponent implements OnInit {
           this.loadEnterpriseUsers(enterpriseId);
         },
         (error) => {
-          console.error('Error removing user from enterprise:', error);
+          this.toastr.error('No ha sido posible remover al usuario', 'ArcticCRM');
         }
       );
     }
@@ -141,7 +142,7 @@ export class EnterpriseDetailsComponent implements OnInit {
           this.cdr.detectChanges();
         },
         (error) => {
-          console.error('Error assigning user to enterprise:', error);
+          this.toastr.error('Error al asignar el usuario con una empresa', 'ArcticCRM');
         }
       );
     }

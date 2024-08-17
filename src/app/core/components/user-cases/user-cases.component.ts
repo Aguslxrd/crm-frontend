@@ -10,6 +10,7 @@ import { StorageService } from '../../services/storage-service.service';
 import { NewInteractionFormModalComponent } from '../new-interaction-form-modal/new-interaction-form-modal.component';
 import { EditCaseFormModalComponent } from '../edit-case-form-modal/edit-case-form-modal.component';
 import { EditInteractionFormModalComponent } from '../edit-interaction-form-modal/edit-interaction-form-modal.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-user-cases',
@@ -26,7 +27,8 @@ export class UserCasesComponent implements OnInit {
     private casesService: CasesService,
     private interactionService: InteractionsService,
     private dialog: MatDialog,
-    private localStorage: StorageService
+    private localStorage: StorageService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -38,20 +40,18 @@ export class UserCasesComponent implements OnInit {
   }
 
   loadCaseDetails(caseId: number): void {
-    console.log('Fetching case details for caseId:', caseId);
     this.casesService.getCaseById(caseId).subscribe(
       (caseData) => {
-        console.log('Received case data:', caseData);
         if (caseData) {
           this.case = caseData;
         } else {
-          console.error('No case data returned');
+          this.toastr.warning('No hay detalles del caso', 'ArcticCRM');
           this.case = null;
         }
         this.loading = false;
       },
       (error) => {
-        console.error('Error fetching case details:', error);
+        this.toastr.error('Error, no se encontro caso', 'ArcticCRM');
         this.case = null;
         this.loading = false;
       }
@@ -59,14 +59,12 @@ export class UserCasesComponent implements OnInit {
   }
 
   loadInteractions(caseId: number): void {
-    console.log('Fetching interactions for caseId:', caseId);
     this.interactionService.getInteractionsByCaseId(caseId).subscribe(
       (interactions) => {
-        console.log('Received interactions data:', interactions);
         this.interactions = interactions;
       },
       (error) => {
-        console.error('Error fetching interactions:', error);
+        this.toastr.warning('No se encontro interacciones', 'ArcticCRM');
       }
     );
   }
@@ -79,7 +77,7 @@ export class UserCasesComponent implements OnInit {
     
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('Interaction updated:', result);
+        this.toastr.success('Interaccion editada', 'ArcticCRM');
         this.loadInteractions(this.case?.caseId as number); 
       }
     });

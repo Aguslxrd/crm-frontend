@@ -3,6 +3,7 @@ import { InteractionInterface } from '../../interfaces/IInteraction';
 import { InteractionsService } from '../../services/interactions.service';
 import { StorageService } from '../../services/storage-service.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-interactions-list',
@@ -17,7 +18,8 @@ export class InteractionsListComponent implements OnInit {
   constructor(
     private interactionsService: InteractionsService,
     private storageService: StorageService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -34,13 +36,12 @@ export class InteractionsListComponent implements OnInit {
           this.isLoading = false;
         },
         error: (error) => {
-          console.error('Error loading interactions', error);
-          this.errorMessage = 'Failed to load interactions. Please try again later.';
+          this.toastr.warning('No se encontraron interaciones', 'ArcticCRM');
           this.isLoading = false;
         }
       });
     } else {
-      this.errorMessage = 'No user ID found. Please log in.';
+      this.toastr.error('Error, no se encontro tu perfil, recarga la web', 'ArcticCRM');
       this.isLoading = false;
     }
   }

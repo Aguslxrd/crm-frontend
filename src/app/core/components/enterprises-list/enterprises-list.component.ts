@@ -7,6 +7,7 @@ import { NewEnterpriseFormModalComponent } from '../new-enterprise-form-modal/ne
 import { EditEnterpriseFormModalComponent } from '../edit-enterprise-form-modal/edit-enterprise-form-modal.component';
 import Swal from 'sweetalert2';
 import { EnterpriseResponse } from '../../interfaces/IEnterpriseResponse';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-enterprises-list',
@@ -25,7 +26,8 @@ export class EnterprisesListComponent implements OnInit {
   constructor(
     private enterpriseService: EnterprisesService, 
     public dialog: MatDialog, 
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -39,7 +41,7 @@ export class EnterprisesListComponent implements OnInit {
         this.totalPages = response.totalPages;
       },
       (error) => {
-        console.error('Error fetching enterprises:', error);
+        this.toastr.warning('No se encontraron empresas', 'ArcticCRM');
       }
     );
   }
@@ -57,7 +59,7 @@ export class EnterprisesListComponent implements OnInit {
             this.enterprises = Array.isArray(response) ? response : [response];
           },
           (error) => {
-            console.error('Error searching enterprises by name:', error);
+            this.toastr.error('Empresa no encontrada con el nombre', 'ArcticCRM');
             this.enterprises = [];
           }
         );
@@ -68,7 +70,7 @@ export class EnterprisesListComponent implements OnInit {
             this.enterprises = Array.isArray(response) ? response : [response];
           },
           (error) => {
-            console.error('Error searching enterprises by RUT:', error);
+            this.toastr.error('Empresa no encontrada con rut', 'ArcticCRM');
             this.enterprises = [];
           }
         );
@@ -81,17 +83,17 @@ export class EnterprisesListComponent implements OnInit {
               this.enterprises = Array.isArray(response) ? response : [response];
             },
             (error) => {
-              console.error('Error searching enterprises by ID:', error);
+              this.toastr.error('Empresa no encontrada con id', 'ArcticCRM');
               this.enterprises = [];
             }
           );
         } else {
-          console.error('Invalid enterprise ID');
+          this.toastr.error('Empresa no encontrada', 'ArcticCRM');
           this.enterprises = [];
         }
         break;
       default:
-        console.error('Invalid search criteria:', this.searchCriteria);
+        this.toastr.warning('Tipo de busqueda no valida', 'ArcticCRM');
         this.enterprises = []; 
         break;
     }
@@ -104,7 +106,7 @@ export class EnterprisesListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('Enterprise saved:', result);
+        this.toastr.success('Empresa guardada', 'ArcticCRM');
         this.loadEnterprises();
       }
     });
@@ -118,7 +120,7 @@ export class EnterprisesListComponent implements OnInit {
   
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('Enterprise Edited:', result);
+        this.toastr.success('Empresa editada', 'ArcticCRM');
       }
       this.loadEnterprises();
     });

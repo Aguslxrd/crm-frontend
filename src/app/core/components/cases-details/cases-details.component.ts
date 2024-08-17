@@ -44,8 +44,7 @@ export class CaseDetailsComponent implements OnInit {
         this.loading = false;
       },
       (error) => {
-        console.error('Error al cargar los detalles del caso:', error);
-        this.error = 'Error al cargar los detalles del caso. Por favor, intente de nuevo.';
+        this.toastrService.error("Error al cargar detalles del caso! ", "ArcticCRM");
         this.loading = false;
       }
     );

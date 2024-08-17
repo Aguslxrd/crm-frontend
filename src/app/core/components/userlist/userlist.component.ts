@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { EditUserFormModalComponent } from '../edit-user-form-modal/edit-user-form-modal.component';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2'
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-userlist',
@@ -21,7 +22,10 @@ export class UserlistComponent implements OnInit {
   totalPages: number = 0;
   size: number = 10;
 
-  constructor(private userService: UserService, public dialog: MatDialog, private router: Router) {}
+  constructor(private userService: UserService, 
+    public dialog: MatDialog, 
+    private router: Router,
+    private toastr: ToastrService) {}
 
   ngOnInit(): void {
     this.loadUsers();
@@ -34,7 +38,7 @@ export class UserlistComponent implements OnInit {
         this.totalPages = response.totalPages;
       },
       (error) => {
-        console.error('Error fetching users:', error);
+        this.toastr.warning('No se encontraron usuarios', 'ArcticCRM');
       }
     );
   }
@@ -52,7 +56,7 @@ export class UserlistComponent implements OnInit {
             this.users = Array.isArray(response) ? response : [response];
           },
           (error) => {
-            console.error('Error searching users by email:', error);
+            this.toastr.error('Error no se encontro usuario por email', 'ArcticCRM');
             this.users = [];
           }
         );
@@ -63,7 +67,7 @@ export class UserlistComponent implements OnInit {
             this.users = Array.isArray(response) ? response : [response];
           },
           (error) => {
-            console.error('Error searching users by identifier:', error);
+            this.toastr.error('Error no se encontro usuario por identificador', 'ArcticCRM');
             this.users = [];
           }
         );
@@ -74,7 +78,7 @@ export class UserlistComponent implements OnInit {
             this.users = Array.isArray(response) ? response : [response];
           },
           (error) => {
-            console.error('Error searching users by phone number:', error);
+            this.toastr.error('Error no se encontro usuario por telefono', 'ArcticCRM');
             this.users = [];
           }
         );
@@ -87,17 +91,17 @@ export class UserlistComponent implements OnInit {
               this.users = Array.isArray(response) ? response : [response];
             },
             (error) => {
-              console.error('Error searching users by user ID:', error);
+              this.toastr.error('Error no se encontro usuario con id', 'ArcticCRM');
               this.users = [];
             }
           );
         } else {
-          console.error('Invalid user ID');
+          this.toastr.error('Error no se encontro usuario', 'ArcticCRM');
           this.users = [];
         }
         break;
       default:
-        console.error('Invalid search criteria:', this.searchCriteria);
+        this.toastr.warning('Tipo de busqueda no valida', 'ArcticCRM');
         this.users = []; 
         break;
     }
@@ -110,7 +114,7 @@ export class UserlistComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('User saved:', result);
+        this.toastr.success('Usuario guardado', 'ArcticCRM');
         this.loadUsers();
       }
     });
@@ -124,7 +128,7 @@ export class UserlistComponent implements OnInit {
   
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('User Edited:', result);
+        this.toastr.success('Usuario editado', 'ArcticCRM');
       }
       this.loadUsers();
     });

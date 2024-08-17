@@ -9,6 +9,7 @@ import { EditCaseFormModalComponent } from '../edit-case-form-modal/edit-case-fo
 import { EnterprisesService } from '../../services/enterprises.service';
 import { EnterprisesInterface } from '../../interfaces/IEnterprises';
 import { UserEnterpriseInterface } from '../../interfaces/IUser-Enterprise';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-user-details',
@@ -28,7 +29,8 @@ export class UserDetailsComponent implements OnInit {
     private casesService: CasesService,
     private enterprisesService: EnterprisesService,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -40,7 +42,7 @@ export class UserDetailsComponent implements OnInit {
         this.loadUserCases(this.userId);
         this.loadUserEnterprise(this.userId);
       } else {
-        console.error('Invalid userId in URL');
+        this.toastr.error('Error no ha sido posible encontrar el cliente', 'ArcticCRM');
       }
     }
   }
@@ -52,7 +54,7 @@ export class UserDetailsComponent implements OnInit {
         console.log('User data:', this.user);
       },
       (error) => {
-        console.error('Error fetching user details:', error);
+        this.toastr.error('Error no se encontro detalles del usuario', 'ArcticCRM');
       }
     );
   }
@@ -65,14 +67,13 @@ export class UserDetailsComponent implements OnInit {
           this.loadEnterpriseDetails(userEnterprises[0].id.enterpriseId);
           this.hasEnterprise = true;
         } else {
-          console.log('No enterprise associated with this user or unexpected data structure');
-          console.log('Received data:', userEnterprises);
+          this.toastr.warning('No se encontro empresa vinculada al cliente', 'ArcticCRM');
           this.hasEnterprise = false;
           this.enterprise = null;
         }
       },
       error => {
-        console.error('Error fetching user enterprise:', error);
+        this.toastr.warning('No se encontro empresa vinculada al cliente', 'ArcticCRM');
         this.hasEnterprise = false;
         this.enterprise = null;
       }
@@ -83,10 +84,9 @@ export class UserDetailsComponent implements OnInit {
     this.enterprisesService.getEnterpriseByEnterpriseId(enterpriseId).subscribe(
       (enterprise: EnterprisesInterface) => {
         this.enterprise = enterprise;
-        console.log('Enterprise data:', this.enterprise);
       },
       (error) => {
-        console.error('Error fetching enterprise details:', error);
+        this.toastr.warning('Error no se encontro detalles de la empresa', 'ArcticCRM');
       }
     );
   }
@@ -95,10 +95,9 @@ export class UserDetailsComponent implements OnInit {
     this.casesService.getCasesByUserId(userId).subscribe(
       (cases) => {
         this.cases = cases;
-        console.log('User cases:', this.cases);
       },
       (error) => {
-        console.error('Error fetching user cases:', error);
+        this.toastr.warning('Error no se encontro casos del cliente', 'ArcticCRM');
       }
     );
   }
@@ -115,7 +114,6 @@ export class UserDetailsComponent implements OnInit {
   
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('Case saved:', result);
         this.loadUserCases(this.userId as number);
       }
     });
@@ -132,12 +130,11 @@ export class UserDetailsComponent implements OnInit {
     
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          console.log('Case updated:', result);
           this.loadUserCases(this.userId as number);
         }
       });
     } else {
-      console.error('userId is not defined');
+      this.toastr.error('Id de cliente no definido', 'ArcticCRM');
     }
   }
 
