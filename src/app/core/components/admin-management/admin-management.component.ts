@@ -90,21 +90,12 @@ export class AdminManagementComponent implements OnInit {
     });
   }
 
-  editAdmin(adminData: AdminInterface): void {
-    const adminEditData: AdminEditInterface = {
-      id: adminData.userId,
-      email: adminData.email,
-      adminName: adminData.username,
-      passwd: '',  
-      userrole: adminData.role
-    };
-    this.openDialog(EditAdminFormModalComponent, adminEditData, () => this.getAdminUsers());
+  editAdmin(): void {
+    this.toastr.warning('Opcion deshabilitado en entorno demo', 'ArcticCRM');
   }
 
-  deleteAdmin(userId: number): void {
-    this.adminService.deleteAdminById(userId).subscribe(() => {
-      this.getAdminUsers();
-    });
+  deleteAdmin(): void {
+    this.toastr.warning('Opcion deshabilitado en entorno demo', 'ArcticCRM');
   }
 
   getLogs(page: number, size: number): void {
@@ -158,7 +149,7 @@ export class AdminManagementComponent implements OnInit {
   }  
 
   addNewAdmin(): void {
-    this.openDialog(NewAdminFormModalComponent, null, () => this.getAdminUsers());
+    this.toastr.warning('Opcion deshabilitado en entorno demo', 'ArcticCRM');
   }
 
   getDeletedEnterprises(page: number, size: number): void {
